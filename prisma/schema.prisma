@@ -7,8 +7,137 @@ datasource db {
   provider = "postgresql"
 }
 
-model Todo {
-  id        Int      @id @default(autoincrement())
-  title     String
-  createdAt DateTime @default(now())
+enum Gender {
+  Male
+  Female
+  Other
+}
+
+enum MaritalStatus {
+  Single
+  Married
+  Divorced
+  Widowed
+  Separated
+}
+
+model Address {
+  id                        String    @id @default(uuid())
+  division                  String
+  district                  String
+  upazilaOrThana            String
+  postOffice                String
+  postCode                  String
+  block                     String
+  houseNoOrVillage          String
+  roadNo                    String?   @default("n/a")
+  createdAt                 DateTime  @default(now())
+  employeePresentAddress    Employee? @relation("employeePresentAddress")
+  employeePermanenttAddress Employee? @relation("employeePermanentAddress")
+}
+
+model ContactInformation {
+  id                        String    @id @default(uuid())
+  fullName                  String    @default("n/a")
+  dateOfBirth               DateTime  @default(now())
+  gender                    String    @default("n/a")
+  occupation                String    @default("n/a")
+  nid                       String    @default("n/a")
+  mobileNumber              String    @default("n/a")
+  email                     String    @default("n/a")
+  createdAt                 DateTime  @default(now())
+  employeeSpouseInformation Employee? @relation("spouseInformation")
+  employeeEmergencyContact  Employee? @relation("emergencyContact")
+}
+
+model AdditionalInformation {
+  id               String         @id @default(uuid())
+  fatherName       String?        @default("n/a")
+  motherName       String?        @default("n/a")
+  nationalId       String?        @default("n/a")
+  placeOfBirth     String?        @default("n/a")
+  maritalStatus    MaritalStatus? @default(Single)
+  eTIN             String?        @default("n/a")
+  program          String?        @default("n/a")
+  unit             String?        @default("n/a")
+  prlDate          DateTime?      @default(now())
+  dateofRegularity DateTime?      @default(now())
+  createdAt        DateTime       @default(now())
+  employee         Employee?
+}
+
+model PersonalInformation {
+  id                 String     @id @default(uuid())
+  fullName           String
+  imageUrl           String
+  officeEmail        String     @unique
+  personalEmail      String     @unique
+  personalNumber     String
+  officeNumber       String
+  employeeType       String
+  employeeStatus     String
+  nationality        String
+  disability         Boolean
+  gender             Gender
+  religion           String
+  joiningDesignation String
+  currentDesignation String
+  dateOfBirth        DateTime   @default(now())
+  dateOfConfirmation DateTime   @default(now())
+  createdAt          DateTime   @default(now())
+  employees          Employee[]
+}
+
+model BankInformation {
+  id            String     @id @default(uuid())
+  bankName      String
+  branchName    String
+  accountNumber String
+  walletType    String     @default("N/A")
+  walletNumber  String     @default("N/A")
+  createdAt     DateTime   @default(now())
+  employees     Employee[]
+}
+
+enum AttendanceStatus {
+  In
+  Out
+}
+
+model Attendance {
+  id               String           @id @default(uuid())
+  checkIn          DateTime         @default(now())
+  checkOut         DateTime?
+  preferableInTime DateTime
+  status           AttendanceStatus
+  createdAt        DateTime         @default(now())
+  employee         Employee?        @relation(fields: [employeeId], references: [id])
+  employeeId       String?
+}
+
+model Employee {
+  id                     String                @id @default(uuid())
+  createdAt              DateTime              @default(now())
+  // Personal Information Relation
+  personalInformationId  String
+  personalInformation    PersonalInformation   @relation(fields: [personalInformationId], references: [id])
+  // Bank Information Relation
+  bankInformation        BankInformation       @relation(fields: [bankInformationId], references: [id])
+  bankInformationId      String
+  // Addtional Informatio Relation
+  addtionalInformationId String                @unique
+  additionalInformation  AdditionalInformation @relation(fields: [addtionalInformationId], references: [id], onDelete: Cascade)
+  // Address Relation
+  presentAddressId       String                @unique
+  presentAddress         Address               @relation(name: "employeePresentAddress", fields: [presentAddressId], references: [id], onDelete: Cascade)
+  permanentAddressId     String                @unique
+  permanentAddress       Address               @relation(name: "employeePermanentAddress", fields: [permanentAddressId], references: [id], onDelete: Cascade)
+  // Spouse Information Relation
+  spouseInformation      ContactInformation?   @relation(name: "spouseInformation", fields: [spouseInformationId], references: [id], onDelete: Cascade)
+  spouseInformationId    String?               @unique
+  // Emergency Contact Relation
+  emergencyContact       ContactInformation    @relation(name: "emergencyContact", fields: [emergencyContactId], references: [id], onDelete: Cascade)
+  emergencyContactId     String                @unique
+  // Attendance
+  attendance             Attendance[]
 }
