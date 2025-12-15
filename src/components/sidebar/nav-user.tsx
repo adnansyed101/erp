@@ -9,7 +9,6 @@ import {
   Sparkles,
   User,
 } from "lucide-react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -26,7 +25,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
+import { Link } from "@tanstack/react-router"; 
 
 export function NavUser({
   user,
@@ -103,7 +102,7 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href={"/"}>
+              <Link to={"/"}>
                 <LogOut />
                 Log out
               </Link>

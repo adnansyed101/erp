@@ -7,7 +7,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
+import { Link } from "@tanstack/react-router"; 
 
 interface NavMainProps {
   label: string;
@@ -31,7 +31,7 @@ export function NavMain({ links }: { links: NavMainProps }) {
               asChild
               className="hover:font-semibold"
             >
-              <Link href={item.url}>
+              <Link to={item.url}>
                 {item.icon && <item.icon />}
                 <span>{item.title}</span>
               </Link>

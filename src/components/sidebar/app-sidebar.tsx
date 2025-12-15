@@ -9,8 +9,8 @@ import {
   SidebarMenuButton,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import Image from "next/image";
-import { Links } from "@/lib/types/types";
+import { Image } from "@unpic/react";
+import { Links } from "@/lib/types/general.types";
 
 // This is sample data.
 const user = {
