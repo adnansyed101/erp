@@ -17,8 +17,6 @@ import { useNavigate } from '@tanstack/react-router'
 // import { useRouter } from "next/navigation";
 import type { FormEvent } from 'react'
 
-console.log(Button)
-
 export default function LoginForm() {
   const navigate = useNavigate()
 
