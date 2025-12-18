@@ -44,7 +44,7 @@ function RouteComponent() {
     {
       icon: Briefcase,
       title: 'Human Resource Management System',
-      link: '/hr-management',
+      link: '/hr-management/dashboard',
     },
     {
       icon: DollarSign,
