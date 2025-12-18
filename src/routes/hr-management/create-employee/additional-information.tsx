@@ -28,10 +28,10 @@ import { AddtionalInformation } from '@/lib/types/employee.types'
 export const Route = createFileRoute(
   '/hr-management/create-employee/additional-information',
 )({
-  component: RouteComponent,
+  component: AdditonalInformationPage,
 })
 
-function RouteComponent() {
+function AdditonalInformationPage() {
   const navigate = useNavigate()
 
   const additionalInformation = useEmployeeStore(
