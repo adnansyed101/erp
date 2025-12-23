@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import { parse, set } from 'date-fns'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -29,4 +30,17 @@ export function formatError(error: any) {
       ? error.message
       : JSON.stringify(error.message)
   }
+}
+
+export function formatTime(values: string, today: Date) {
+  const parsedTime = parse(values, 'HH:mm', new Date())
+
+  const combined = set(today, {
+    hours: parsedTime.getHours(),
+    minutes: parsedTime.getMinutes(),
+    seconds: 0,
+    milliseconds: 0,
+  })
+
+  return combined
 }
