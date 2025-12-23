@@ -1,5 +1,5 @@
 [build]
-  command = "vite build"
+  command = "vite build & prisma generate"
   dir = "dist/client"
 [dev]
   command = "vite dev"
