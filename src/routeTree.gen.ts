@@ -18,6 +18,7 @@ import { Route as HrManagementDashboardRouteImport } from './routes/hr-managemen
 import { Route as HrManagementEmployeeIdRouteImport } from './routes/hr-management/$employeeId'
 import { Route as HrManagementCreateEmployeeRouteRouteImport } from './routes/hr-management/create-employee/route'
 import { Route as HrManagementCreateEmployeeSpouseInformationRouteImport } from './routes/hr-management/create-employee/spouse-information'
+import { Route as HrManagementCreateEmployeePresentAddressRouteImport } from './routes/hr-management/create-employee/present-address'
 import { Route as HrManagementCreateEmployeePersonalInformationRouteImport } from './routes/hr-management/create-employee/personal-information'
 import { Route as HrManagementCreateEmployeePermanentAddressRouteImport } from './routes/hr-management/create-employee/permanent-address'
 import { Route as HrManagementCreateEmployeeEmergencyContactRouteImport } from './routes/hr-management/create-employee/emergency-contact'
@@ -73,6 +74,12 @@ const HrManagementCreateEmployeeSpouseInformationRoute =
   HrManagementCreateEmployeeSpouseInformationRouteImport.update({
     id: '/spouse-information',
     path: '/spouse-information',
+    getParentRoute: () => HrManagementCreateEmployeeRouteRoute,
+  } as any)
+const HrManagementCreateEmployeePresentAddressRoute =
+  HrManagementCreateEmployeePresentAddressRouteImport.update({
+    id: '/present-address',
+    path: '/present-address',
     getParentRoute: () => HrManagementCreateEmployeeRouteRoute,
   } as any)
 const HrManagementCreateEmployeePersonalInformationRoute =
@@ -134,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/hr-management/create-employee/emergency-contact': typeof HrManagementCreateEmployeeEmergencyContactRoute
   '/hr-management/create-employee/permanent-address': typeof HrManagementCreateEmployeePermanentAddressRoute
   '/hr-management/create-employee/personal-information': typeof HrManagementCreateEmployeePersonalInformationRoute
+  '/hr-management/create-employee/present-address': typeof HrManagementCreateEmployeePresentAddressRoute
   '/hr-management/create-employee/spouse-information': typeof HrManagementCreateEmployeeSpouseInformationRoute
 }
 export interface FileRoutesByTo {
@@ -152,6 +160,7 @@ export interface FileRoutesByTo {
   '/hr-management/create-employee/emergency-contact': typeof HrManagementCreateEmployeeEmergencyContactRoute
   '/hr-management/create-employee/permanent-address': typeof HrManagementCreateEmployeePermanentAddressRoute
   '/hr-management/create-employee/personal-information': typeof HrManagementCreateEmployeePersonalInformationRoute
+  '/hr-management/create-employee/present-address': typeof HrManagementCreateEmployeePresentAddressRoute
   '/hr-management/create-employee/spouse-information': typeof HrManagementCreateEmployeeSpouseInformationRoute
 }
 export interface FileRoutesById {
@@ -171,6 +180,7 @@ export interface FileRoutesById {
   '/hr-management/create-employee/emergency-contact': typeof HrManagementCreateEmployeeEmergencyContactRoute
   '/hr-management/create-employee/permanent-address': typeof HrManagementCreateEmployeePermanentAddressRoute
   '/hr-management/create-employee/personal-information': typeof HrManagementCreateEmployeePersonalInformationRoute
+  '/hr-management/create-employee/present-address': typeof HrManagementCreateEmployeePresentAddressRoute
   '/hr-management/create-employee/spouse-information': typeof HrManagementCreateEmployeeSpouseInformationRoute
 }
 export interface FileRouteTypes {
@@ -191,6 +201,7 @@ export interface FileRouteTypes {
     | '/hr-management/create-employee/emergency-contact'
     | '/hr-management/create-employee/permanent-address'
     | '/hr-management/create-employee/personal-information'
+    | '/hr-management/create-employee/present-address'
     | '/hr-management/create-employee/spouse-information'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -209,6 +220,7 @@ export interface FileRouteTypes {
     | '/hr-management/create-employee/emergency-contact'
     | '/hr-management/create-employee/permanent-address'
     | '/hr-management/create-employee/personal-information'
+    | '/hr-management/create-employee/present-address'
     | '/hr-management/create-employee/spouse-information'
   id:
     | '__root__'
@@ -227,6 +239,7 @@ export interface FileRouteTypes {
     | '/hr-management/create-employee/emergency-contact'
     | '/hr-management/create-employee/permanent-address'
     | '/hr-management/create-employee/personal-information'
+    | '/hr-management/create-employee/present-address'
     | '/hr-management/create-employee/spouse-information'
   fileRoutesById: FileRoutesById
 }
@@ -303,6 +316,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HrManagementCreateEmployeeSpouseInformationRouteImport
       parentRoute: typeof HrManagementCreateEmployeeRouteRoute
     }
+    '/hr-management/create-employee/present-address': {
+      id: '/hr-management/create-employee/present-address'
+      path: '/present-address'
+      fullPath: '/hr-management/create-employee/present-address'
+      preLoaderRoute: typeof HrManagementCreateEmployeePresentAddressRouteImport
+      parentRoute: typeof HrManagementCreateEmployeeRouteRoute
+    }
     '/hr-management/create-employee/personal-information': {
       id: '/hr-management/create-employee/personal-information'
       path: '/personal-information'
@@ -361,6 +381,7 @@ interface HrManagementCreateEmployeeRouteRouteChildren {
   HrManagementCreateEmployeeEmergencyContactRoute: typeof HrManagementCreateEmployeeEmergencyContactRoute
   HrManagementCreateEmployeePermanentAddressRoute: typeof HrManagementCreateEmployeePermanentAddressRoute
   HrManagementCreateEmployeePersonalInformationRoute: typeof HrManagementCreateEmployeePersonalInformationRoute
+  HrManagementCreateEmployeePresentAddressRoute: typeof HrManagementCreateEmployeePresentAddressRoute
   HrManagementCreateEmployeeSpouseInformationRoute: typeof HrManagementCreateEmployeeSpouseInformationRoute
 }
 
@@ -376,6 +397,8 @@ const HrManagementCreateEmployeeRouteRouteChildren: HrManagementCreateEmployeeRo
       HrManagementCreateEmployeePermanentAddressRoute,
     HrManagementCreateEmployeePersonalInformationRoute:
       HrManagementCreateEmployeePersonalInformationRoute,
+    HrManagementCreateEmployeePresentAddressRoute:
+      HrManagementCreateEmployeePresentAddressRoute,
     HrManagementCreateEmployeeSpouseInformationRoute:
       HrManagementCreateEmployeeSpouseInformationRoute,
   }
