@@ -15,8 +15,7 @@ type FormState = {
 const initialFormState: Employee = {
   personalInformation: {
     fullName: "",
-    imgUrl: null,
-    image: null,
+    imageUrl: '',
     officeEmail: "",
     personalEmail: "",
     personalNumber: "",
