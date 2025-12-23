@@ -10,11 +10,30 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as HomeRouteImport } from './routes/home'
+import { Route as HrManagementRouteRouteImport } from './routes/hr-management/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HrManagementPersonalInformationManagementRouteImport } from './routes/hr-management/personal-information-management'
+import { Route as HrManagementEmployeeListRouteImport } from './routes/hr-management/employee-list'
+import { Route as HrManagementDashboardRouteImport } from './routes/hr-management/dashboard'
+import { Route as HrManagementEmployeeIdRouteImport } from './routes/hr-management/$employeeId'
+import { Route as HrManagementCreateEmployeeRouteRouteImport } from './routes/hr-management/create-employee/route'
+import { Route as HrManagementCreateEmployeeSpouseInformationRouteImport } from './routes/hr-management/create-employee/spouse-information'
+import { Route as HrManagementCreateEmployeePersonalInformationRouteImport } from './routes/hr-management/create-employee/personal-information'
+import { Route as HrManagementCreateEmployeePermanentAddressRouteImport } from './routes/hr-management/create-employee/permanent-address'
+import { Route as HrManagementCreateEmployeeEmergencyContactRouteImport } from './routes/hr-management/create-employee/emergency-contact'
+import { Route as HrManagementCreateEmployeeBankInformationRouteImport } from './routes/hr-management/create-employee/bank-information'
+import { Route as HrManagementCreateEmployeeAdditionalInformationRouteImport } from './routes/hr-management/create-employee/additional-information'
+import { Route as ApiHrManagementEmployeesRouteImport } from './routes/api/hr-management/employees'
+import { Route as ApiHrManagementEmployeeIdRouteImport } from './routes/api/hr-management/$employeeId'
 
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HrManagementRouteRoute = HrManagementRouteRouteImport.update({
+  id: '/hr-management',
+  path: '/hr-management',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -22,31 +41,201 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HrManagementPersonalInformationManagementRoute =
+  HrManagementPersonalInformationManagementRouteImport.update({
+    id: '/personal-information-management',
+    path: '/personal-information-management',
+    getParentRoute: () => HrManagementRouteRoute,
+  } as any)
+const HrManagementEmployeeListRoute =
+  HrManagementEmployeeListRouteImport.update({
+    id: '/employee-list',
+    path: '/employee-list',
+    getParentRoute: () => HrManagementRouteRoute,
+  } as any)
+const HrManagementDashboardRoute = HrManagementDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => HrManagementRouteRoute,
+} as any)
+const HrManagementEmployeeIdRoute = HrManagementEmployeeIdRouteImport.update({
+  id: '/$employeeId',
+  path: '/$employeeId',
+  getParentRoute: () => HrManagementRouteRoute,
+} as any)
+const HrManagementCreateEmployeeRouteRoute =
+  HrManagementCreateEmployeeRouteRouteImport.update({
+    id: '/create-employee',
+    path: '/create-employee',
+    getParentRoute: () => HrManagementRouteRoute,
+  } as any)
+const HrManagementCreateEmployeeSpouseInformationRoute =
+  HrManagementCreateEmployeeSpouseInformationRouteImport.update({
+    id: '/spouse-information',
+    path: '/spouse-information',
+    getParentRoute: () => HrManagementCreateEmployeeRouteRoute,
+  } as any)
+const HrManagementCreateEmployeePersonalInformationRoute =
+  HrManagementCreateEmployeePersonalInformationRouteImport.update({
+    id: '/personal-information',
+    path: '/personal-information',
+    getParentRoute: () => HrManagementCreateEmployeeRouteRoute,
+  } as any)
+const HrManagementCreateEmployeePermanentAddressRoute =
+  HrManagementCreateEmployeePermanentAddressRouteImport.update({
+    id: '/permanent-address',
+    path: '/permanent-address',
+    getParentRoute: () => HrManagementCreateEmployeeRouteRoute,
+  } as any)
+const HrManagementCreateEmployeeEmergencyContactRoute =
+  HrManagementCreateEmployeeEmergencyContactRouteImport.update({
+    id: '/emergency-contact',
+    path: '/emergency-contact',
+    getParentRoute: () => HrManagementCreateEmployeeRouteRoute,
+  } as any)
+const HrManagementCreateEmployeeBankInformationRoute =
+  HrManagementCreateEmployeeBankInformationRouteImport.update({
+    id: '/bank-information',
+    path: '/bank-information',
+    getParentRoute: () => HrManagementCreateEmployeeRouteRoute,
+  } as any)
+const HrManagementCreateEmployeeAdditionalInformationRoute =
+  HrManagementCreateEmployeeAdditionalInformationRouteImport.update({
+    id: '/additional-information',
+    path: '/additional-information',
+    getParentRoute: () => HrManagementCreateEmployeeRouteRoute,
+  } as any)
+const ApiHrManagementEmployeesRoute =
+  ApiHrManagementEmployeesRouteImport.update({
+    id: '/api/hr-management/employees',
+    path: '/api/hr-management/employees',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiHrManagementEmployeeIdRoute =
+  ApiHrManagementEmployeeIdRouteImport.update({
+    id: '/api/hr-management/$employeeId',
+    path: '/api/hr-management/$employeeId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/hr-management': typeof HrManagementRouteRouteWithChildren
   '/home': typeof HomeRoute
+  '/hr-management/create-employee': typeof HrManagementCreateEmployeeRouteRouteWithChildren
+  '/hr-management/$employeeId': typeof HrManagementEmployeeIdRoute
+  '/hr-management/dashboard': typeof HrManagementDashboardRoute
+  '/hr-management/employee-list': typeof HrManagementEmployeeListRoute
+  '/hr-management/personal-information-management': typeof HrManagementPersonalInformationManagementRoute
+  '/api/hr-management/$employeeId': typeof ApiHrManagementEmployeeIdRoute
+  '/api/hr-management/employees': typeof ApiHrManagementEmployeesRoute
+  '/hr-management/create-employee/additional-information': typeof HrManagementCreateEmployeeAdditionalInformationRoute
+  '/hr-management/create-employee/bank-information': typeof HrManagementCreateEmployeeBankInformationRoute
+  '/hr-management/create-employee/emergency-contact': typeof HrManagementCreateEmployeeEmergencyContactRoute
+  '/hr-management/create-employee/permanent-address': typeof HrManagementCreateEmployeePermanentAddressRoute
+  '/hr-management/create-employee/personal-information': typeof HrManagementCreateEmployeePersonalInformationRoute
+  '/hr-management/create-employee/spouse-information': typeof HrManagementCreateEmployeeSpouseInformationRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/hr-management': typeof HrManagementRouteRouteWithChildren
   '/home': typeof HomeRoute
+  '/hr-management/create-employee': typeof HrManagementCreateEmployeeRouteRouteWithChildren
+  '/hr-management/$employeeId': typeof HrManagementEmployeeIdRoute
+  '/hr-management/dashboard': typeof HrManagementDashboardRoute
+  '/hr-management/employee-list': typeof HrManagementEmployeeListRoute
+  '/hr-management/personal-information-management': typeof HrManagementPersonalInformationManagementRoute
+  '/api/hr-management/$employeeId': typeof ApiHrManagementEmployeeIdRoute
+  '/api/hr-management/employees': typeof ApiHrManagementEmployeesRoute
+  '/hr-management/create-employee/additional-information': typeof HrManagementCreateEmployeeAdditionalInformationRoute
+  '/hr-management/create-employee/bank-information': typeof HrManagementCreateEmployeeBankInformationRoute
+  '/hr-management/create-employee/emergency-contact': typeof HrManagementCreateEmployeeEmergencyContactRoute
+  '/hr-management/create-employee/permanent-address': typeof HrManagementCreateEmployeePermanentAddressRoute
+  '/hr-management/create-employee/personal-information': typeof HrManagementCreateEmployeePersonalInformationRoute
+  '/hr-management/create-employee/spouse-information': typeof HrManagementCreateEmployeeSpouseInformationRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/hr-management': typeof HrManagementRouteRouteWithChildren
   '/home': typeof HomeRoute
+  '/hr-management/create-employee': typeof HrManagementCreateEmployeeRouteRouteWithChildren
+  '/hr-management/$employeeId': typeof HrManagementEmployeeIdRoute
+  '/hr-management/dashboard': typeof HrManagementDashboardRoute
+  '/hr-management/employee-list': typeof HrManagementEmployeeListRoute
+  '/hr-management/personal-information-management': typeof HrManagementPersonalInformationManagementRoute
+  '/api/hr-management/$employeeId': typeof ApiHrManagementEmployeeIdRoute
+  '/api/hr-management/employees': typeof ApiHrManagementEmployeesRoute
+  '/hr-management/create-employee/additional-information': typeof HrManagementCreateEmployeeAdditionalInformationRoute
+  '/hr-management/create-employee/bank-information': typeof HrManagementCreateEmployeeBankInformationRoute
+  '/hr-management/create-employee/emergency-contact': typeof HrManagementCreateEmployeeEmergencyContactRoute
+  '/hr-management/create-employee/permanent-address': typeof HrManagementCreateEmployeePermanentAddressRoute
+  '/hr-management/create-employee/personal-information': typeof HrManagementCreateEmployeePersonalInformationRoute
+  '/hr-management/create-employee/spouse-information': typeof HrManagementCreateEmployeeSpouseInformationRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/home'
+  fullPaths:
+    | '/'
+    | '/hr-management'
+    | '/home'
+    | '/hr-management/create-employee'
+    | '/hr-management/$employeeId'
+    | '/hr-management/dashboard'
+    | '/hr-management/employee-list'
+    | '/hr-management/personal-information-management'
+    | '/api/hr-management/$employeeId'
+    | '/api/hr-management/employees'
+    | '/hr-management/create-employee/additional-information'
+    | '/hr-management/create-employee/bank-information'
+    | '/hr-management/create-employee/emergency-contact'
+    | '/hr-management/create-employee/permanent-address'
+    | '/hr-management/create-employee/personal-information'
+    | '/hr-management/create-employee/spouse-information'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/home'
-  id: '__root__' | '/' | '/home'
+  to:
+    | '/'
+    | '/hr-management'
+    | '/home'
+    | '/hr-management/create-employee'
+    | '/hr-management/$employeeId'
+    | '/hr-management/dashboard'
+    | '/hr-management/employee-list'
+    | '/hr-management/personal-information-management'
+    | '/api/hr-management/$employeeId'
+    | '/api/hr-management/employees'
+    | '/hr-management/create-employee/additional-information'
+    | '/hr-management/create-employee/bank-information'
+    | '/hr-management/create-employee/emergency-contact'
+    | '/hr-management/create-employee/permanent-address'
+    | '/hr-management/create-employee/personal-information'
+    | '/hr-management/create-employee/spouse-information'
+  id:
+    | '__root__'
+    | '/'
+    | '/hr-management'
+    | '/home'
+    | '/hr-management/create-employee'
+    | '/hr-management/$employeeId'
+    | '/hr-management/dashboard'
+    | '/hr-management/employee-list'
+    | '/hr-management/personal-information-management'
+    | '/api/hr-management/$employeeId'
+    | '/api/hr-management/employees'
+    | '/hr-management/create-employee/additional-information'
+    | '/hr-management/create-employee/bank-information'
+    | '/hr-management/create-employee/emergency-contact'
+    | '/hr-management/create-employee/permanent-address'
+    | '/hr-management/create-employee/personal-information'
+    | '/hr-management/create-employee/spouse-information'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HrManagementRouteRoute: typeof HrManagementRouteRouteWithChildren
   HomeRoute: typeof HomeRoute
+  ApiHrManagementEmployeeIdRoute: typeof ApiHrManagementEmployeeIdRoute
+  ApiHrManagementEmployeesRoute: typeof ApiHrManagementEmployeesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +247,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hr-management': {
+      id: '/hr-management'
+      path: '/hr-management'
+      fullPath: '/hr-management'
+      preLoaderRoute: typeof HrManagementRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -65,12 +261,157 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hr-management/personal-information-management': {
+      id: '/hr-management/personal-information-management'
+      path: '/personal-information-management'
+      fullPath: '/hr-management/personal-information-management'
+      preLoaderRoute: typeof HrManagementPersonalInformationManagementRouteImport
+      parentRoute: typeof HrManagementRouteRoute
+    }
+    '/hr-management/employee-list': {
+      id: '/hr-management/employee-list'
+      path: '/employee-list'
+      fullPath: '/hr-management/employee-list'
+      preLoaderRoute: typeof HrManagementEmployeeListRouteImport
+      parentRoute: typeof HrManagementRouteRoute
+    }
+    '/hr-management/dashboard': {
+      id: '/hr-management/dashboard'
+      path: '/dashboard'
+      fullPath: '/hr-management/dashboard'
+      preLoaderRoute: typeof HrManagementDashboardRouteImport
+      parentRoute: typeof HrManagementRouteRoute
+    }
+    '/hr-management/$employeeId': {
+      id: '/hr-management/$employeeId'
+      path: '/$employeeId'
+      fullPath: '/hr-management/$employeeId'
+      preLoaderRoute: typeof HrManagementEmployeeIdRouteImport
+      parentRoute: typeof HrManagementRouteRoute
+    }
+    '/hr-management/create-employee': {
+      id: '/hr-management/create-employee'
+      path: '/create-employee'
+      fullPath: '/hr-management/create-employee'
+      preLoaderRoute: typeof HrManagementCreateEmployeeRouteRouteImport
+      parentRoute: typeof HrManagementRouteRoute
+    }
+    '/hr-management/create-employee/spouse-information': {
+      id: '/hr-management/create-employee/spouse-information'
+      path: '/spouse-information'
+      fullPath: '/hr-management/create-employee/spouse-information'
+      preLoaderRoute: typeof HrManagementCreateEmployeeSpouseInformationRouteImport
+      parentRoute: typeof HrManagementCreateEmployeeRouteRoute
+    }
+    '/hr-management/create-employee/personal-information': {
+      id: '/hr-management/create-employee/personal-information'
+      path: '/personal-information'
+      fullPath: '/hr-management/create-employee/personal-information'
+      preLoaderRoute: typeof HrManagementCreateEmployeePersonalInformationRouteImport
+      parentRoute: typeof HrManagementCreateEmployeeRouteRoute
+    }
+    '/hr-management/create-employee/permanent-address': {
+      id: '/hr-management/create-employee/permanent-address'
+      path: '/permanent-address'
+      fullPath: '/hr-management/create-employee/permanent-address'
+      preLoaderRoute: typeof HrManagementCreateEmployeePermanentAddressRouteImport
+      parentRoute: typeof HrManagementCreateEmployeeRouteRoute
+    }
+    '/hr-management/create-employee/emergency-contact': {
+      id: '/hr-management/create-employee/emergency-contact'
+      path: '/emergency-contact'
+      fullPath: '/hr-management/create-employee/emergency-contact'
+      preLoaderRoute: typeof HrManagementCreateEmployeeEmergencyContactRouteImport
+      parentRoute: typeof HrManagementCreateEmployeeRouteRoute
+    }
+    '/hr-management/create-employee/bank-information': {
+      id: '/hr-management/create-employee/bank-information'
+      path: '/bank-information'
+      fullPath: '/hr-management/create-employee/bank-information'
+      preLoaderRoute: typeof HrManagementCreateEmployeeBankInformationRouteImport
+      parentRoute: typeof HrManagementCreateEmployeeRouteRoute
+    }
+    '/hr-management/create-employee/additional-information': {
+      id: '/hr-management/create-employee/additional-information'
+      path: '/additional-information'
+      fullPath: '/hr-management/create-employee/additional-information'
+      preLoaderRoute: typeof HrManagementCreateEmployeeAdditionalInformationRouteImport
+      parentRoute: typeof HrManagementCreateEmployeeRouteRoute
+    }
+    '/api/hr-management/employees': {
+      id: '/api/hr-management/employees'
+      path: '/api/hr-management/employees'
+      fullPath: '/api/hr-management/employees'
+      preLoaderRoute: typeof ApiHrManagementEmployeesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/hr-management/$employeeId': {
+      id: '/api/hr-management/$employeeId'
+      path: '/api/hr-management/$employeeId'
+      fullPath: '/api/hr-management/$employeeId'
+      preLoaderRoute: typeof ApiHrManagementEmployeeIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface HrManagementCreateEmployeeRouteRouteChildren {
+  HrManagementCreateEmployeeAdditionalInformationRoute: typeof HrManagementCreateEmployeeAdditionalInformationRoute
+  HrManagementCreateEmployeeBankInformationRoute: typeof HrManagementCreateEmployeeBankInformationRoute
+  HrManagementCreateEmployeeEmergencyContactRoute: typeof HrManagementCreateEmployeeEmergencyContactRoute
+  HrManagementCreateEmployeePermanentAddressRoute: typeof HrManagementCreateEmployeePermanentAddressRoute
+  HrManagementCreateEmployeePersonalInformationRoute: typeof HrManagementCreateEmployeePersonalInformationRoute
+  HrManagementCreateEmployeeSpouseInformationRoute: typeof HrManagementCreateEmployeeSpouseInformationRoute
+}
+
+const HrManagementCreateEmployeeRouteRouteChildren: HrManagementCreateEmployeeRouteRouteChildren =
+  {
+    HrManagementCreateEmployeeAdditionalInformationRoute:
+      HrManagementCreateEmployeeAdditionalInformationRoute,
+    HrManagementCreateEmployeeBankInformationRoute:
+      HrManagementCreateEmployeeBankInformationRoute,
+    HrManagementCreateEmployeeEmergencyContactRoute:
+      HrManagementCreateEmployeeEmergencyContactRoute,
+    HrManagementCreateEmployeePermanentAddressRoute:
+      HrManagementCreateEmployeePermanentAddressRoute,
+    HrManagementCreateEmployeePersonalInformationRoute:
+      HrManagementCreateEmployeePersonalInformationRoute,
+    HrManagementCreateEmployeeSpouseInformationRoute:
+      HrManagementCreateEmployeeSpouseInformationRoute,
+  }
+
+const HrManagementCreateEmployeeRouteRouteWithChildren =
+  HrManagementCreateEmployeeRouteRoute._addFileChildren(
+    HrManagementCreateEmployeeRouteRouteChildren,
+  )
+
+interface HrManagementRouteRouteChildren {
+  HrManagementCreateEmployeeRouteRoute: typeof HrManagementCreateEmployeeRouteRouteWithChildren
+  HrManagementEmployeeIdRoute: typeof HrManagementEmployeeIdRoute
+  HrManagementDashboardRoute: typeof HrManagementDashboardRoute
+  HrManagementEmployeeListRoute: typeof HrManagementEmployeeListRoute
+  HrManagementPersonalInformationManagementRoute: typeof HrManagementPersonalInformationManagementRoute
+}
+
+const HrManagementRouteRouteChildren: HrManagementRouteRouteChildren = {
+  HrManagementCreateEmployeeRouteRoute:
+    HrManagementCreateEmployeeRouteRouteWithChildren,
+  HrManagementEmployeeIdRoute: HrManagementEmployeeIdRoute,
+  HrManagementDashboardRoute: HrManagementDashboardRoute,
+  HrManagementEmployeeListRoute: HrManagementEmployeeListRoute,
+  HrManagementPersonalInformationManagementRoute:
+    HrManagementPersonalInformationManagementRoute,
+}
+
+const HrManagementRouteRouteWithChildren =
+  HrManagementRouteRoute._addFileChildren(HrManagementRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HrManagementRouteRoute: HrManagementRouteRouteWithChildren,
   HomeRoute: HomeRoute,
+  ApiHrManagementEmployeeIdRoute: ApiHrManagementEmployeeIdRoute,
+  ApiHrManagementEmployeesRoute: ApiHrManagementEmployeesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
