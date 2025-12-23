@@ -2,8 +2,8 @@ import z from 'zod'
 
 export const PersonalInformationSchema = z.object({
   fullName: z.string().min(2, 'At least 2 characters are needed.'),
-  imgUrl: z.string().nullable(),
-  image: z.instanceof(File, { message: 'Image is required' }).nullable(),
+  imageUrl: z.url().min(1, 'Image URL is required.'),
+  // image: z.instanceof(File, { message: 'Image is required' }).nullable(),
   officeEmail: z.email(),
   personalEmail: z.email(),
   personalNumber: z.string().min(2, 'Personal Phone Number is required.'),
