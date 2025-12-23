@@ -15,6 +15,7 @@ import { Employee } from '@/lib/types/employee.types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Dispatch, SetStateAction } from 'react'
 import { toast } from 'sonner'
+import { useNavigate } from '@tanstack/react-router'
 
 type ConfirmationModalProps = {
   setIsConfirmed: Dispatch<SetStateAction<boolean>>
@@ -27,7 +28,7 @@ const ConfirmationModal = ({
 }: ConfirmationModalProps) => {
   const employeeData = useEmployeeStore((state) => state.formData)
   const queryClient = useQueryClient()
-  console.log(employeeData)
+  const navigate = useNavigate()
 
   const { mutate } = useMutation({
     mutationKey: ['employees'],
@@ -65,7 +66,7 @@ const ConfirmationModal = ({
     useEmployeeStore.setState(useEmployeeStore.getInitialState())
     setIsConfirmed(false)
 
-    // return navigate({ to: '/hr-management/employee-list' })
+    return navigate({ to: '/hr-management/employee-list' })
   }
 
   return (
