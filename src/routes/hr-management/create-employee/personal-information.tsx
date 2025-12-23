@@ -18,12 +18,12 @@ import {
 } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
+import { Card,  CardTitle } from '@/components/ui/card'
 import CreateEmployeeSteps from '@/components/create-employee/create-employee-steps'
 import { PersonalInformation } from '@/lib/types/employee.types'
 import { useEmployeeStore } from '@/stores/employee.store'
 import { Input } from '@/components/ui/input'
-import { Image } from '@unpic/react'
+// import { Image } from '@unpic/react'
 import { PersonalInformationSchema } from '@/lib/validators/employee.validator'
 
 export const Route = createFileRoute(
@@ -46,8 +46,7 @@ function PersonalInformationPage() {
     resolver: zodResolver(PersonalInformationSchema),
     defaultValues: {
       fullName: employeeData.fullName || '',
-      image: employeeData.image || null,
-      imgUrl: null,
+      imageUrl: employeeData.imageUrl || '',
       officeEmail: employeeData.officeEmail || '',
       personalEmail: employeeData.personalEmail || '',
       officeNumber: employeeData.officeNumber || '',
@@ -73,7 +72,7 @@ function PersonalInformationPage() {
     })
   }
 
-  const image = form.watch('image')
+  // const image = form.watch('imgUrl')
 
   return (
     <div className="flex flex-col md:flex-row gap-2">
@@ -89,6 +88,20 @@ function PersonalInformationPage() {
             className="space-y-2 lg:space-y-6"
           >
             <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+              {/* Full Name Input */}
+              <FormField
+                control={form.control}
+                name="imageUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Image URL</FormLabel>
+                    <FormControl>
+                      <Input placeholder="https://example.com/image.jpg" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               {/* Full Name Input */}
               <FormField
                 control={form.control}
@@ -373,55 +386,7 @@ function PersonalInformationPage() {
                 )}
               />
             </div>
-            <div className="upload-field flex flex-col md:flex-row gap-5">
-              {/* Images */}
-              <FormField
-                control={form.control}
-                name="image"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel>Image</FormLabel>
-                    <Card>
-                      <CardContent className="space-y-2 mt-2 min-h-48">
-                        <div className="flex-start space-x-2">
-                          {image ? (
-                            <div className="flex flex-col gap-2 items-start">
-                              <Image
-                                src={URL.createObjectURL(image)}
-                                alt="Employee Image"
-                                className="w-40 h-40 object-cover object-center rounded-sm "
-                                width={100}
-                                height={100}
-                              />
-                              <Button
-                                size="sm"
-                                onClick={() => form.setValue('image', null)}
-                              >
-                                Remove Image
-                              </Button>
-                            </div>
-                          ) : (
-                            <FormControl>
-                              <Input
-                                type="file"
-                                onChange={(e) => {
-                                  const file = e.target.files?.[0]
-                                  field.onChange(file)
-                                }}
-                                onBlur={field.onBlur}
-                                name={field.name}
-                                ref={field.ref}
-                              />
-                            </FormControl>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+           
 
             <FormField
               control={form.control}
