@@ -32,7 +32,7 @@ export function EmployeeCard({
             alt={fullName}
             className="w-full object-fit rounded-t-2xl absolute"
             height={240}
-            width={200}
+            layout="fullWidth"
           />
         </div>
       </CardHeader>
