@@ -376,7 +376,7 @@ function RouteComponent() {
                             Division
                           </p>
                           <p className="text-lg font-semibold">
-                            {employee.data.permanentAddress?.division}
+                            {employee.data.permanentAddress.division}
                           </p>
                         </div>
                         <div>
@@ -384,7 +384,7 @@ function RouteComponent() {
                             District
                           </p>
                           <p className="text-lg font-semibold">
-                            {employee.data.permanentAddress?.district}
+                            {employee.data.permanentAddress.district}
                           </p>
                         </div>
                         <div>
@@ -392,7 +392,7 @@ function RouteComponent() {
                             Upazila/Thana
                           </p>
                           <p className="text-lg font-semibold">
-                            {employee.data.permanentAddress?.upazilaOrThana}
+                            {employee.data.permanentAddress.upazilaOrThana}
                           </p>
                         </div>
                         <div>
@@ -400,7 +400,7 @@ function RouteComponent() {
                             Post Office
                           </p>
                           <p className="text-lg font-semibold">
-                            {employee.data.permanentAddress?.postOffice}
+                            {employee.data.permanentAddress.postOffice}
                           </p>
                         </div>
                         <div>
@@ -408,7 +408,7 @@ function RouteComponent() {
                             Post Code
                           </p>
                           <p className="text-lg font-semibold">
-                            {employee.data.permanentAddress?.postCode}
+                            {employee.data.permanentAddress.postCode}
                           </p>
                         </div>
                         <div>
@@ -416,7 +416,7 @@ function RouteComponent() {
                             House No./Village
                           </p>
                           <p className="text-lg font-semibold">
-                            {employee.data.permanentAddress?.houseNoOrVillage}
+                            {employee.data.permanentAddress.houseNoOrVillage}
                           </p>
                         </div>
                         <div>
@@ -424,7 +424,7 @@ function RouteComponent() {
                             Road No.
                           </p>
                           <p className="text-lg font-semibold">
-                            {employee.data.permanentAddress?.roadNo || 'N/A'}
+                            {employee.data.permanentAddress.roadNo || 'N/A'}
                           </p>
                         </div>
                         <div>
