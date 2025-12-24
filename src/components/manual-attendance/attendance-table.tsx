@@ -51,8 +51,6 @@ export function AttendanceTable() {
     },
   })
 
-  console.log('Attendances:', attendances)
-
   // Create new attendance
   const { mutate } = useMutation({
     mutationKey: ['employee-checkout'],
