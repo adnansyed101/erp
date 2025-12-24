@@ -3,21 +3,51 @@ import { createFileRoute } from '@tanstack/react-router'
 // import { createClient } from '@supabase/supabase-js'
 import { Employee } from '@/lib/types/employee.types'
 import { prisma } from '@/db'
+import z from 'zod'
 
 // const apiKey = process.env.SUPABASE_API_KEY ? process.env.SUPABASE_API_KEY : ''
 
 // const supabase = createClient('http://localhost:3000/', apiKey)
 
+const employeesSearchSchema = z.object({
+  limit: z.number(),
+  search: z.string(),
+})
+
 export const Route = createFileRoute('/api/hr-management/employees')({
+  validateSearch: (search) => employeesSearchSchema.parse(search),
   server: {
     handlers: {
-      GET: async () => {
+      GET: async ({ request }) => {
+        const { searchParams } = new URL(request.url)
+        const limit = Number(searchParams.get('limit'))
+        const search = searchParams.get('search') || ''
+
         try {
-          const employees = await prisma.employee.findMany({
-            include: {
-              personalInformation: true,
-            },
-          })
+          let employees = []
+          if (searchParams.get('limit')) {
+            employees = await prisma.employee.findMany({
+              where: {
+                personalInformation: {
+                  fullName: {
+                    contains: search,
+                    mode: 'insensitive',
+                  },
+                },
+              },
+              include: {
+                personalInformation: true,
+              },
+              take: limit,
+            })
+            console.log('Employees with search:', employees)
+          } else {
+            employees = await prisma.employee.findMany({
+              include: {
+                personalInformation: true,
+              },
+            })
+          }
 
           return Response.json({
             success: true,
