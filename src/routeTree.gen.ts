@@ -24,7 +24,10 @@ import { Route as HrManagementCreateEmployeePermanentAddressRouteImport } from '
 import { Route as HrManagementCreateEmployeeEmergencyContactRouteImport } from './routes/hr-management/create-employee/emergency-contact'
 import { Route as HrManagementCreateEmployeeBankInformationRouteImport } from './routes/hr-management/create-employee/bank-information'
 import { Route as HrManagementCreateEmployeeAdditionalInformationRouteImport } from './routes/hr-management/create-employee/additional-information'
+import { Route as HrManagementAttendanceManualAttendanceRouteImport } from './routes/hr-management/attendance/manual-attendance'
+import { Route as HrManagementAttendanceAttendanceManagementRouteImport } from './routes/hr-management/attendance/attendance-management'
 import { Route as ApiHrManagementEmployeesRouteImport } from './routes/api/hr-management/employees'
+import { Route as ApiHrManagementAttendanceRouteImport } from './routes/api/hr-management/attendance'
 import { Route as ApiHrManagementEmployeeIdRouteImport } from './routes/api/hr-management/$employeeId'
 
 const HomeRoute = HomeRouteImport.update({
@@ -112,10 +115,28 @@ const HrManagementCreateEmployeeAdditionalInformationRoute =
     path: '/additional-information',
     getParentRoute: () => HrManagementCreateEmployeeRouteRoute,
   } as any)
+const HrManagementAttendanceManualAttendanceRoute =
+  HrManagementAttendanceManualAttendanceRouteImport.update({
+    id: '/attendance/manual-attendance',
+    path: '/attendance/manual-attendance',
+    getParentRoute: () => HrManagementRouteRoute,
+  } as any)
+const HrManagementAttendanceAttendanceManagementRoute =
+  HrManagementAttendanceAttendanceManagementRouteImport.update({
+    id: '/attendance/attendance-management',
+    path: '/attendance/attendance-management',
+    getParentRoute: () => HrManagementRouteRoute,
+  } as any)
 const ApiHrManagementEmployeesRoute =
   ApiHrManagementEmployeesRouteImport.update({
     id: '/api/hr-management/employees',
     path: '/api/hr-management/employees',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiHrManagementAttendanceRoute =
+  ApiHrManagementAttendanceRouteImport.update({
+    id: '/api/hr-management/attendance',
+    path: '/api/hr-management/attendance',
     getParentRoute: () => rootRouteImport,
   } as any)
 const ApiHrManagementEmployeeIdRoute =
@@ -135,7 +156,10 @@ export interface FileRoutesByFullPath {
   '/hr-management/employee-list': typeof HrManagementEmployeeListRoute
   '/hr-management/personal-information-management': typeof HrManagementPersonalInformationManagementRoute
   '/api/hr-management/$employeeId': typeof ApiHrManagementEmployeeIdRoute
+  '/api/hr-management/attendance': typeof ApiHrManagementAttendanceRoute
   '/api/hr-management/employees': typeof ApiHrManagementEmployeesRoute
+  '/hr-management/attendance/attendance-management': typeof HrManagementAttendanceAttendanceManagementRoute
+  '/hr-management/attendance/manual-attendance': typeof HrManagementAttendanceManualAttendanceRoute
   '/hr-management/create-employee/additional-information': typeof HrManagementCreateEmployeeAdditionalInformationRoute
   '/hr-management/create-employee/bank-information': typeof HrManagementCreateEmployeeBankInformationRoute
   '/hr-management/create-employee/emergency-contact': typeof HrManagementCreateEmployeeEmergencyContactRoute
@@ -154,7 +178,10 @@ export interface FileRoutesByTo {
   '/hr-management/employee-list': typeof HrManagementEmployeeListRoute
   '/hr-management/personal-information-management': typeof HrManagementPersonalInformationManagementRoute
   '/api/hr-management/$employeeId': typeof ApiHrManagementEmployeeIdRoute
+  '/api/hr-management/attendance': typeof ApiHrManagementAttendanceRoute
   '/api/hr-management/employees': typeof ApiHrManagementEmployeesRoute
+  '/hr-management/attendance/attendance-management': typeof HrManagementAttendanceAttendanceManagementRoute
+  '/hr-management/attendance/manual-attendance': typeof HrManagementAttendanceManualAttendanceRoute
   '/hr-management/create-employee/additional-information': typeof HrManagementCreateEmployeeAdditionalInformationRoute
   '/hr-management/create-employee/bank-information': typeof HrManagementCreateEmployeeBankInformationRoute
   '/hr-management/create-employee/emergency-contact': typeof HrManagementCreateEmployeeEmergencyContactRoute
@@ -174,7 +201,10 @@ export interface FileRoutesById {
   '/hr-management/employee-list': typeof HrManagementEmployeeListRoute
   '/hr-management/personal-information-management': typeof HrManagementPersonalInformationManagementRoute
   '/api/hr-management/$employeeId': typeof ApiHrManagementEmployeeIdRoute
+  '/api/hr-management/attendance': typeof ApiHrManagementAttendanceRoute
   '/api/hr-management/employees': typeof ApiHrManagementEmployeesRoute
+  '/hr-management/attendance/attendance-management': typeof HrManagementAttendanceAttendanceManagementRoute
+  '/hr-management/attendance/manual-attendance': typeof HrManagementAttendanceManualAttendanceRoute
   '/hr-management/create-employee/additional-information': typeof HrManagementCreateEmployeeAdditionalInformationRoute
   '/hr-management/create-employee/bank-information': typeof HrManagementCreateEmployeeBankInformationRoute
   '/hr-management/create-employee/emergency-contact': typeof HrManagementCreateEmployeeEmergencyContactRoute
@@ -195,7 +225,10 @@ export interface FileRouteTypes {
     | '/hr-management/employee-list'
     | '/hr-management/personal-information-management'
     | '/api/hr-management/$employeeId'
+    | '/api/hr-management/attendance'
     | '/api/hr-management/employees'
+    | '/hr-management/attendance/attendance-management'
+    | '/hr-management/attendance/manual-attendance'
     | '/hr-management/create-employee/additional-information'
     | '/hr-management/create-employee/bank-information'
     | '/hr-management/create-employee/emergency-contact'
@@ -214,7 +247,10 @@ export interface FileRouteTypes {
     | '/hr-management/employee-list'
     | '/hr-management/personal-information-management'
     | '/api/hr-management/$employeeId'
+    | '/api/hr-management/attendance'
     | '/api/hr-management/employees'
+    | '/hr-management/attendance/attendance-management'
+    | '/hr-management/attendance/manual-attendance'
     | '/hr-management/create-employee/additional-information'
     | '/hr-management/create-employee/bank-information'
     | '/hr-management/create-employee/emergency-contact'
@@ -233,7 +269,10 @@ export interface FileRouteTypes {
     | '/hr-management/employee-list'
     | '/hr-management/personal-information-management'
     | '/api/hr-management/$employeeId'
+    | '/api/hr-management/attendance'
     | '/api/hr-management/employees'
+    | '/hr-management/attendance/attendance-management'
+    | '/hr-management/attendance/manual-attendance'
     | '/hr-management/create-employee/additional-information'
     | '/hr-management/create-employee/bank-information'
     | '/hr-management/create-employee/emergency-contact'
@@ -248,6 +287,7 @@ export interface RootRouteChildren {
   HrManagementRouteRoute: typeof HrManagementRouteRouteWithChildren
   HomeRoute: typeof HomeRoute
   ApiHrManagementEmployeeIdRoute: typeof ApiHrManagementEmployeeIdRoute
+  ApiHrManagementAttendanceRoute: typeof ApiHrManagementAttendanceRoute
   ApiHrManagementEmployeesRoute: typeof ApiHrManagementEmployeesRoute
 }
 
@@ -358,11 +398,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HrManagementCreateEmployeeAdditionalInformationRouteImport
       parentRoute: typeof HrManagementCreateEmployeeRouteRoute
     }
+    '/hr-management/attendance/manual-attendance': {
+      id: '/hr-management/attendance/manual-attendance'
+      path: '/attendance/manual-attendance'
+      fullPath: '/hr-management/attendance/manual-attendance'
+      preLoaderRoute: typeof HrManagementAttendanceManualAttendanceRouteImport
+      parentRoute: typeof HrManagementRouteRoute
+    }
+    '/hr-management/attendance/attendance-management': {
+      id: '/hr-management/attendance/attendance-management'
+      path: '/attendance/attendance-management'
+      fullPath: '/hr-management/attendance/attendance-management'
+      preLoaderRoute: typeof HrManagementAttendanceAttendanceManagementRouteImport
+      parentRoute: typeof HrManagementRouteRoute
+    }
     '/api/hr-management/employees': {
       id: '/api/hr-management/employees'
       path: '/api/hr-management/employees'
       fullPath: '/api/hr-management/employees'
       preLoaderRoute: typeof ApiHrManagementEmployeesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/hr-management/attendance': {
+      id: '/api/hr-management/attendance'
+      path: '/api/hr-management/attendance'
+      fullPath: '/api/hr-management/attendance'
+      preLoaderRoute: typeof ApiHrManagementAttendanceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/hr-management/$employeeId': {
@@ -414,6 +475,8 @@ interface HrManagementRouteRouteChildren {
   HrManagementDashboardRoute: typeof HrManagementDashboardRoute
   HrManagementEmployeeListRoute: typeof HrManagementEmployeeListRoute
   HrManagementPersonalInformationManagementRoute: typeof HrManagementPersonalInformationManagementRoute
+  HrManagementAttendanceAttendanceManagementRoute: typeof HrManagementAttendanceAttendanceManagementRoute
+  HrManagementAttendanceManualAttendanceRoute: typeof HrManagementAttendanceManualAttendanceRoute
 }
 
 const HrManagementRouteRouteChildren: HrManagementRouteRouteChildren = {
@@ -424,6 +487,10 @@ const HrManagementRouteRouteChildren: HrManagementRouteRouteChildren = {
   HrManagementEmployeeListRoute: HrManagementEmployeeListRoute,
   HrManagementPersonalInformationManagementRoute:
     HrManagementPersonalInformationManagementRoute,
+  HrManagementAttendanceAttendanceManagementRoute:
+    HrManagementAttendanceAttendanceManagementRoute,
+  HrManagementAttendanceManualAttendanceRoute:
+    HrManagementAttendanceManualAttendanceRoute,
 }
 
 const HrManagementRouteRouteWithChildren =
@@ -434,6 +501,7 @@ const rootRouteChildren: RootRouteChildren = {
   HrManagementRouteRoute: HrManagementRouteRouteWithChildren,
   HomeRoute: HomeRoute,
   ApiHrManagementEmployeeIdRoute: ApiHrManagementEmployeeIdRoute,
+  ApiHrManagementAttendanceRoute: ApiHrManagementAttendanceRoute,
   ApiHrManagementEmployeesRoute: ApiHrManagementEmployeesRoute,
 }
 export const routeTree = rootRouteImport
