@@ -27,7 +27,7 @@ export const Route = createFileRoute(
 function PermanentInformationPage() {
   const navigate = useNavigate()
   const employeeData = useEmployeeStore(
-    (state) => state.formData.presentAddress,
+    (state) => state.formData.permanentAddress,
   )
   const updateFormData = useEmployeeStore((state) => state.updateFormData)
 
@@ -48,14 +48,14 @@ function PermanentInformationPage() {
   const onSubmit = (data: PermanentAddress) => {
     updateFormData('presentAddress', data)
 
-    return navigate({ to: '/hr-management/create-employee/spouse-information' })
+    return navigate({ to: '/hr-management/create-employee/present-address' })
   }
   return (
     <div className="flex flex-col md:flex-row gap-2">
       <CreateEmployeeSteps current={3} />
       <Card className="px-4 flex-1">
         <CardTitle className="text-2xl font-semibold">
-          Present Address
+          Permanent Address
         </CardTitle>
         <Form {...form}>
           <form
