@@ -29,7 +29,7 @@ function RouteComponent() {
         },
         {
           title: 'Attendance',
-          url: '/hr-management/attendance-management',
+          url: '/hr-management/attendance/attendance-management',
           icon: ListCheck,
         },
       ],
