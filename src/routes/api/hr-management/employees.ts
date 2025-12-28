@@ -40,7 +40,6 @@ export const Route = createFileRoute('/api/hr-management/employees')({
               },
               take: limit,
             })
-            console.log('Employees with search:', employees)
           } else {
             employees = await prisma.employee.findMany({
               include: {
