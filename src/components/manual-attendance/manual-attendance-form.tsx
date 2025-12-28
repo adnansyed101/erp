@@ -26,6 +26,7 @@ import { Attendance } from '@/lib/types/attendance.type'
 import { toast } from 'sonner'
 import { formatTime } from '@/lib/utils'
 import { useState } from 'react'
+import useDebounce from '@/hooks/useDebouncer'
 
 const attendanceSchema = z.object({
   employeeId: z.string().min(1, 'Employee name is required'),
@@ -46,6 +47,7 @@ type ResponseType = {
 export function ManualAttendanceForm() {
   const queryClient = useQueryClient()
   const [search, setSearch] = useState('')
+  const debouncedSearch = useDebounce(search, 300)
   // Create the form
   const form = useForm<AttendanceFormData>({
     resolver: zodResolver(attendanceSchema),
@@ -60,10 +62,10 @@ export function ManualAttendanceForm() {
 
   // Get the attendances
   const { data: employees, isLoading } = useQuery({
-    queryKey: ['employees-search', search],
+    queryKey: ['employees-search', debouncedSearch],
     queryFn: async (): Promise<ResponseType> => {
       const response = await fetch(
-        `/api/hr-management/employees?limit=5&search=${search}`,
+        `/api/hr-management/employees?limit=5&search=${debouncedSearch}`,
       )
       if (!response.ok) throw new Error('Failed to fetch employees')
       return response.json()
@@ -130,7 +132,7 @@ export function ManualAttendanceForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         {/* Action Buttons */}
-        <div className="flex gap-2">
+        {/* <div className="flex gap-2">
           <Button variant="secondary" className="bg-slate-600 text-white gap-2">
             <LogIn className="w-4 h-4" /> Log In Time
           </Button>
@@ -140,7 +142,7 @@ export function ManualAttendanceForm() {
           <Button className="bg-cyan-500 text-white gap-2">
             <Clock className="w-4 h-4" /> Both Time
           </Button>
-        </div>
+        </div> */}
 
         {/* Employee Name */}
         <FormField
