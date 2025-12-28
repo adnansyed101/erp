@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { format } from 'date-fns'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { EmployeeWithId } from '@/lib/types/employee.types'
-import { LogIn, LogOut, Clock, ChevronDownIcon } from 'lucide-react'
+import { ChevronDownIcon } from 'lucide-react'
 import {
   Form,
   FormField,
