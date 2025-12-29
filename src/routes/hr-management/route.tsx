@@ -1,7 +1,7 @@
 import { Links } from '@/lib/types/general.types'
 import MainLayout from '@/providers/main-layout'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
-import { Home, ListCheck, Logs, User } from 'lucide-react'
+import { ArrowLeftToLine, Home, ListCheck, Logs, User } from 'lucide-react'
 
 export const Route = createFileRoute('/hr-management')({
   component: RouteComponent,
@@ -23,14 +23,19 @@ function RouteComponent() {
           icon: Logs,
         },
         {
-          title: 'Personal Information',
+          title: 'Personal Information Management',
           url: '/hr-management/personal-information-management',
           icon: User,
         },
         {
-          title: 'Attendance',
+          title: 'Attendance Management',
           url: '/hr-management/attendance/attendance-management',
           icon: ListCheck,
+        },
+        {
+          title: 'Leave Management',
+          url: '/hr-management/leave/leave-management',
+          icon: ArrowLeftToLine,
         },
       ],
     },
