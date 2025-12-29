@@ -17,6 +17,8 @@ import { Route as HrManagementEmployeeListRouteImport } from './routes/hr-manage
 import { Route as HrManagementDashboardRouteImport } from './routes/hr-management/dashboard'
 import { Route as HrManagementEmployeeIdRouteImport } from './routes/hr-management/$employeeId'
 import { Route as HrManagementCreateEmployeeRouteRouteImport } from './routes/hr-management/create-employee/route'
+import { Route as HrManagementLeaveLeaveManagementRouteImport } from './routes/hr-management/leave/leave-management'
+import { Route as HrManagementLeaveApplyLeaveRouteImport } from './routes/hr-management/leave/apply-leave'
 import { Route as HrManagementCreateEmployeeSpouseInformationRouteImport } from './routes/hr-management/create-employee/spouse-information'
 import { Route as HrManagementCreateEmployeePresentAddressRouteImport } from './routes/hr-management/create-employee/present-address'
 import { Route as HrManagementCreateEmployeePersonalInformationRouteImport } from './routes/hr-management/create-employee/personal-information'
@@ -71,6 +73,18 @@ const HrManagementCreateEmployeeRouteRoute =
   HrManagementCreateEmployeeRouteRouteImport.update({
     id: '/create-employee',
     path: '/create-employee',
+    getParentRoute: () => HrManagementRouteRoute,
+  } as any)
+const HrManagementLeaveLeaveManagementRoute =
+  HrManagementLeaveLeaveManagementRouteImport.update({
+    id: '/leave/leave-management',
+    path: '/leave/leave-management',
+    getParentRoute: () => HrManagementRouteRoute,
+  } as any)
+const HrManagementLeaveApplyLeaveRoute =
+  HrManagementLeaveApplyLeaveRouteImport.update({
+    id: '/leave/apply-leave',
+    path: '/leave/apply-leave',
     getParentRoute: () => HrManagementRouteRoute,
   } as any)
 const HrManagementCreateEmployeeSpouseInformationRoute =
@@ -167,6 +181,8 @@ export interface FileRoutesByFullPath {
   '/hr-management/create-employee/personal-information': typeof HrManagementCreateEmployeePersonalInformationRoute
   '/hr-management/create-employee/present-address': typeof HrManagementCreateEmployeePresentAddressRoute
   '/hr-management/create-employee/spouse-information': typeof HrManagementCreateEmployeeSpouseInformationRoute
+  '/hr-management/leave/apply-leave': typeof HrManagementLeaveApplyLeaveRoute
+  '/hr-management/leave/leave-management': typeof HrManagementLeaveLeaveManagementRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -189,6 +205,8 @@ export interface FileRoutesByTo {
   '/hr-management/create-employee/personal-information': typeof HrManagementCreateEmployeePersonalInformationRoute
   '/hr-management/create-employee/present-address': typeof HrManagementCreateEmployeePresentAddressRoute
   '/hr-management/create-employee/spouse-information': typeof HrManagementCreateEmployeeSpouseInformationRoute
+  '/hr-management/leave/apply-leave': typeof HrManagementLeaveApplyLeaveRoute
+  '/hr-management/leave/leave-management': typeof HrManagementLeaveLeaveManagementRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -212,6 +230,8 @@ export interface FileRoutesById {
   '/hr-management/create-employee/personal-information': typeof HrManagementCreateEmployeePersonalInformationRoute
   '/hr-management/create-employee/present-address': typeof HrManagementCreateEmployeePresentAddressRoute
   '/hr-management/create-employee/spouse-information': typeof HrManagementCreateEmployeeSpouseInformationRoute
+  '/hr-management/leave/apply-leave': typeof HrManagementLeaveApplyLeaveRoute
+  '/hr-management/leave/leave-management': typeof HrManagementLeaveLeaveManagementRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -236,6 +256,8 @@ export interface FileRouteTypes {
     | '/hr-management/create-employee/personal-information'
     | '/hr-management/create-employee/present-address'
     | '/hr-management/create-employee/spouse-information'
+    | '/hr-management/leave/apply-leave'
+    | '/hr-management/leave/leave-management'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -258,6 +280,8 @@ export interface FileRouteTypes {
     | '/hr-management/create-employee/personal-information'
     | '/hr-management/create-employee/present-address'
     | '/hr-management/create-employee/spouse-information'
+    | '/hr-management/leave/apply-leave'
+    | '/hr-management/leave/leave-management'
   id:
     | '__root__'
     | '/'
@@ -280,6 +304,8 @@ export interface FileRouteTypes {
     | '/hr-management/create-employee/personal-information'
     | '/hr-management/create-employee/present-address'
     | '/hr-management/create-employee/spouse-information'
+    | '/hr-management/leave/apply-leave'
+    | '/hr-management/leave/leave-management'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -347,6 +373,20 @@ declare module '@tanstack/react-router' {
       path: '/create-employee'
       fullPath: '/hr-management/create-employee'
       preLoaderRoute: typeof HrManagementCreateEmployeeRouteRouteImport
+      parentRoute: typeof HrManagementRouteRoute
+    }
+    '/hr-management/leave/leave-management': {
+      id: '/hr-management/leave/leave-management'
+      path: '/leave/leave-management'
+      fullPath: '/hr-management/leave/leave-management'
+      preLoaderRoute: typeof HrManagementLeaveLeaveManagementRouteImport
+      parentRoute: typeof HrManagementRouteRoute
+    }
+    '/hr-management/leave/apply-leave': {
+      id: '/hr-management/leave/apply-leave'
+      path: '/leave/apply-leave'
+      fullPath: '/hr-management/leave/apply-leave'
+      preLoaderRoute: typeof HrManagementLeaveApplyLeaveRouteImport
       parentRoute: typeof HrManagementRouteRoute
     }
     '/hr-management/create-employee/spouse-information': {
@@ -477,6 +517,8 @@ interface HrManagementRouteRouteChildren {
   HrManagementPersonalInformationManagementRoute: typeof HrManagementPersonalInformationManagementRoute
   HrManagementAttendanceAttendanceManagementRoute: typeof HrManagementAttendanceAttendanceManagementRoute
   HrManagementAttendanceManualAttendanceRoute: typeof HrManagementAttendanceManualAttendanceRoute
+  HrManagementLeaveApplyLeaveRoute: typeof HrManagementLeaveApplyLeaveRoute
+  HrManagementLeaveLeaveManagementRoute: typeof HrManagementLeaveLeaveManagementRoute
 }
 
 const HrManagementRouteRouteChildren: HrManagementRouteRouteChildren = {
@@ -491,6 +533,8 @@ const HrManagementRouteRouteChildren: HrManagementRouteRouteChildren = {
     HrManagementAttendanceAttendanceManagementRoute,
   HrManagementAttendanceManualAttendanceRoute:
     HrManagementAttendanceManualAttendanceRoute,
+  HrManagementLeaveApplyLeaveRoute: HrManagementLeaveApplyLeaveRoute,
+  HrManagementLeaveLeaveManagementRoute: HrManagementLeaveLeaveManagementRoute,
 }
 
 const HrManagementRouteRouteWithChildren =
