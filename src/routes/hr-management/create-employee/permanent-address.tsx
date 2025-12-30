@@ -46,7 +46,7 @@ function PermanentInformationPage() {
   })
 
   const onSubmit = (data: PermanentAddress) => {
-    updateFormData('presentAddress', data)
+    updateFormData('permanentAddress', data)
 
     return navigate({ to: '/hr-management/create-employee/present-address' })
   }
