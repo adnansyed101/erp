@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -141,6 +140,9 @@ model Employee {
   emergencyContactId     String                @unique
   // Attendance
   attendance             Attendance[]
+  // User Relation
+  user                   User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                 String                @unique
 }
 
 model User {
@@ -153,6 +155,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  employees     Employee?
 
   @@unique([email])
   @@map("user")
