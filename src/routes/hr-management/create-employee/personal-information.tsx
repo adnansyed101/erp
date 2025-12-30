@@ -18,13 +18,33 @@ import {
 } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
-import { Card,  CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import CreateEmployeeSteps from '@/components/create-employee/create-employee-steps'
 import { PersonalInformation } from '@/lib/types/employee.types'
 import { useEmployeeStore } from '@/stores/employee.store'
 import { Input } from '@/components/ui/input'
 // import { Image } from '@unpic/react'
 import { PersonalInformationSchema } from '@/lib/validators/employee.validator'
+import { useState, useTransition } from 'react'
+import { createClient } from '@supabase/supabase-js'
+import { toast } from 'sonner'
+import slugify from 'slugify'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { ChevronDownIcon } from 'lucide-react'
+import { Calendar } from '@/components/ui/calendar'
+import { Image } from '@unpic/react'
+import loader from '@/assets/loader.gif'
+import { format } from 'date-fns'
+
+// Create Supabase client
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_PROJECT_URL,
+  import.meta.env.VITE_SUPABASE_API_KEY,
+)
 
 export const Route = createFileRoute(
   '/hr-management/create-employee/personal-information',
@@ -35,6 +55,8 @@ export const Route = createFileRoute(
 
 function PersonalInformationPage() {
   const naviagte = useNavigate()
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [isPending, startTransition] = useTransition()
 
   const employeeData = useEmployeeStore(
     (state) => state.formData.personalInformation,
@@ -72,7 +94,7 @@ function PersonalInformationPage() {
     })
   }
 
-  // const image = form.watch('imgUrl')
+  const image = form.watch('imageUrl')
 
   return (
     <div className="flex flex-col md:flex-row gap-2">
@@ -87,21 +109,7 @@ function PersonalInformationPage() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-2 lg:space-y-6"
           >
-            <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-              {/* Full Name Input */}
-              <FormField
-                control={form.control}
-                name="imageUrl"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Image URL</FormLabel>
-                    <FormControl>
-                      <Input placeholder="https://example.com/image.jpg" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <div>
               {/* Full Name Input */}
               <FormField
                 control={form.control}
@@ -343,18 +351,28 @@ function PersonalInformationPage() {
                   <FormItem>
                     <FormLabel>Date of Birth</FormLabel>
                     <FormControl>
-                      <Input
-                        type="date"
-                        {...field}
-                        value={
-                          field.value
-                            ? new Date(field.value).toISOString().split('T')[0]
-                            : ''
-                        }
-                        onChange={(e) =>
-                          field.onChange(new Date(e.target.value))
-                        }
-                      />
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="w-full justify-between"
+                          >
+                            {field.value
+                              ? format(field.value, 'PP')
+                              : 'Select date'}
+                            <ChevronDownIcon />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0">
+                          <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            className="rounded-md border shadow-sm"
+                            captionLayout="dropdown"
+                          />
+                        </PopoverContent>
+                      </Popover>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -368,25 +386,137 @@ function PersonalInformationPage() {
                   <FormItem>
                     <FormLabel>Date of Confirmation</FormLabel>
                     <FormControl>
-                      <Input
-                        type="date"
-                        {...field}
-                        value={
-                          field.value
-                            ? new Date(field.value).toISOString().split('T')[0]
-                            : ''
-                        }
-                        onChange={(e) =>
-                          field.onChange(new Date(e.target.value))
-                        }
-                      />
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="w-full justify-between"
+                          >
+                            {field.value
+                              ? format(field.value, 'PP')
+                              : 'Select date'}
+                            <ChevronDownIcon />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0">
+                          <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            className="rounded-md border shadow-sm"
+                            captionLayout="dropdown"
+                          />
+                        </PopoverContent>
+                      </Popover>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-           
+
+            {/* Images */}
+            <FormField
+              control={form.control}
+              name="imageUrl"
+              render={() => (
+                <FormItem className="w-full">
+                  <FormLabel>Add Image</FormLabel>
+                  <Card>
+                    <CardContent className="space-y-2 mt-2 min-h-48">
+                      <div className="flex-start space-x-2">
+                        {imageFile ? (
+                          <>
+                            <img
+                              src={
+                                image ? image : URL.createObjectURL(imageFile)
+                              }
+                              alt="Employee Image"
+                              className="w-40 h-40 object-cover object-center rounded-sm "
+                              width={200}
+                              height={200}
+                              srcSet={image}
+                            />
+                            {isPending && (
+                              <>
+                                <Image
+                                  src={loader}
+                                  alt="Loader GIF"
+                                  width={200}
+                                  height={200}
+                                />
+                              </>
+                            )}
+                            {!image && (
+                              <div className="mt-2 space-x-2">
+                                <Button
+                                  size="sm"
+                                  type="button"
+                                  onClick={() => setImageFile(null)}
+                                >
+                                  Remove Image
+                                </Button>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  type="button"
+                                  onClick={() => {
+                                    startTransition(async () => {
+                                      const fullName =
+                                        form.getValues('fullName')
+
+                                      if (!fullName) {
+                                        toast.error(
+                                          'Enter full name before confirming image.',
+                                        )
+                                        return
+                                      }
+
+                                      const { data, error } =
+                                        await supabase.storage
+                                          .from('erp')
+                                          .upload(
+                                            `employee-photos/${slugify(form.getValues('fullName'))}`,
+                                            imageFile ? imageFile : '',
+                                          )
+
+                                      if (error) {
+                                        toast.error('Some Error Occured.')
+                                        return
+                                      }
+
+                                      form.setValue(
+                                        'imageUrl',
+                                        `${import.meta.env.VITE_SUPABASE_PROJECT_URL}/storage/v1/object/public/${data.fullPath}`,
+                                      )
+                                    })
+                                  }}
+                                >
+                                  Confirm Image
+                                </Button>
+                              </div>
+                            )}
+                          </>
+                        ) : (
+                          <FormControl>
+                            <Input
+                              id="picture"
+                              type="file"
+                              onChange={(e) =>
+                                setImageFile(
+                                  e.target.files ? e.target.files[0] : null,
+                                )
+                              }
+                            />
+                          </FormControl>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <FormField
               control={form.control}
