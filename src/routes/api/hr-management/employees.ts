@@ -1,13 +1,8 @@
 import { formatError } from '@/lib/utils'
 import { createFileRoute } from '@tanstack/react-router'
-// import { createClient } from '@supabase/supabase-js'
 import { Employee } from '@/lib/types/employee.types'
 import { prisma } from '@/db'
 import z from 'zod'
-
-// const apiKey = process.env.SUPABASE_API_KEY ? process.env.SUPABASE_API_KEY : ''
-
-// const supabase = createClient('http://localhost:3000/', apiKey)
 
 const employeesSearchSchema = z.object({
   limit: z.number(),
