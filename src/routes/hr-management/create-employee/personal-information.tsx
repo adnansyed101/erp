@@ -438,14 +438,12 @@ function PersonalInformationPage() {
                               srcSet={image}
                             />
                             {isPending && (
-                              <>
-                                <Image
-                                  src={loader}
-                                  alt="Loader GIF"
-                                  width={200}
-                                  height={200}
-                                />
-                              </>
+                              <Image
+                                src={loader}
+                                alt="Loader GIF"
+                                width={200}
+                                height={200}
+                              />
                             )}
                             {!image && (
                               <div className="mt-2 space-x-2">
