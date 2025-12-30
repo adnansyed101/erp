@@ -14,7 +14,6 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { format } from 'date-fns'
-import { Image } from '@unpic/react'
 import { useQuery } from '@tanstack/react-query'
 import { Employee } from '@/lib/types/employee.types'
 
@@ -52,7 +51,7 @@ function RouteComponent() {
 
   return (
     <main className="min-h-screen">
-      <div className="max-w-5xl mx-auto">
+      <div>
         {/* Back Button */}
         <Link to="/hr-management/employee-list">
           <Button variant="ghost">
@@ -64,23 +63,20 @@ function RouteComponent() {
         {isLoading || isPending ? (
           'Loading....'
         ) : (
-          <>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 h-full">
             {/* Header Card */}
             <Card className="overflow-hidden mb-8 pt-0">
-              <CardHeader className="p-0 relative h-80">
-                <Image
-                  src={
-                    employee.data.personalInformation.imageUrl ||
-                    '/placeholder.jpeg'
-                  }
+              <CardHeader className="p-0 relative h-full">
+                <img
+                  src={employee.data.personalInformation.imageUrl}
                   alt={employee.data.personalInformation.fullName}
-                  className="w-full object-cover absolute"
+                  className="w-full object-cover h-150"
                   height={400}
                   width={350}
                 />
               </CardHeader>
 
-              <CardContent className="p-8">
+              <CardContent className="">
                 <h1 className="text-4xl font-bold text-foreground mb-2">
                   {employee.data.personalInformation.fullName}
                 </h1>
@@ -100,8 +96,8 @@ function RouteComponent() {
             </Card>
 
             {/* Tabs */}
-            <Tabs defaultValue="personal" className="w-full">
-              <TabsList className="grid w-full grid-cols-5 mb-8">
+            <Tabs defaultValue="personal" className="h-full">
+              <TabsList className="grid w-full grid-cols-5">
                 <TabsTrigger value="personal">Personal</TabsTrigger>
                 <TabsTrigger value="address">Address</TabsTrigger>
                 <TabsTrigger value="spouse">Spouse</TabsTrigger>
@@ -673,9 +669,12 @@ function RouteComponent() {
                           Date of Regularity
                         </p>
                         <p className="text-lg font-semibold">
-                          {employee.data.additionalInformation.dateofRegularity
-                            ? employee.data.additionalInformation.dateofRegularity.toString()
-                            : 'N/A'}
+                          {format(
+                            employee.data.additionalInformation.dateofRegularity
+                              ? employee.data.additionalInformation.dateofRegularity.toString()
+                              : '',
+                            'PP',
+                          )}
                         </p>
                       </div>
                     </div>
@@ -683,7 +682,7 @@ function RouteComponent() {
                 </Card>
               </TabsContent>
             </Tabs>
-          </>
+          </div>
         )}
       </div>
     </main>
