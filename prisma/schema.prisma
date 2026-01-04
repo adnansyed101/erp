@@ -155,7 +155,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
-  employees     Employee?
+  employee      Employee?
 
   @@unique([email])
   @@map("user")
