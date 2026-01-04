@@ -1375,7 +1375,8 @@ export const EmployeeScalarFieldEnum = {
   presentAddressId: 'presentAddressId',
   permanentAddressId: 'permanentAddressId',
   spouseInformationId: 'spouseInformationId',
-  emergencyContactId: 'emergencyContactId'
+  emergencyContactId: 'emergencyContactId',
+  userId: 'userId'
 } as const
 
 export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
