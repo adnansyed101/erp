@@ -1,94 +1,96 @@
-import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
-import { Employee } from "@/lib/types/employee.types";
+import { create } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
+import { Employee } from '@/lib/types/employee.types'
 
 // Define the shape of your store's state
 type FormState = {
-  currentStep: number;
-  formData: Employee;
+  currentStep: number
+  formData: Employee
   updateFormData: <TKey extends keyof Employee>(
     key: TKey,
-    data: Partial<Employee[TKey]>
-  ) => void;
-};
+    data: Partial<Employee[TKey]>,
+  ) => void
+}
 
 const initialFormState: Employee = {
   personalInformation: {
-    fullName: "",
+    fullName: '',
     imageUrl: '',
-    officeEmail: "",
-    personalEmail: "",
-    personalNumber: "",
-    officeNumber: "",
-    employeeType: "",
-    employeeStatus: "",
-    nationality: "",
+    role: 'DEVELOPER',
+    department: 'ENGINEERING',
+    officeEmail: '',
+    personalEmail: '',
+    personalNumber: '',
+    officeNumber: '',
+    employeeType: '',
+    employeeStatus: '',
+    nationality: '',
     disability: false,
-    gender: "Male",
-    religion: "",
-    joiningDesignation: "",
-    currentDesignation: "",
+    gender: 'Male',
+    religion: '',
+    joiningDesignation: '',
+    currentDesignation: '',
     dateOfBirth: new Date(),
     dateOfConfirmation: new Date(),
   },
   additionalInformation: {
-    fatherName: "",
-    motherName: "",
-    nationalId: "",
-    placeOfBirth: "",
-    maritalStatus: "Married",
-    eTIN: "",
-    program: "",
-    unit: "",
+    fatherName: '',
+    motherName: '',
+    nationalId: '',
+    placeOfBirth: '',
+    maritalStatus: 'Married',
+    eTIN: '',
+    program: '',
+    unit: '',
     prlDate: new Date(),
     dateofRegularity: new Date(),
   },
   presentAddress: {
-    division: "",
-    district: "",
-    upazilaOrThana: "",
-    postOffice: "",
-    postCode: "",
-    houseNoOrVillage: "",
-    block: "",
-    roadNo: "",
+    division: '',
+    district: '',
+    upazilaOrThana: '',
+    postOffice: '',
+    postCode: '',
+    houseNoOrVillage: '',
+    block: '',
+    roadNo: '',
   },
   permanentAddress: {
-    division: "",
-    district: "",
-    upazilaOrThana: "",
-    postOffice: "",
-    postCode: "",
-    houseNoOrVillage: "",
-    block: "",
-    roadNo: "",
+    division: '',
+    district: '',
+    upazilaOrThana: '',
+    postOffice: '',
+    postCode: '',
+    houseNoOrVillage: '',
+    block: '',
+    roadNo: '',
   },
   spouseInformation: {
-    fullName: "",
+    fullName: '',
     dateOfBirth: new Date(),
-    gender: "Male",
-    occupation: "",
-    nid: "",
-    mobileNumber: "",
-    email: "",
+    gender: 'Male',
+    occupation: '',
+    nid: '',
+    mobileNumber: '',
+    email: '',
   },
   emergencyContact: {
-    fullName: "",
+    fullName: '',
     dateOfBirth: new Date(),
-    gender: "Male",
-    occupation: "",
-    nid: "",
-    mobileNumber: "",
-    email: "",
+    gender: 'Male',
+    occupation: '',
+    nid: '',
+    mobileNumber: '',
+    email: '',
   },
   bankInformation: {
-    bankName: "",
-    branchName: "",
-    accountNumber: "",
-    walletType: "",
-    walletNumber: "",
+    bankName: '',
+    branchName: '',
+    accountNumber: '',
+    walletType: '',
+    walletNumber: '',
   },
-};
+}
 
 export const useEmployeeStore = create<FormState>()(
   persist(
@@ -107,8 +109,8 @@ export const useEmployeeStore = create<FormState>()(
         })),
     }),
     {
-      name: "employee-information-data",
+      name: 'employee-information-data',
       storage: createJSONStorage(() => localStorage),
-    }
-  )
-);
+    },
+  ),
+)
