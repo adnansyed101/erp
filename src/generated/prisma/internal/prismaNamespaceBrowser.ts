@@ -133,6 +133,8 @@ export const PersonalInformationScalarFieldEnum = {
   id: 'id',
   fullName: 'fullName',
   imageUrl: 'imageUrl',
+  role: 'role',
+  department: 'department',
   officeEmail: 'officeEmail',
   personalEmail: 'personalEmail',
   personalNumber: 'personalNumber',

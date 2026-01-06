@@ -29,6 +29,30 @@ export const MaritalStatus = {
 export type MaritalStatus = (typeof MaritalStatus)[keyof typeof MaritalStatus]
 
 
+export const Role = {
+  CEO: 'CEO',
+  CTO: 'CTO',
+  ENGINEERING_MANAGER: 'ENGINEERING_MANAGER',
+  TECH_LEAD: 'TECH_LEAD',
+  DEVELOPER: 'DEVELOPER',
+  DESIGNER: 'DESIGNER',
+  PROJECT_MANAGER: 'PROJECT_MANAGER'
+} as const
+
+export type Role = (typeof Role)[keyof typeof Role]
+
+
+export const Department = {
+  EXECUTIVE: 'EXECUTIVE',
+  ENGINEERING: 'ENGINEERING',
+  PRODUCT: 'PRODUCT',
+  DESIGN: 'DESIGN',
+  SALES: 'SALES'
+} as const
+
+export type Department = (typeof Department)[keyof typeof Department]
+
+
 export const AttendanceStatus = {
   In: 'In',
   Out: 'Out'
