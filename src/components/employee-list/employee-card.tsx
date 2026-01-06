@@ -2,7 +2,6 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Mail, Phone } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Link } from '@tanstack/react-router'
-import { Image } from '@unpic/react'
 
 export interface EmployeeCardProps {
   id: string
@@ -27,12 +26,10 @@ export function EmployeeCard({
     <Card className="w-full max-w-sm overflow-hidden pt-0">
       <CardHeader className="p-0">
         <div className="relative h-60">
-          <Image
-            src={imgUrl || '/placeholder.jpeg'}
+          <img
+            src={imgUrl}
             alt={fullName}
-            className="w-full object-fit rounded-t-2xl absolute"
-            height={240}
-            layout="fullWidth"
+            className="w-full object-cover rounded-t-2xl h-70"
           />
         </div>
       </CardHeader>
