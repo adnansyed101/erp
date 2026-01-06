@@ -69,6 +69,8 @@ function PersonalInformationPage() {
     defaultValues: {
       fullName: employeeData.fullName || '',
       imageUrl: employeeData.imageUrl || '',
+      role: employeeData.role || 'DEVELOPER',
+      department: employeeData.department || 'ENGINEERING',
       officeEmail: employeeData.officeEmail || '',
       personalEmail: employeeData.personalEmail || '',
       officeNumber: employeeData.officeNumber || '',
@@ -120,6 +122,72 @@ function PersonalInformationPage() {
                     <FormControl>
                       <Input placeholder="John Doe" {...field} />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="role"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Employee Role</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="CEO">
+                          Chief Executive Officer (CEO)
+                        </SelectItem>
+                        <SelectItem value="CTO">
+                          Chief Technology Office (CTO)
+                        </SelectItem>
+                        <SelectItem value="PRODUCT">Product</SelectItem>
+                        <SelectItem value="DEVELOPER">Developer</SelectItem>
+                        <SelectItem value="Designer">Designer</SelectItem>
+                        <SelectItem value="Project_Manager">
+                          Project Manager
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="department"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Employee Department</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="EXECUTIVE">Executive</SelectItem>
+                        <SelectItem value="ENGINEERING">Engineering</SelectItem>
+                        <SelectItem value="PRODUCT">Product</SelectItem>
+                        <SelectItem value="DESIGN">Design</SelectItem>
+                        <SelectItem value="SALES">Sales</SelectItem>
+                        <SelectItem value="Project_Manager">
+                          Project Manager
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}

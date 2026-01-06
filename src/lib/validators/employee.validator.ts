@@ -3,7 +3,22 @@ import z from 'zod'
 export const PersonalInformationSchema = z.object({
   fullName: z.string().min(2, 'At least 2 characters are needed.'),
   imageUrl: z.url().min(1, 'Image URL is required.'),
-  // image: z.instanceof(File, { message: 'Image is required' }).nullable(),
+  role: z.enum([
+    'CEO',
+    'CTO',
+    'ENGINEERING_MANAGER',
+    'TECH_LEAD',
+    'DEVELOPER',
+    'DESIGNER',
+    'PROJECT_MANAGER',
+  ]),
+  department: z.enum([
+    'EXECUTIVE',
+    'ENGINEERING',
+    'PRODUCT',
+    'DESIGN',
+    'SALES',
+  ]),
   officeEmail: z.email(),
   personalEmail: z.email(),
   personalNumber: z.string().min(2, 'Personal Phone Number is required.'),
@@ -93,4 +108,5 @@ export const EmployeeSchema = z.object({
 
 export const EmployeeSchemaWithId = EmployeeSchema.extend({
   id: z.string(),
+  userId: z.string(),
 })
