@@ -76,10 +76,10 @@ function AttendanceManagementPage() {
 
   return (
     <main>
-      <div className="">
+      <div>
         {/* Header */}
         <h1 className="text-4xl font-bold text-foreground mb-4">
-          My Leave
+          Leave Management
         </h1>
 
         {/* Cards Grid */}
