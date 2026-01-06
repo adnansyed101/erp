@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -20,6 +19,24 @@ enum MaritalStatus {
   Divorced
   Widowed
   Separated
+}
+
+enum Role {
+  CEO
+  CTO
+  ENGINEERING_MANAGER
+  TECH_LEAD
+  DEVELOPER
+  DESIGNER
+  PROJECT_MANAGER
+}
+
+enum Department {
+  EXECUTIVE
+  ENGINEERING
+  PRODUCT
+  DESIGN
+  SALES
 }
 
 model Address {
@@ -71,6 +88,8 @@ model PersonalInformation {
   id                 String     @id @default(uuid())
   fullName           String
   imageUrl           String
+  role               Role
+  department         Department
   officeEmail        String     @unique
   personalEmail      String     @unique
   personalNumber     String
