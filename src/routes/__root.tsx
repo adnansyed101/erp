@@ -11,7 +11,7 @@ import type { QueryClient } from '@tanstack/react-query'
 import { Toaster } from 'sonner'
 import { Image } from '@unpic/react'
 import { Button } from '@/components/ui/button'
-import loader from '@/assets/loader.gif'
+import DefaultLoadingComponent from '@/components/shared/default-loading-component'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -42,7 +42,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
   shellComponent: RootDocument,
   notFoundComponent: NotFoundPage,
-  pendingComponent: LoadingComponent,
+  pendingComponent: DefaultLoadingComponent,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -93,22 +93,6 @@ function NotFoundPage() {
           Back To Home
         </Button>
       </div>
-    </div>
-  )
-}
-
-function LoadingComponent() {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        width: '100vw',
-      }}
-    >
-      <Image src={loader} height={150} width={150} alt="Loading..." />
     </div>
   )
 }
