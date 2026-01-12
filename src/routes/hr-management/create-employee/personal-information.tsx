@@ -436,6 +436,7 @@ function PersonalInformationPage() {
                             onSelect={field.onChange}
                             className="rounded-md border shadow-sm"
                             captionLayout="dropdown"
+                            disabled={{ after: new Date() }}
                           />
                         </PopoverContent>
                       </Popover>
