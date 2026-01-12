@@ -302,7 +302,7 @@ export type PersonalInformationWhereInput = {
   dateOfBirth?: Prisma.DateTimeFilter<"PersonalInformation"> | Date | string
   dateOfConfirmation?: Prisma.DateTimeFilter<"PersonalInformation"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"PersonalInformation"> | Date | string
-  employees?: Prisma.EmployeeListRelationFilter
+  employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type PersonalInformationOrderByWithRelationInput = {
@@ -326,7 +326,7 @@ export type PersonalInformationOrderByWithRelationInput = {
   dateOfBirth?: Prisma.SortOrder
   dateOfConfirmation?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  employees?: Prisma.EmployeeOrderByRelationAggregateInput
+  employee?: Prisma.EmployeeOrderByWithRelationInput
 }
 
 export type PersonalInformationWhereUniqueInput = Prisma.AtLeast<{
@@ -353,7 +353,7 @@ export type PersonalInformationWhereUniqueInput = Prisma.AtLeast<{
   dateOfBirth?: Prisma.DateTimeFilter<"PersonalInformation"> | Date | string
   dateOfConfirmation?: Prisma.DateTimeFilter<"PersonalInformation"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"PersonalInformation"> | Date | string
-  employees?: Prisma.EmployeeListRelationFilter
+  employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id" | "officeEmail" | "personalEmail">
 
 export type PersonalInformationOrderByWithAggregationInput = {
@@ -429,7 +429,7 @@ export type PersonalInformationCreateInput = {
   dateOfBirth?: Date | string
   dateOfConfirmation?: Date | string
   createdAt?: Date | string
-  employees?: Prisma.EmployeeCreateNestedManyWithoutPersonalInformationInput
+  employee?: Prisma.EmployeeCreateNestedOneWithoutPersonalInformationInput
 }
 
 export type PersonalInformationUncheckedCreateInput = {
@@ -453,7 +453,7 @@ export type PersonalInformationUncheckedCreateInput = {
   dateOfBirth?: Date | string
   dateOfConfirmation?: Date | string
   createdAt?: Date | string
-  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutPersonalInformationInput
+  employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutPersonalInformationInput
 }
 
 export type PersonalInformationUpdateInput = {
@@ -477,7 +477,7 @@ export type PersonalInformationUpdateInput = {
   dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dateOfConfirmation?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  employees?: Prisma.EmployeeUpdateManyWithoutPersonalInformationNestedInput
+  employee?: Prisma.EmployeeUpdateOneWithoutPersonalInformationNestedInput
 }
 
 export type PersonalInformationUncheckedUpdateInput = {
@@ -501,7 +501,7 @@ export type PersonalInformationUncheckedUpdateInput = {
   dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dateOfConfirmation?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutPersonalInformationNestedInput
+  employee?: Prisma.EmployeeUncheckedUpdateOneWithoutPersonalInformationNestedInput
 }
 
 export type PersonalInformationCreateManyInput = {
@@ -663,21 +663,21 @@ export type EnumGenderFieldUpdateOperationsInput = {
   set?: $Enums.Gender
 }
 
-export type PersonalInformationCreateNestedOneWithoutEmployeesInput = {
-  create?: Prisma.XOR<Prisma.PersonalInformationCreateWithoutEmployeesInput, Prisma.PersonalInformationUncheckedCreateWithoutEmployeesInput>
-  connectOrCreate?: Prisma.PersonalInformationCreateOrConnectWithoutEmployeesInput
+export type PersonalInformationCreateNestedOneWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.PersonalInformationCreateWithoutEmployeeInput, Prisma.PersonalInformationUncheckedCreateWithoutEmployeeInput>
+  connectOrCreate?: Prisma.PersonalInformationCreateOrConnectWithoutEmployeeInput
   connect?: Prisma.PersonalInformationWhereUniqueInput
 }
 
-export type PersonalInformationUpdateOneRequiredWithoutEmployeesNestedInput = {
-  create?: Prisma.XOR<Prisma.PersonalInformationCreateWithoutEmployeesInput, Prisma.PersonalInformationUncheckedCreateWithoutEmployeesInput>
-  connectOrCreate?: Prisma.PersonalInformationCreateOrConnectWithoutEmployeesInput
-  upsert?: Prisma.PersonalInformationUpsertWithoutEmployeesInput
+export type PersonalInformationUpdateOneRequiredWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonalInformationCreateWithoutEmployeeInput, Prisma.PersonalInformationUncheckedCreateWithoutEmployeeInput>
+  connectOrCreate?: Prisma.PersonalInformationCreateOrConnectWithoutEmployeeInput
+  upsert?: Prisma.PersonalInformationUpsertWithoutEmployeeInput
   connect?: Prisma.PersonalInformationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonalInformationUpdateToOneWithWhereWithoutEmployeesInput, Prisma.PersonalInformationUpdateWithoutEmployeesInput>, Prisma.PersonalInformationUncheckedUpdateWithoutEmployeesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonalInformationUpdateToOneWithWhereWithoutEmployeeInput, Prisma.PersonalInformationUpdateWithoutEmployeeInput>, Prisma.PersonalInformationUncheckedUpdateWithoutEmployeeInput>
 }
 
-export type PersonalInformationCreateWithoutEmployeesInput = {
+export type PersonalInformationCreateWithoutEmployeeInput = {
   id?: string
   fullName: string
   imageUrl: string
@@ -700,7 +700,7 @@ export type PersonalInformationCreateWithoutEmployeesInput = {
   createdAt?: Date | string
 }
 
-export type PersonalInformationUncheckedCreateWithoutEmployeesInput = {
+export type PersonalInformationUncheckedCreateWithoutEmployeeInput = {
   id?: string
   fullName: string
   imageUrl: string
@@ -723,23 +723,23 @@ export type PersonalInformationUncheckedCreateWithoutEmployeesInput = {
   createdAt?: Date | string
 }
 
-export type PersonalInformationCreateOrConnectWithoutEmployeesInput = {
+export type PersonalInformationCreateOrConnectWithoutEmployeeInput = {
   where: Prisma.PersonalInformationWhereUniqueInput
-  create: Prisma.XOR<Prisma.PersonalInformationCreateWithoutEmployeesInput, Prisma.PersonalInformationUncheckedCreateWithoutEmployeesInput>
+  create: Prisma.XOR<Prisma.PersonalInformationCreateWithoutEmployeeInput, Prisma.PersonalInformationUncheckedCreateWithoutEmployeeInput>
 }
 
-export type PersonalInformationUpsertWithoutEmployeesInput = {
-  update: Prisma.XOR<Prisma.PersonalInformationUpdateWithoutEmployeesInput, Prisma.PersonalInformationUncheckedUpdateWithoutEmployeesInput>
-  create: Prisma.XOR<Prisma.PersonalInformationCreateWithoutEmployeesInput, Prisma.PersonalInformationUncheckedCreateWithoutEmployeesInput>
+export type PersonalInformationUpsertWithoutEmployeeInput = {
+  update: Prisma.XOR<Prisma.PersonalInformationUpdateWithoutEmployeeInput, Prisma.PersonalInformationUncheckedUpdateWithoutEmployeeInput>
+  create: Prisma.XOR<Prisma.PersonalInformationCreateWithoutEmployeeInput, Prisma.PersonalInformationUncheckedCreateWithoutEmployeeInput>
   where?: Prisma.PersonalInformationWhereInput
 }
 
-export type PersonalInformationUpdateToOneWithWhereWithoutEmployeesInput = {
+export type PersonalInformationUpdateToOneWithWhereWithoutEmployeeInput = {
   where?: Prisma.PersonalInformationWhereInput
-  data: Prisma.XOR<Prisma.PersonalInformationUpdateWithoutEmployeesInput, Prisma.PersonalInformationUncheckedUpdateWithoutEmployeesInput>
+  data: Prisma.XOR<Prisma.PersonalInformationUpdateWithoutEmployeeInput, Prisma.PersonalInformationUncheckedUpdateWithoutEmployeeInput>
 }
 
-export type PersonalInformationUpdateWithoutEmployeesInput = {
+export type PersonalInformationUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -762,7 +762,7 @@ export type PersonalInformationUpdateWithoutEmployeesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type PersonalInformationUncheckedUpdateWithoutEmployeesInput = {
+export type PersonalInformationUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -785,35 +785,6 @@ export type PersonalInformationUncheckedUpdateWithoutEmployeesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-
-/**
- * Count Type PersonalInformationCountOutputType
- */
-
-export type PersonalInformationCountOutputType = {
-  employees: number
-}
-
-export type PersonalInformationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  employees?: boolean | PersonalInformationCountOutputTypeCountEmployeesArgs
-}
-
-/**
- * PersonalInformationCountOutputType without action
- */
-export type PersonalInformationCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PersonalInformationCountOutputType
-   */
-  select?: Prisma.PersonalInformationCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * PersonalInformationCountOutputType without action
- */
-export type PersonalInformationCountOutputTypeCountEmployeesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.EmployeeWhereInput
-}
 
 
 export type PersonalInformationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -837,8 +808,7 @@ export type PersonalInformationSelect<ExtArgs extends runtime.Types.Extensions.I
   dateOfBirth?: boolean
   dateOfConfirmation?: boolean
   createdAt?: boolean
-  employees?: boolean | Prisma.PersonalInformation$employeesArgs<ExtArgs>
-  _count?: boolean | Prisma.PersonalInformationCountOutputTypeDefaultArgs<ExtArgs>
+  employee?: boolean | Prisma.PersonalInformation$employeeArgs<ExtArgs>
 }, ExtArgs["result"]["personalInformation"]>
 
 export type PersonalInformationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -912,8 +882,7 @@ export type PersonalInformationSelectScalar = {
 
 export type PersonalInformationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "imageUrl" | "role" | "department" | "officeEmail" | "personalEmail" | "personalNumber" | "officeNumber" | "employeeType" | "employeeStatus" | "nationality" | "disability" | "gender" | "religion" | "joiningDesignation" | "currentDesignation" | "dateOfBirth" | "dateOfConfirmation" | "createdAt", ExtArgs["result"]["personalInformation"]>
 export type PersonalInformationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  employees?: boolean | Prisma.PersonalInformation$employeesArgs<ExtArgs>
-  _count?: boolean | Prisma.PersonalInformationCountOutputTypeDefaultArgs<ExtArgs>
+  employee?: boolean | Prisma.PersonalInformation$employeeArgs<ExtArgs>
 }
 export type PersonalInformationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 export type PersonalInformationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -921,7 +890,7 @@ export type PersonalInformationIncludeUpdateManyAndReturn<ExtArgs extends runtim
 export type $PersonalInformationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PersonalInformation"
   objects: {
-    employees: Prisma.$EmployeePayload<ExtArgs>[]
+    employee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1338,7 +1307,7 @@ readonly fields: PersonalInformationFieldRefs;
  */
 export interface Prisma__PersonalInformationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  employees<T extends Prisma.PersonalInformation$employeesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PersonalInformation$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  employee<T extends Prisma.PersonalInformation$employeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PersonalInformation$employeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1776,9 +1745,9 @@ export type PersonalInformationDeleteManyArgs<ExtArgs extends runtime.Types.Exte
 }
 
 /**
- * PersonalInformation.employees
+ * PersonalInformation.employee
  */
-export type PersonalInformation$employeesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type PersonalInformation$employeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Employee
    */
@@ -1792,11 +1761,6 @@ export type PersonalInformation$employeesArgs<ExtArgs extends runtime.Types.Exte
    */
   include?: Prisma.EmployeeInclude<ExtArgs> | null
   where?: Prisma.EmployeeWhereInput
-  orderBy?: Prisma.EmployeeOrderByWithRelationInput | Prisma.EmployeeOrderByWithRelationInput[]
-  cursor?: Prisma.EmployeeWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.EmployeeScalarFieldEnum | Prisma.EmployeeScalarFieldEnum[]
 }
 
 /**

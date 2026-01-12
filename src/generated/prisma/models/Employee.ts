@@ -257,6 +257,7 @@ export type EmployeeOrderByWithRelationInput = {
 
 export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  personalInformationId?: string
   addtionalInformationId?: string
   presentAddressId?: string
   permanentAddressId?: string
@@ -267,7 +268,6 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.EmployeeWhereInput[]
   NOT?: Prisma.EmployeeWhereInput | Prisma.EmployeeWhereInput[]
   createdAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
-  personalInformationId?: Prisma.StringFilter<"Employee"> | string
   bankInformationId?: Prisma.StringFilter<"Employee"> | string
   personalInformation?: Prisma.XOR<Prisma.PersonalInformationScalarRelationFilter, Prisma.PersonalInformationWhereInput>
   bankInformation?: Prisma.XOR<Prisma.BankInformationScalarRelationFilter, Prisma.BankInformationWhereInput>
@@ -278,7 +278,7 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   emergencyContact?: Prisma.XOR<Prisma.ContactInformationScalarRelationFilter, Prisma.ContactInformationWhereInput>
   attendance?: Prisma.AttendanceListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id" | "addtionalInformationId" | "presentAddressId" | "permanentAddressId" | "spouseInformationId" | "emergencyContactId" | "userId">
+}, "id" | "personalInformationId" | "addtionalInformationId" | "presentAddressId" | "permanentAddressId" | "spouseInformationId" | "emergencyContactId" | "userId">
 
 export type EmployeeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -315,7 +315,7 @@ export type EmployeeScalarWhereWithAggregatesInput = {
 export type EmployeeCreateInput = {
   id?: string
   createdAt?: Date | string
-  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeesInput
+  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeeInput
   bankInformation: Prisma.BankInformationCreateNestedOneWithoutEmployeesInput
   additionalInformation: Prisma.AdditionalInformationCreateNestedOneWithoutEmployeeInput
   presentAddress: Prisma.AddressCreateNestedOneWithoutEmployeePresentAddressInput
@@ -343,7 +343,7 @@ export type EmployeeUncheckedCreateInput = {
 export type EmployeeUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeesNestedInput
+  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   bankInformation?: Prisma.BankInformationUpdateOneRequiredWithoutEmployeesNestedInput
   additionalInformation?: Prisma.AdditionalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   presentAddress?: Prisma.AddressUpdateOneRequiredWithoutEmployeePresentAddressNestedInput
@@ -613,46 +613,36 @@ export type EmployeeUncheckedUpdateOneWithoutAdditionalInformationNestedInput = 
   update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutAdditionalInformationInput, Prisma.EmployeeUpdateWithoutAdditionalInformationInput>, Prisma.EmployeeUncheckedUpdateWithoutAdditionalInformationInput>
 }
 
-export type EmployeeCreateNestedManyWithoutPersonalInformationInput = {
-  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutPersonalInformationInput, Prisma.EmployeeUncheckedCreateWithoutPersonalInformationInput> | Prisma.EmployeeCreateWithoutPersonalInformationInput[] | Prisma.EmployeeUncheckedCreateWithoutPersonalInformationInput[]
-  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutPersonalInformationInput | Prisma.EmployeeCreateOrConnectWithoutPersonalInformationInput[]
-  createMany?: Prisma.EmployeeCreateManyPersonalInformationInputEnvelope
-  connect?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
+export type EmployeeCreateNestedOneWithoutPersonalInformationInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutPersonalInformationInput, Prisma.EmployeeUncheckedCreateWithoutPersonalInformationInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutPersonalInformationInput
+  connect?: Prisma.EmployeeWhereUniqueInput
 }
 
-export type EmployeeUncheckedCreateNestedManyWithoutPersonalInformationInput = {
-  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutPersonalInformationInput, Prisma.EmployeeUncheckedCreateWithoutPersonalInformationInput> | Prisma.EmployeeCreateWithoutPersonalInformationInput[] | Prisma.EmployeeUncheckedCreateWithoutPersonalInformationInput[]
-  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutPersonalInformationInput | Prisma.EmployeeCreateOrConnectWithoutPersonalInformationInput[]
-  createMany?: Prisma.EmployeeCreateManyPersonalInformationInputEnvelope
-  connect?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
+export type EmployeeUncheckedCreateNestedOneWithoutPersonalInformationInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutPersonalInformationInput, Prisma.EmployeeUncheckedCreateWithoutPersonalInformationInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutPersonalInformationInput
+  connect?: Prisma.EmployeeWhereUniqueInput
 }
 
-export type EmployeeUpdateManyWithoutPersonalInformationNestedInput = {
-  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutPersonalInformationInput, Prisma.EmployeeUncheckedCreateWithoutPersonalInformationInput> | Prisma.EmployeeCreateWithoutPersonalInformationInput[] | Prisma.EmployeeUncheckedCreateWithoutPersonalInformationInput[]
-  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutPersonalInformationInput | Prisma.EmployeeCreateOrConnectWithoutPersonalInformationInput[]
-  upsert?: Prisma.EmployeeUpsertWithWhereUniqueWithoutPersonalInformationInput | Prisma.EmployeeUpsertWithWhereUniqueWithoutPersonalInformationInput[]
-  createMany?: Prisma.EmployeeCreateManyPersonalInformationInputEnvelope
-  set?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  disconnect?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  delete?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  connect?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  update?: Prisma.EmployeeUpdateWithWhereUniqueWithoutPersonalInformationInput | Prisma.EmployeeUpdateWithWhereUniqueWithoutPersonalInformationInput[]
-  updateMany?: Prisma.EmployeeUpdateManyWithWhereWithoutPersonalInformationInput | Prisma.EmployeeUpdateManyWithWhereWithoutPersonalInformationInput[]
-  deleteMany?: Prisma.EmployeeScalarWhereInput | Prisma.EmployeeScalarWhereInput[]
+export type EmployeeUpdateOneWithoutPersonalInformationNestedInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutPersonalInformationInput, Prisma.EmployeeUncheckedCreateWithoutPersonalInformationInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutPersonalInformationInput
+  upsert?: Prisma.EmployeeUpsertWithoutPersonalInformationInput
+  disconnect?: Prisma.EmployeeWhereInput | boolean
+  delete?: Prisma.EmployeeWhereInput | boolean
+  connect?: Prisma.EmployeeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutPersonalInformationInput, Prisma.EmployeeUpdateWithoutPersonalInformationInput>, Prisma.EmployeeUncheckedUpdateWithoutPersonalInformationInput>
 }
 
-export type EmployeeUncheckedUpdateManyWithoutPersonalInformationNestedInput = {
-  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutPersonalInformationInput, Prisma.EmployeeUncheckedCreateWithoutPersonalInformationInput> | Prisma.EmployeeCreateWithoutPersonalInformationInput[] | Prisma.EmployeeUncheckedCreateWithoutPersonalInformationInput[]
-  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutPersonalInformationInput | Prisma.EmployeeCreateOrConnectWithoutPersonalInformationInput[]
-  upsert?: Prisma.EmployeeUpsertWithWhereUniqueWithoutPersonalInformationInput | Prisma.EmployeeUpsertWithWhereUniqueWithoutPersonalInformationInput[]
-  createMany?: Prisma.EmployeeCreateManyPersonalInformationInputEnvelope
-  set?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  disconnect?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  delete?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  connect?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  update?: Prisma.EmployeeUpdateWithWhereUniqueWithoutPersonalInformationInput | Prisma.EmployeeUpdateWithWhereUniqueWithoutPersonalInformationInput[]
-  updateMany?: Prisma.EmployeeUpdateManyWithWhereWithoutPersonalInformationInput | Prisma.EmployeeUpdateManyWithWhereWithoutPersonalInformationInput[]
-  deleteMany?: Prisma.EmployeeScalarWhereInput | Prisma.EmployeeScalarWhereInput[]
+export type EmployeeUncheckedUpdateOneWithoutPersonalInformationNestedInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutPersonalInformationInput, Prisma.EmployeeUncheckedCreateWithoutPersonalInformationInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutPersonalInformationInput
+  upsert?: Prisma.EmployeeUpsertWithoutPersonalInformationInput
+  disconnect?: Prisma.EmployeeWhereInput | boolean
+  delete?: Prisma.EmployeeWhereInput | boolean
+  connect?: Prisma.EmployeeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutPersonalInformationInput, Prisma.EmployeeUpdateWithoutPersonalInformationInput>, Prisma.EmployeeUncheckedUpdateWithoutPersonalInformationInput>
 }
 
 export type EmployeeCreateNestedManyWithoutBankInformationInput = {
@@ -748,7 +738,7 @@ export type EmployeeUncheckedUpdateOneWithoutUserNestedInput = {
 export type EmployeeCreateWithoutPresentAddressInput = {
   id?: string
   createdAt?: Date | string
-  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeesInput
+  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeeInput
   bankInformation: Prisma.BankInformationCreateNestedOneWithoutEmployeesInput
   additionalInformation: Prisma.AdditionalInformationCreateNestedOneWithoutEmployeeInput
   permanentAddress: Prisma.AddressCreateNestedOneWithoutEmployeePermanenttAddressInput
@@ -779,7 +769,7 @@ export type EmployeeCreateOrConnectWithoutPresentAddressInput = {
 export type EmployeeCreateWithoutPermanentAddressInput = {
   id?: string
   createdAt?: Date | string
-  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeesInput
+  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeeInput
   bankInformation: Prisma.BankInformationCreateNestedOneWithoutEmployeesInput
   additionalInformation: Prisma.AdditionalInformationCreateNestedOneWithoutEmployeeInput
   presentAddress: Prisma.AddressCreateNestedOneWithoutEmployeePresentAddressInput
@@ -821,7 +811,7 @@ export type EmployeeUpdateToOneWithWhereWithoutPresentAddressInput = {
 export type EmployeeUpdateWithoutPresentAddressInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeesNestedInput
+  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   bankInformation?: Prisma.BankInformationUpdateOneRequiredWithoutEmployeesNestedInput
   additionalInformation?: Prisma.AdditionalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   permanentAddress?: Prisma.AddressUpdateOneRequiredWithoutEmployeePermanenttAddressNestedInput
@@ -858,7 +848,7 @@ export type EmployeeUpdateToOneWithWhereWithoutPermanentAddressInput = {
 export type EmployeeUpdateWithoutPermanentAddressInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeesNestedInput
+  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   bankInformation?: Prisma.BankInformationUpdateOneRequiredWithoutEmployeesNestedInput
   additionalInformation?: Prisma.AdditionalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   presentAddress?: Prisma.AddressUpdateOneRequiredWithoutEmployeePresentAddressNestedInput
@@ -884,7 +874,7 @@ export type EmployeeUncheckedUpdateWithoutPermanentAddressInput = {
 export type EmployeeCreateWithoutSpouseInformationInput = {
   id?: string
   createdAt?: Date | string
-  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeesInput
+  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeeInput
   bankInformation: Prisma.BankInformationCreateNestedOneWithoutEmployeesInput
   additionalInformation: Prisma.AdditionalInformationCreateNestedOneWithoutEmployeeInput
   presentAddress: Prisma.AddressCreateNestedOneWithoutEmployeePresentAddressInput
@@ -915,7 +905,7 @@ export type EmployeeCreateOrConnectWithoutSpouseInformationInput = {
 export type EmployeeCreateWithoutEmergencyContactInput = {
   id?: string
   createdAt?: Date | string
-  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeesInput
+  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeeInput
   bankInformation: Prisma.BankInformationCreateNestedOneWithoutEmployeesInput
   additionalInformation: Prisma.AdditionalInformationCreateNestedOneWithoutEmployeeInput
   presentAddress: Prisma.AddressCreateNestedOneWithoutEmployeePresentAddressInput
@@ -957,7 +947,7 @@ export type EmployeeUpdateToOneWithWhereWithoutSpouseInformationInput = {
 export type EmployeeUpdateWithoutSpouseInformationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeesNestedInput
+  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   bankInformation?: Prisma.BankInformationUpdateOneRequiredWithoutEmployeesNestedInput
   additionalInformation?: Prisma.AdditionalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   presentAddress?: Prisma.AddressUpdateOneRequiredWithoutEmployeePresentAddressNestedInput
@@ -994,7 +984,7 @@ export type EmployeeUpdateToOneWithWhereWithoutEmergencyContactInput = {
 export type EmployeeUpdateWithoutEmergencyContactInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeesNestedInput
+  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   bankInformation?: Prisma.BankInformationUpdateOneRequiredWithoutEmployeesNestedInput
   additionalInformation?: Prisma.AdditionalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   presentAddress?: Prisma.AddressUpdateOneRequiredWithoutEmployeePresentAddressNestedInput
@@ -1020,7 +1010,7 @@ export type EmployeeUncheckedUpdateWithoutEmergencyContactInput = {
 export type EmployeeCreateWithoutAdditionalInformationInput = {
   id?: string
   createdAt?: Date | string
-  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeesInput
+  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeeInput
   bankInformation: Prisma.BankInformationCreateNestedOneWithoutEmployeesInput
   presentAddress: Prisma.AddressCreateNestedOneWithoutEmployeePresentAddressInput
   permanentAddress: Prisma.AddressCreateNestedOneWithoutEmployeePermanenttAddressInput
@@ -1062,7 +1052,7 @@ export type EmployeeUpdateToOneWithWhereWithoutAdditionalInformationInput = {
 export type EmployeeUpdateWithoutAdditionalInformationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeesNestedInput
+  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   bankInformation?: Prisma.BankInformationUpdateOneRequiredWithoutEmployeesNestedInput
   presentAddress?: Prisma.AddressUpdateOneRequiredWithoutEmployeePresentAddressNestedInput
   permanentAddress?: Prisma.AddressUpdateOneRequiredWithoutEmployeePermanenttAddressNestedInput
@@ -1116,47 +1106,47 @@ export type EmployeeCreateOrConnectWithoutPersonalInformationInput = {
   create: Prisma.XOR<Prisma.EmployeeCreateWithoutPersonalInformationInput, Prisma.EmployeeUncheckedCreateWithoutPersonalInformationInput>
 }
 
-export type EmployeeCreateManyPersonalInformationInputEnvelope = {
-  data: Prisma.EmployeeCreateManyPersonalInformationInput | Prisma.EmployeeCreateManyPersonalInformationInput[]
-  skipDuplicates?: boolean
-}
-
-export type EmployeeUpsertWithWhereUniqueWithoutPersonalInformationInput = {
-  where: Prisma.EmployeeWhereUniqueInput
+export type EmployeeUpsertWithoutPersonalInformationInput = {
   update: Prisma.XOR<Prisma.EmployeeUpdateWithoutPersonalInformationInput, Prisma.EmployeeUncheckedUpdateWithoutPersonalInformationInput>
   create: Prisma.XOR<Prisma.EmployeeCreateWithoutPersonalInformationInput, Prisma.EmployeeUncheckedCreateWithoutPersonalInformationInput>
+  where?: Prisma.EmployeeWhereInput
 }
 
-export type EmployeeUpdateWithWhereUniqueWithoutPersonalInformationInput = {
-  where: Prisma.EmployeeWhereUniqueInput
+export type EmployeeUpdateToOneWithWhereWithoutPersonalInformationInput = {
+  where?: Prisma.EmployeeWhereInput
   data: Prisma.XOR<Prisma.EmployeeUpdateWithoutPersonalInformationInput, Prisma.EmployeeUncheckedUpdateWithoutPersonalInformationInput>
 }
 
-export type EmployeeUpdateManyWithWhereWithoutPersonalInformationInput = {
-  where: Prisma.EmployeeScalarWhereInput
-  data: Prisma.XOR<Prisma.EmployeeUpdateManyMutationInput, Prisma.EmployeeUncheckedUpdateManyWithoutPersonalInformationInput>
+export type EmployeeUpdateWithoutPersonalInformationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bankInformation?: Prisma.BankInformationUpdateOneRequiredWithoutEmployeesNestedInput
+  additionalInformation?: Prisma.AdditionalInformationUpdateOneRequiredWithoutEmployeeNestedInput
+  presentAddress?: Prisma.AddressUpdateOneRequiredWithoutEmployeePresentAddressNestedInput
+  permanentAddress?: Prisma.AddressUpdateOneRequiredWithoutEmployeePermanenttAddressNestedInput
+  spouseInformation?: Prisma.ContactInformationUpdateOneWithoutEmployeeSpouseInformationNestedInput
+  emergencyContact?: Prisma.ContactInformationUpdateOneRequiredWithoutEmployeeEmergencyContactNestedInput
+  attendance?: Prisma.AttendanceUpdateManyWithoutEmployeeNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutEmployeeNestedInput
 }
 
-export type EmployeeScalarWhereInput = {
-  AND?: Prisma.EmployeeScalarWhereInput | Prisma.EmployeeScalarWhereInput[]
-  OR?: Prisma.EmployeeScalarWhereInput[]
-  NOT?: Prisma.EmployeeScalarWhereInput | Prisma.EmployeeScalarWhereInput[]
-  id?: Prisma.StringFilter<"Employee"> | string
-  createdAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
-  personalInformationId?: Prisma.StringFilter<"Employee"> | string
-  bankInformationId?: Prisma.StringFilter<"Employee"> | string
-  addtionalInformationId?: Prisma.StringFilter<"Employee"> | string
-  presentAddressId?: Prisma.StringFilter<"Employee"> | string
-  permanentAddressId?: Prisma.StringFilter<"Employee"> | string
-  spouseInformationId?: Prisma.StringNullableFilter<"Employee"> | string | null
-  emergencyContactId?: Prisma.StringFilter<"Employee"> | string
-  userId?: Prisma.StringFilter<"Employee"> | string
+export type EmployeeUncheckedUpdateWithoutPersonalInformationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bankInformationId?: Prisma.StringFieldUpdateOperationsInput | string
+  addtionalInformationId?: Prisma.StringFieldUpdateOperationsInput | string
+  presentAddressId?: Prisma.StringFieldUpdateOperationsInput | string
+  permanentAddressId?: Prisma.StringFieldUpdateOperationsInput | string
+  spouseInformationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateWithoutBankInformationInput = {
   id?: string
   createdAt?: Date | string
-  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeesInput
+  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeeInput
   additionalInformation: Prisma.AdditionalInformationCreateNestedOneWithoutEmployeeInput
   presentAddress: Prisma.AddressCreateNestedOneWithoutEmployeePresentAddressInput
   permanentAddress: Prisma.AddressCreateNestedOneWithoutEmployeePermanenttAddressInput
@@ -1205,10 +1195,26 @@ export type EmployeeUpdateManyWithWhereWithoutBankInformationInput = {
   data: Prisma.XOR<Prisma.EmployeeUpdateManyMutationInput, Prisma.EmployeeUncheckedUpdateManyWithoutBankInformationInput>
 }
 
+export type EmployeeScalarWhereInput = {
+  AND?: Prisma.EmployeeScalarWhereInput | Prisma.EmployeeScalarWhereInput[]
+  OR?: Prisma.EmployeeScalarWhereInput[]
+  NOT?: Prisma.EmployeeScalarWhereInput | Prisma.EmployeeScalarWhereInput[]
+  id?: Prisma.StringFilter<"Employee"> | string
+  createdAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
+  personalInformationId?: Prisma.StringFilter<"Employee"> | string
+  bankInformationId?: Prisma.StringFilter<"Employee"> | string
+  addtionalInformationId?: Prisma.StringFilter<"Employee"> | string
+  presentAddressId?: Prisma.StringFilter<"Employee"> | string
+  permanentAddressId?: Prisma.StringFilter<"Employee"> | string
+  spouseInformationId?: Prisma.StringNullableFilter<"Employee"> | string | null
+  emergencyContactId?: Prisma.StringFilter<"Employee"> | string
+  userId?: Prisma.StringFilter<"Employee"> | string
+}
+
 export type EmployeeCreateWithoutAttendanceInput = {
   id?: string
   createdAt?: Date | string
-  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeesInput
+  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeeInput
   bankInformation: Prisma.BankInformationCreateNestedOneWithoutEmployeesInput
   additionalInformation: Prisma.AdditionalInformationCreateNestedOneWithoutEmployeeInput
   presentAddress: Prisma.AddressCreateNestedOneWithoutEmployeePresentAddressInput
@@ -1250,7 +1256,7 @@ export type EmployeeUpdateToOneWithWhereWithoutAttendanceInput = {
 export type EmployeeUpdateWithoutAttendanceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeesNestedInput
+  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   bankInformation?: Prisma.BankInformationUpdateOneRequiredWithoutEmployeesNestedInput
   additionalInformation?: Prisma.AdditionalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   presentAddress?: Prisma.AddressUpdateOneRequiredWithoutEmployeePresentAddressNestedInput
@@ -1276,7 +1282,7 @@ export type EmployeeUncheckedUpdateWithoutAttendanceInput = {
 export type EmployeeCreateWithoutUserInput = {
   id?: string
   createdAt?: Date | string
-  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeesInput
+  personalInformation: Prisma.PersonalInformationCreateNestedOneWithoutEmployeeInput
   bankInformation: Prisma.BankInformationCreateNestedOneWithoutEmployeesInput
   additionalInformation: Prisma.AdditionalInformationCreateNestedOneWithoutEmployeeInput
   presentAddress: Prisma.AddressCreateNestedOneWithoutEmployeePresentAddressInput
@@ -1318,7 +1324,7 @@ export type EmployeeUpdateToOneWithWhereWithoutUserInput = {
 export type EmployeeUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeesNestedInput
+  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   bankInformation?: Prisma.BankInformationUpdateOneRequiredWithoutEmployeesNestedInput
   additionalInformation?: Prisma.AdditionalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   presentAddress?: Prisma.AddressUpdateOneRequiredWithoutEmployeePresentAddressNestedInput
@@ -1341,56 +1347,6 @@ export type EmployeeUncheckedUpdateWithoutUserInput = {
   attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
-export type EmployeeCreateManyPersonalInformationInput = {
-  id?: string
-  createdAt?: Date | string
-  bankInformationId: string
-  addtionalInformationId: string
-  presentAddressId: string
-  permanentAddressId: string
-  spouseInformationId?: string | null
-  emergencyContactId: string
-  userId: string
-}
-
-export type EmployeeUpdateWithoutPersonalInformationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  bankInformation?: Prisma.BankInformationUpdateOneRequiredWithoutEmployeesNestedInput
-  additionalInformation?: Prisma.AdditionalInformationUpdateOneRequiredWithoutEmployeeNestedInput
-  presentAddress?: Prisma.AddressUpdateOneRequiredWithoutEmployeePresentAddressNestedInput
-  permanentAddress?: Prisma.AddressUpdateOneRequiredWithoutEmployeePermanenttAddressNestedInput
-  spouseInformation?: Prisma.ContactInformationUpdateOneWithoutEmployeeSpouseInformationNestedInput
-  emergencyContact?: Prisma.ContactInformationUpdateOneRequiredWithoutEmployeeEmergencyContactNestedInput
-  attendance?: Prisma.AttendanceUpdateManyWithoutEmployeeNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutEmployeeNestedInput
-}
-
-export type EmployeeUncheckedUpdateWithoutPersonalInformationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  bankInformationId?: Prisma.StringFieldUpdateOperationsInput | string
-  addtionalInformationId?: Prisma.StringFieldUpdateOperationsInput | string
-  presentAddressId?: Prisma.StringFieldUpdateOperationsInput | string
-  permanentAddressId?: Prisma.StringFieldUpdateOperationsInput | string
-  spouseInformationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emergencyContactId?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
-}
-
-export type EmployeeUncheckedUpdateManyWithoutPersonalInformationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  bankInformationId?: Prisma.StringFieldUpdateOperationsInput | string
-  addtionalInformationId?: Prisma.StringFieldUpdateOperationsInput | string
-  presentAddressId?: Prisma.StringFieldUpdateOperationsInput | string
-  permanentAddressId?: Prisma.StringFieldUpdateOperationsInput | string
-  spouseInformationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emergencyContactId?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
 export type EmployeeCreateManyBankInformationInput = {
   id?: string
   createdAt?: Date | string
@@ -1406,7 +1362,7 @@ export type EmployeeCreateManyBankInformationInput = {
 export type EmployeeUpdateWithoutBankInformationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeesNestedInput
+  personalInformation?: Prisma.PersonalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   additionalInformation?: Prisma.AdditionalInformationUpdateOneRequiredWithoutEmployeeNestedInput
   presentAddress?: Prisma.AddressUpdateOneRequiredWithoutEmployeePresentAddressNestedInput
   permanentAddress?: Prisma.AddressUpdateOneRequiredWithoutEmployeePermanenttAddressNestedInput
