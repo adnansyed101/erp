@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   BadgeCheck,
@@ -8,8 +8,8 @@ import {
   LogOut,
   Sparkles,
   User,
-} from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+} from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,25 +18,33 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu'
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import { Link } from "@tanstack/react-router"; 
+} from '@/components/ui/sidebar'
+import { Button } from '../ui/button'
+import { authClient } from '@/lib/auth-cilent'
+import { useNavigate } from '@tanstack/react-router'
+import { useTransition } from 'react'
+import { Spinner } from '../ui/spinner'
+import { toast } from 'sonner'
 
 export function NavUser({
   user,
 }: {
   user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
+    name: string
+    email: string
+    avatar: string
+  }
 }) {
-  const { isMobile } = useSidebar();
+  const { isMobile } = useSidebar()
+  const [isTransitionPending, startTransition] = useTransition()
+
+  const navigate = useNavigate()
 
   return (
     <SidebarMenu>
@@ -62,7 +70,7 @@ export function NavUser({
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
+            side={isMobile ? 'bottom' : 'right'}
             align="end"
             sideOffset={4}
           >
@@ -102,14 +110,32 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link to={"/"}>
-                <LogOut />
-                Log out
-              </Link>
+              <Button
+                variant="ghost"
+                className="w-full"
+                size="sm"
+                type="button"
+                disabled={isTransitionPending}
+                onClick={() => {
+                  startTransition(async () => {
+                    await authClient.signOut({
+                      fetchOptions: {
+                        onSuccess: () => {
+                          navigate({ to: '/' })
+                          toast.success('Logged out successfully.')
+                        },
+                      },
+                    })
+                  })
+                }}
+              >
+                {isTransitionPending ? <Spinner /> : <LogOut />}
+                Sign out
+              </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  );
+  )
 }
