@@ -31,6 +31,7 @@ import { Route as HrManagementAttendanceAttendanceManagementRouteImport } from '
 import { Route as ApiHrManagementEmployeesRouteImport } from './routes/api/hr-management/employees'
 import { Route as ApiHrManagementAttendanceRouteImport } from './routes/api/hr-management/attendance'
 import { Route as ApiHrManagementEmployeeIdRouteImport } from './routes/api/hr-management/$employeeId'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
@@ -159,6 +160,11 @@ const ApiHrManagementEmployeeIdRoute =
     path: '/api/hr-management/$employeeId',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -169,6 +175,7 @@ export interface FileRoutesByFullPath {
   '/hr-management/dashboard': typeof HrManagementDashboardRoute
   '/hr-management/employee-list': typeof HrManagementEmployeeListRoute
   '/hr-management/personal-information-management': typeof HrManagementPersonalInformationManagementRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/hr-management/$employeeId': typeof ApiHrManagementEmployeeIdRoute
   '/api/hr-management/attendance': typeof ApiHrManagementAttendanceRoute
   '/api/hr-management/employees': typeof ApiHrManagementEmployeesRoute
@@ -193,6 +200,7 @@ export interface FileRoutesByTo {
   '/hr-management/dashboard': typeof HrManagementDashboardRoute
   '/hr-management/employee-list': typeof HrManagementEmployeeListRoute
   '/hr-management/personal-information-management': typeof HrManagementPersonalInformationManagementRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/hr-management/$employeeId': typeof ApiHrManagementEmployeeIdRoute
   '/api/hr-management/attendance': typeof ApiHrManagementAttendanceRoute
   '/api/hr-management/employees': typeof ApiHrManagementEmployeesRoute
@@ -218,6 +226,7 @@ export interface FileRoutesById {
   '/hr-management/dashboard': typeof HrManagementDashboardRoute
   '/hr-management/employee-list': typeof HrManagementEmployeeListRoute
   '/hr-management/personal-information-management': typeof HrManagementPersonalInformationManagementRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/hr-management/$employeeId': typeof ApiHrManagementEmployeeIdRoute
   '/api/hr-management/attendance': typeof ApiHrManagementAttendanceRoute
   '/api/hr-management/employees': typeof ApiHrManagementEmployeesRoute
@@ -244,6 +253,7 @@ export interface FileRouteTypes {
     | '/hr-management/dashboard'
     | '/hr-management/employee-list'
     | '/hr-management/personal-information-management'
+    | '/api/auth/$'
     | '/api/hr-management/$employeeId'
     | '/api/hr-management/attendance'
     | '/api/hr-management/employees'
@@ -268,6 +278,7 @@ export interface FileRouteTypes {
     | '/hr-management/dashboard'
     | '/hr-management/employee-list'
     | '/hr-management/personal-information-management'
+    | '/api/auth/$'
     | '/api/hr-management/$employeeId'
     | '/api/hr-management/attendance'
     | '/api/hr-management/employees'
@@ -292,6 +303,7 @@ export interface FileRouteTypes {
     | '/hr-management/dashboard'
     | '/hr-management/employee-list'
     | '/hr-management/personal-information-management'
+    | '/api/auth/$'
     | '/api/hr-management/$employeeId'
     | '/api/hr-management/attendance'
     | '/api/hr-management/employees'
@@ -312,6 +324,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HrManagementRouteRoute: typeof HrManagementRouteRouteWithChildren
   HomeRoute: typeof HomeRoute
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiHrManagementEmployeeIdRoute: typeof ApiHrManagementEmployeeIdRoute
   ApiHrManagementAttendanceRoute: typeof ApiHrManagementAttendanceRoute
   ApiHrManagementEmployeesRoute: typeof ApiHrManagementEmployeesRoute
@@ -473,6 +486,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiHrManagementEmployeeIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -544,6 +564,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HrManagementRouteRoute: HrManagementRouteRouteWithChildren,
   HomeRoute: HomeRoute,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiHrManagementEmployeeIdRoute: ApiHrManagementEmployeeIdRoute,
   ApiHrManagementAttendanceRoute: ApiHrManagementAttendanceRoute,
   ApiHrManagementEmployeesRoute: ApiHrManagementEmployeesRoute,
