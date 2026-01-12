@@ -28,7 +28,6 @@ import { PersonalInformationSchema } from '@/lib/validators/employee.validator'
 import { useState, useTransition } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import { toast } from 'sonner'
-import slugify from 'slugify'
 import {
   Popover,
   PopoverContent,
@@ -36,9 +35,8 @@ import {
 } from '@/components/ui/popover'
 import { ChevronDownIcon } from 'lucide-react'
 import { Calendar } from '@/components/ui/calendar'
-import { Image } from '@unpic/react'
-import loader from '@/assets/loader.gif'
 import { format } from 'date-fns'
+import { Spinner } from '@/components/ui/spinner'
 
 // Create Supabase client
 const supabase = createClient(
@@ -238,7 +236,7 @@ function PersonalInformationPage() {
                   <FormItem>
                     <FormLabel>Office Phone Number</FormLabel>
                     <FormControl>
-                      <Input placeholder="+1 (555) 000-0000" {...field} />
+                      <Input placeholder="017********" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -252,7 +250,7 @@ function PersonalInformationPage() {
                   <FormItem>
                     <FormLabel>Personal Phone Number</FormLabel>
                     <FormControl>
-                      <Input placeholder="+1 (555) 000-0000" {...field} />
+                      <Input placeholder="017********" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -495,22 +493,18 @@ function PersonalInformationPage() {
                       <div className="flex-start space-x-2">
                         {imageFile ? (
                           <>
-                            <img
-                              src={
-                                image ? image : URL.createObjectURL(imageFile)
-                              }
-                              alt="Employee Image"
-                              className="w-40 h-40 object-cover object-center rounded-sm "
-                              width={200}
-                              height={200}
-                              srcSet={image}
-                            />
-                            {isPending && (
-                              <Image
-                                src={loader}
-                                alt="Loader GIF"
+                            {isPending ? (
+                              <Spinner className="size-20" />
+                            ) : (
+                              <img
+                                src={
+                                  image ? image : URL.createObjectURL(imageFile)
+                                }
+                                alt="Employee Image"
+                                className="w-40 h-40 object-cover object-center rounded-sm "
                                 width={200}
                                 height={200}
+                                srcSet={image}
                               />
                             )}
                             {!image && (
@@ -542,7 +536,7 @@ function PersonalInformationPage() {
                                         await supabase.storage
                                           .from('erp')
                                           .upload(
-                                            `employee-photos/${slugify(form.getValues('fullName'))}`,
+                                            `employee-photos/${form.getValues('officeEmail')}`,
                                             imageFile ? imageFile : '',
                                           )
 
