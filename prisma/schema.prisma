@@ -105,7 +105,7 @@ model PersonalInformation {
   dateOfBirth        DateTime   @default(now())
   dateOfConfirmation DateTime   @default(now())
   createdAt          DateTime   @default(now())
-  employees          Employee[]
+  employee           Employee?
 }
 
 model BankInformation {
@@ -139,11 +139,11 @@ model Employee {
   id                     String                @id @default(uuid())
   createdAt              DateTime              @default(now())
   // Personal Information Relation
-  personalInformationId  String
-  personalInformation    PersonalInformation   @relation(fields: [personalInformationId], references: [id])
+  personalInformationId  String                @unique
+  personalInformation    PersonalInformation   @relation(fields: [personalInformationId], references: [id], onDelete: Cascade)
   // Bank Information Relation
-  bankInformation        BankInformation       @relation(fields: [bankInformationId], references: [id])
   bankInformationId      String
+  bankInformation        BankInformation       @relation(fields: [bankInformationId], references: [id], onDelete: Cascade)
   // Addtional Informatio Relation
   addtionalInformationId String                @unique
   additionalInformation  AdditionalInformation @relation(fields: [addtionalInformationId], references: [id], onDelete: Cascade)
