@@ -21,36 +21,64 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { authClient } from '@/lib/auth-cilent'
+import { toast } from 'sonner'
+import { useState, useTransition } from 'react'
+import { Eye, EyeOff } from 'lucide-react'
+import DefaultLoadingComponent from '@/components/shared/default-loading-component'
+import { Spinner } from '@/components/ui/spinner'
+import { authLoginMiddleware } from '@/middleware/auth'
 
-export const Route = createFileRoute('/')({ component: LoginPage })
+export const Route = createFileRoute('/')({
+  component: LoginPage,
+  pendingComponent: DefaultLoadingComponent,
+  server: {
+    middleware: [authLoginMiddleware],
+  },
+})
 
 // 1. Define the schema
 const formSchema = z.object({
   email: z.email({
-    message: "Please enter a valid email address.",
+    message: 'Please enter a valid email address.',
   }),
   password: z.string().min(1, {
-    message: "Password is required.",
+    message: 'Password is required.',
   }),
 })
 
 function LoginPage() {
   const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false)
+  const [isTransitionPending, startTransition] = useTransition()
 
   // 2. Define the form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "admin@gmail.com",
-      password: "123456789",
+      email: 'sirgeant10@gmail.com',
+      password: 'Arbree@2026',
     },
   })
 
   // 3. Define the submit handler
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // console.log(values)
-    return navigate({ to: '/home' })
+    startTransition(async () => {
+      const { error } = await authClient.signIn.email({
+        email: values.email,
+        password: values.password,
+        rememberMe: true,
+      })
+
+      if (error) {
+        toast.error(error.message)
+        return
+      }
+
+      toast.success('Logged in.')
+
+      return navigate({ to: '/home' })
+    })
   }
 
   return (
@@ -74,7 +102,10 @@ function LoginPage() {
           </CardHeader>
           <CardContent>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
                 <div className="grid gap-6">
                   {/* Email Field */}
                   <FormField
@@ -83,7 +114,7 @@ function LoginPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Email</FormLabel>
-                        <FormControl>
+                        <FormControl className="relative">
                           <Input
                             placeholder="m@example.com"
                             type="email"
@@ -111,20 +142,46 @@ function LoginPage() {
                           </a>
                         </div>
                         <FormControl>
-                          <Input type="password" {...field} />
+                          <div className="relative">
+                            <Input
+                              type={showPassword ? 'text' : 'password'}
+                              className="bg-background"
+                              id="password-toggle"
+                              placeholder="Enter your password"
+                              {...field}
+                            />
+                            <Button
+                              className="absolute top-0 right-0 h-full px-3 hover:bg-transparent"
+                              onClick={() => setShowPassword(!showPassword)}
+                              size="icon"
+                              type="button"
+                              variant="ghost"
+                            >
+                              {showPassword ? (
+                                <EyeOff className="h-4 w-4 text-muted-foreground" />
+                              ) : (
+                                <Eye className="h-4 w-4 text-muted-foreground" />
+                              )}
+                            </Button>
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
 
-                  <Button type="submit" className="w-full">
-                    Login
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={isTransitionPending}
+                  >
+                    {isTransitionPending && <Spinner />}
+                    Sign In
                   </Button>
                 </div>
 
                 <div className="text-center text-sm">
-                  Don&apos;t have an account?{" "}
+                  Don&apos;t have an account?{' '}
                   <a href="#" className="underline underline-offset-4">
                     Sign up
                   </a>
