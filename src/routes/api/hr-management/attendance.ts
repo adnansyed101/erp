@@ -4,6 +4,7 @@ import {
   AttendanceWithEmployeeData,
 } from '@/lib/types/attendance.type'
 import { formatError } from '@/lib/utils'
+import { authApiMiddleware } from '@/middleware/auth'
 import { createFileRoute } from '@tanstack/react-router'
 import z from 'zod'
 
@@ -15,6 +16,7 @@ const manualAttendanceSeachSchema = z.object({
 export const Route = createFileRoute('/api/hr-management/attendance')({
   validateSearch: (search) => manualAttendanceSeachSchema.parse(search),
   server: {
+    middleware: [authApiMiddleware],
     handlers: {
       GET: async ({ request }) => {
         const { searchParams } = new URL(request.url)

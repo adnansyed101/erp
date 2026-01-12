@@ -3,6 +3,8 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Employee } from '@/lib/types/employee.types'
 import { prisma } from '@/db'
 import z from 'zod'
+import { auth } from '@/lib/auth'
+import { authApiMiddleware } from '@/middleware/auth'
 
 const employeesSearchSchema = z.object({
   limit: z.number(),
@@ -12,6 +14,7 @@ const employeesSearchSchema = z.object({
 export const Route = createFileRoute('/api/hr-management/employees')({
   validateSearch: (search) => employeesSearchSchema.parse(search),
   server: {
+    middleware: [authApiMiddleware],
     handlers: {
       GET: async ({ request }) => {
         const { searchParams } = new URL(request.url)
@@ -60,6 +63,16 @@ export const Route = createFileRoute('/api/hr-management/employees')({
         const body: Employee = await request.json()
 
         try {
+          const signUpData = await auth.api.signUpEmail({
+            body: {
+              email: body.personalInformation.officeEmail,
+              password: 'Arbree@2026',
+              name: body.personalInformation.fullName,
+              role: body.personalInformation.role,
+              image: body.personalInformation.imageUrl,
+            },
+          })
+
           const newEmployee = await prisma.employee.create({
             data: {
               personalInformation: {
@@ -96,6 +109,9 @@ export const Route = createFileRoute('/api/hr-management/employees')({
                 create: {
                   ...body.bankInformation,
                 },
+              },
+              user: {
+                connect: { id: signUpData.user.id },
               },
             },
           })

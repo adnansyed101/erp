@@ -1,9 +1,11 @@
 import { prisma } from '@/db'
 import { formatError } from '@/lib/utils'
+import { authApiMiddleware } from '@/middleware/auth'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/api/hr-management/$employeeId')({
   server: {
+    middleware: [authApiMiddleware],
     handlers: {
       GET: async ({ params }) => {
         const { employeeId } = params
