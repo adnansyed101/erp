@@ -1,10 +1,14 @@
 import { Links } from '@/lib/types/general.types'
+import { authMiddleware } from '@/middleware/auth'
 import MainLayout from '@/providers/main-layout'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { ArrowLeftToLine, Home, ListCheck, Logs, User } from 'lucide-react'
 
 export const Route = createFileRoute('/hr-management')({
   component: RouteComponent,
+  server: {
+    middleware: [authMiddleware],
+  },
 })
 
 function RouteComponent() {

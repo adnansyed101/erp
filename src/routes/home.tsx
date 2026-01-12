@@ -1,5 +1,7 @@
 import ActivityCard from '@/components/shared/activity-card'
+import DefaultLoadingComponent from '@/components/shared/default-loading-component'
 import type { Links } from '@/lib/types/general.types'
+import { authMiddleware } from '@/middleware/auth'
 import MainLayout from '@/providers/main-layout'
 import { createFileRoute } from '@tanstack/react-router'
 import {
@@ -27,6 +29,10 @@ import {
 
 export const Route = createFileRoute('/home')({
   component: RouteComponent,
+  pendingComponent: DefaultLoadingComponent,
+  server: {
+    middleware: [authMiddleware],
+  },
 })
 
 function RouteComponent() {
