@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -22,21 +23,43 @@ enum MaritalStatus {
 }
 
 enum Role {
-  CEO
+  ADMIN
+  BOARD_OWNER
+  CEO_MANAGING_DIRECTOR
   CTO
-  ENGINEERING_MANAGER
+  COO
+  DEPARTMENT_HEAD
+  ENGINEERING_HEAD
+  DESIGN_HEAD
+  PROJECT_MANAGEMENT_HEAD
+  PRODUCT_HEAD
+  HR_HEAD
+  FINANCE_HEAD
+  SALES_MARKETING_HEAD
+  SUPPORT_OPERATIONS_HEAD
   TECH_LEAD
-  DEVELOPER
-  DESIGNER
+  QA_LEAD
+  DEVOPS_ENGINEER
+  PRODUCT_MANAGER
   PROJECT_MANAGER
-}
-
-enum Department {
-  EXECUTIVE
-  ENGINEERING
-  PRODUCT
-  DESIGN
-  SALES
+  SENIOR_DEVELOPER
+  SCRUM_MASTER
+  HR_MANAGER
+  SALES_MANAGER
+  MID_LEVEL_DEVELOPER
+  UI_UX_DESIGNER
+  ACCOUNTANT
+  BUSINESS_DEVELOPMENT_EXECUTIVE
+  QA_ENGINEER
+  PAYROLL_OFFICER
+  JUNIOR_DEVELOPER
+  GRAPHIC_DESIGNER
+  HR_EXECUTIVE
+  MARKETING_EXECUTIVE
+  OFFICE_ADMIN
+  IT_SUPPORT
+  INTERN
+  CLIENT
 }
 
 model Address {
@@ -85,13 +108,13 @@ model AdditionalInformation {
 }
 
 model PersonalInformation {
-  id                 String     @id @default(uuid())
+  id                 String    @id @default(uuid())
   fullName           String
   imageUrl           String
   role               Role
-  department         Department
-  officeEmail        String     @unique
-  personalEmail      String     @unique
+  score              Int
+  officeEmail        String    @unique
+  personalEmail      String    @unique
   personalNumber     String
   officeNumber       String
   employeeType       String
@@ -102,9 +125,9 @@ model PersonalInformation {
   religion           String
   joiningDesignation String
   currentDesignation String
-  dateOfBirth        DateTime   @default(now())
-  dateOfConfirmation DateTime   @default(now())
-  createdAt          DateTime   @default(now())
+  dateOfBirth        DateTime  @default(now())
+  dateOfConfirmation DateTime  @default(now())
+  createdAt          DateTime  @default(now())
   employee           Employee?
 }
 
@@ -135,6 +158,15 @@ model Attendance {
   employeeId       String?
 }
 
+model Leave {
+  id        String    @id @default(uuid())
+  casual    Int       @default(14)
+  sick      Int       @default(10)
+  earned    Int       @default(10)
+  createdAt DateTime  @default(now())
+  employee  Employee?
+}
+
 model Employee {
   id                     String                @id @default(uuid())
   createdAt              DateTime              @default(now())
@@ -160,6 +192,9 @@ model Employee {
   emergencyContactId     String                @unique
   // Attendance
   attendance             Attendance[]
+  // Leave Relation
+  remainingLeave         Leave                 @relation(fields: [remainingLeaveId], references: [id], onDelete: Cascade)
+  remainingLeaveId       String                @unique
   // User Relation
   user                   User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId                 String                @unique
@@ -177,7 +212,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   employee      Employee?
-
+  score Int @default(60)
   @@unique([email])
   @@map("user")
 }
