@@ -70,6 +70,11 @@ export type BankInformation = Prisma.BankInformationModel
  */
 export type Attendance = Prisma.AttendanceModel
 /**
+ * Model Leave
+ * 
+ */
+export type Leave = Prisma.LeaveModel
+/**
  * Model Employee
  * 
  */

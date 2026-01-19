@@ -57,6 +57,7 @@ export const ModelName = {
   PersonalInformation: 'PersonalInformation',
   BankInformation: 'BankInformation',
   Attendance: 'Attendance',
+  Leave: 'Leave',
   Employee: 'Employee',
   User: 'User',
   Session: 'Session',
@@ -134,7 +135,7 @@ export const PersonalInformationScalarFieldEnum = {
   fullName: 'fullName',
   imageUrl: 'imageUrl',
   role: 'role',
-  department: 'department',
+  score: 'score',
   officeEmail: 'officeEmail',
   personalEmail: 'personalEmail',
   personalNumber: 'personalNumber',
@@ -181,6 +182,17 @@ export const AttendanceScalarFieldEnum = {
 export type AttendanceScalarFieldEnum = (typeof AttendanceScalarFieldEnum)[keyof typeof AttendanceScalarFieldEnum]
 
 
+export const LeaveScalarFieldEnum = {
+  id: 'id',
+  casual: 'casual',
+  sick: 'sick',
+  earned: 'earned',
+  createdAt: 'createdAt'
+} as const
+
+export type LeaveScalarFieldEnum = (typeof LeaveScalarFieldEnum)[keyof typeof LeaveScalarFieldEnum]
+
+
 export const EmployeeScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
@@ -191,6 +203,7 @@ export const EmployeeScalarFieldEnum = {
   permanentAddressId: 'permanentAddressId',
   spouseInformationId: 'spouseInformationId',
   emergencyContactId: 'emergencyContactId',
+  remainingLeaveId: 'remainingLeaveId',
   userId: 'userId'
 } as const
 
@@ -205,7 +218,8 @@ export const UserScalarFieldEnum = {
   image: 'image',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  role: 'role'
+  role: 'role',
+  score: 'score'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]

@@ -20,8 +20,18 @@ export type PersonalInformationModel = runtime.Types.Result.DefaultSelection<Pri
 
 export type AggregatePersonalInformation = {
   _count: PersonalInformationCountAggregateOutputType | null
+  _avg: PersonalInformationAvgAggregateOutputType | null
+  _sum: PersonalInformationSumAggregateOutputType | null
   _min: PersonalInformationMinAggregateOutputType | null
   _max: PersonalInformationMaxAggregateOutputType | null
+}
+
+export type PersonalInformationAvgAggregateOutputType = {
+  score: number | null
+}
+
+export type PersonalInformationSumAggregateOutputType = {
+  score: number | null
 }
 
 export type PersonalInformationMinAggregateOutputType = {
@@ -29,7 +39,7 @@ export type PersonalInformationMinAggregateOutputType = {
   fullName: string | null
   imageUrl: string | null
   role: $Enums.Role | null
-  department: $Enums.Department | null
+  score: number | null
   officeEmail: string | null
   personalEmail: string | null
   personalNumber: string | null
@@ -52,7 +62,7 @@ export type PersonalInformationMaxAggregateOutputType = {
   fullName: string | null
   imageUrl: string | null
   role: $Enums.Role | null
-  department: $Enums.Department | null
+  score: number | null
   officeEmail: string | null
   personalEmail: string | null
   personalNumber: string | null
@@ -75,7 +85,7 @@ export type PersonalInformationCountAggregateOutputType = {
   fullName: number
   imageUrl: number
   role: number
-  department: number
+  score: number
   officeEmail: number
   personalEmail: number
   personalNumber: number
@@ -95,12 +105,20 @@ export type PersonalInformationCountAggregateOutputType = {
 }
 
 
+export type PersonalInformationAvgAggregateInputType = {
+  score?: true
+}
+
+export type PersonalInformationSumAggregateInputType = {
+  score?: true
+}
+
 export type PersonalInformationMinAggregateInputType = {
   id?: true
   fullName?: true
   imageUrl?: true
   role?: true
-  department?: true
+  score?: true
   officeEmail?: true
   personalEmail?: true
   personalNumber?: true
@@ -123,7 +141,7 @@ export type PersonalInformationMaxAggregateInputType = {
   fullName?: true
   imageUrl?: true
   role?: true
-  department?: true
+  score?: true
   officeEmail?: true
   personalEmail?: true
   personalNumber?: true
@@ -146,7 +164,7 @@ export type PersonalInformationCountAggregateInputType = {
   fullName?: true
   imageUrl?: true
   role?: true
-  department?: true
+  score?: true
   officeEmail?: true
   personalEmail?: true
   personalNumber?: true
@@ -203,6 +221,18 @@ export type PersonalInformationAggregateArgs<ExtArgs extends runtime.Types.Exten
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: PersonalInformationAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: PersonalInformationSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: PersonalInformationMinAggregateInputType
@@ -233,6 +263,8 @@ export type PersonalInformationGroupByArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   _count?: PersonalInformationCountAggregateInputType | true
+  _avg?: PersonalInformationAvgAggregateInputType
+  _sum?: PersonalInformationSumAggregateInputType
   _min?: PersonalInformationMinAggregateInputType
   _max?: PersonalInformationMaxAggregateInputType
 }
@@ -242,7 +274,7 @@ export type PersonalInformationGroupByOutputType = {
   fullName: string
   imageUrl: string
   role: $Enums.Role
-  department: $Enums.Department
+  score: number
   officeEmail: string
   personalEmail: string
   personalNumber: string
@@ -259,6 +291,8 @@ export type PersonalInformationGroupByOutputType = {
   dateOfConfirmation: Date
   createdAt: Date
   _count: PersonalInformationCountAggregateOutputType | null
+  _avg: PersonalInformationAvgAggregateOutputType | null
+  _sum: PersonalInformationSumAggregateOutputType | null
   _min: PersonalInformationMinAggregateOutputType | null
   _max: PersonalInformationMaxAggregateOutputType | null
 }
@@ -286,7 +320,7 @@ export type PersonalInformationWhereInput = {
   fullName?: Prisma.StringFilter<"PersonalInformation"> | string
   imageUrl?: Prisma.StringFilter<"PersonalInformation"> | string
   role?: Prisma.EnumRoleFilter<"PersonalInformation"> | $Enums.Role
-  department?: Prisma.EnumDepartmentFilter<"PersonalInformation"> | $Enums.Department
+  score?: Prisma.IntFilter<"PersonalInformation"> | number
   officeEmail?: Prisma.StringFilter<"PersonalInformation"> | string
   personalEmail?: Prisma.StringFilter<"PersonalInformation"> | string
   personalNumber?: Prisma.StringFilter<"PersonalInformation"> | string
@@ -310,7 +344,7 @@ export type PersonalInformationOrderByWithRelationInput = {
   fullName?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  department?: Prisma.SortOrder
+  score?: Prisma.SortOrder
   officeEmail?: Prisma.SortOrder
   personalEmail?: Prisma.SortOrder
   personalNumber?: Prisma.SortOrder
@@ -339,7 +373,7 @@ export type PersonalInformationWhereUniqueInput = Prisma.AtLeast<{
   fullName?: Prisma.StringFilter<"PersonalInformation"> | string
   imageUrl?: Prisma.StringFilter<"PersonalInformation"> | string
   role?: Prisma.EnumRoleFilter<"PersonalInformation"> | $Enums.Role
-  department?: Prisma.EnumDepartmentFilter<"PersonalInformation"> | $Enums.Department
+  score?: Prisma.IntFilter<"PersonalInformation"> | number
   personalNumber?: Prisma.StringFilter<"PersonalInformation"> | string
   officeNumber?: Prisma.StringFilter<"PersonalInformation"> | string
   employeeType?: Prisma.StringFilter<"PersonalInformation"> | string
@@ -361,7 +395,7 @@ export type PersonalInformationOrderByWithAggregationInput = {
   fullName?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  department?: Prisma.SortOrder
+  score?: Prisma.SortOrder
   officeEmail?: Prisma.SortOrder
   personalEmail?: Prisma.SortOrder
   personalNumber?: Prisma.SortOrder
@@ -378,8 +412,10 @@ export type PersonalInformationOrderByWithAggregationInput = {
   dateOfConfirmation?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.PersonalInformationCountOrderByAggregateInput
+  _avg?: Prisma.PersonalInformationAvgOrderByAggregateInput
   _max?: Prisma.PersonalInformationMaxOrderByAggregateInput
   _min?: Prisma.PersonalInformationMinOrderByAggregateInput
+  _sum?: Prisma.PersonalInformationSumOrderByAggregateInput
 }
 
 export type PersonalInformationScalarWhereWithAggregatesInput = {
@@ -390,7 +426,7 @@ export type PersonalInformationScalarWhereWithAggregatesInput = {
   fullName?: Prisma.StringWithAggregatesFilter<"PersonalInformation"> | string
   imageUrl?: Prisma.StringWithAggregatesFilter<"PersonalInformation"> | string
   role?: Prisma.EnumRoleWithAggregatesFilter<"PersonalInformation"> | $Enums.Role
-  department?: Prisma.EnumDepartmentWithAggregatesFilter<"PersonalInformation"> | $Enums.Department
+  score?: Prisma.IntWithAggregatesFilter<"PersonalInformation"> | number
   officeEmail?: Prisma.StringWithAggregatesFilter<"PersonalInformation"> | string
   personalEmail?: Prisma.StringWithAggregatesFilter<"PersonalInformation"> | string
   personalNumber?: Prisma.StringWithAggregatesFilter<"PersonalInformation"> | string
@@ -413,7 +449,7 @@ export type PersonalInformationCreateInput = {
   fullName: string
   imageUrl: string
   role: $Enums.Role
-  department: $Enums.Department
+  score: number
   officeEmail: string
   personalEmail: string
   personalNumber: string
@@ -437,7 +473,7 @@ export type PersonalInformationUncheckedCreateInput = {
   fullName: string
   imageUrl: string
   role: $Enums.Role
-  department: $Enums.Department
+  score: number
   officeEmail: string
   personalEmail: string
   personalNumber: string
@@ -461,7 +497,7 @@ export type PersonalInformationUpdateInput = {
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  department?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
+  score?: Prisma.IntFieldUpdateOperationsInput | number
   officeEmail?: Prisma.StringFieldUpdateOperationsInput | string
   personalEmail?: Prisma.StringFieldUpdateOperationsInput | string
   personalNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -485,7 +521,7 @@ export type PersonalInformationUncheckedUpdateInput = {
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  department?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
+  score?: Prisma.IntFieldUpdateOperationsInput | number
   officeEmail?: Prisma.StringFieldUpdateOperationsInput | string
   personalEmail?: Prisma.StringFieldUpdateOperationsInput | string
   personalNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -509,7 +545,7 @@ export type PersonalInformationCreateManyInput = {
   fullName: string
   imageUrl: string
   role: $Enums.Role
-  department: $Enums.Department
+  score: number
   officeEmail: string
   personalEmail: string
   personalNumber: string
@@ -532,7 +568,7 @@ export type PersonalInformationUpdateManyMutationInput = {
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  department?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
+  score?: Prisma.IntFieldUpdateOperationsInput | number
   officeEmail?: Prisma.StringFieldUpdateOperationsInput | string
   personalEmail?: Prisma.StringFieldUpdateOperationsInput | string
   personalNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -555,7 +591,7 @@ export type PersonalInformationUncheckedUpdateManyInput = {
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  department?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
+  score?: Prisma.IntFieldUpdateOperationsInput | number
   officeEmail?: Prisma.StringFieldUpdateOperationsInput | string
   personalEmail?: Prisma.StringFieldUpdateOperationsInput | string
   personalNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -578,7 +614,7 @@ export type PersonalInformationCountOrderByAggregateInput = {
   fullName?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  department?: Prisma.SortOrder
+  score?: Prisma.SortOrder
   officeEmail?: Prisma.SortOrder
   personalEmail?: Prisma.SortOrder
   personalNumber?: Prisma.SortOrder
@@ -596,12 +632,16 @@ export type PersonalInformationCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
 }
 
+export type PersonalInformationAvgOrderByAggregateInput = {
+  score?: Prisma.SortOrder
+}
+
 export type PersonalInformationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  department?: Prisma.SortOrder
+  score?: Prisma.SortOrder
   officeEmail?: Prisma.SortOrder
   personalEmail?: Prisma.SortOrder
   personalNumber?: Prisma.SortOrder
@@ -624,7 +664,7 @@ export type PersonalInformationMinOrderByAggregateInput = {
   fullName?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  department?: Prisma.SortOrder
+  score?: Prisma.SortOrder
   officeEmail?: Prisma.SortOrder
   personalEmail?: Prisma.SortOrder
   personalNumber?: Prisma.SortOrder
@@ -642,6 +682,10 @@ export type PersonalInformationMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
 }
 
+export type PersonalInformationSumOrderByAggregateInput = {
+  score?: Prisma.SortOrder
+}
+
 export type PersonalInformationScalarRelationFilter = {
   is?: Prisma.PersonalInformationWhereInput
   isNot?: Prisma.PersonalInformationWhereInput
@@ -651,8 +695,12 @@ export type EnumRoleFieldUpdateOperationsInput = {
   set?: $Enums.Role
 }
 
-export type EnumDepartmentFieldUpdateOperationsInput = {
-  set?: $Enums.Department
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type BoolFieldUpdateOperationsInput = {
@@ -682,7 +730,7 @@ export type PersonalInformationCreateWithoutEmployeeInput = {
   fullName: string
   imageUrl: string
   role: $Enums.Role
-  department: $Enums.Department
+  score: number
   officeEmail: string
   personalEmail: string
   personalNumber: string
@@ -705,7 +753,7 @@ export type PersonalInformationUncheckedCreateWithoutEmployeeInput = {
   fullName: string
   imageUrl: string
   role: $Enums.Role
-  department: $Enums.Department
+  score: number
   officeEmail: string
   personalEmail: string
   personalNumber: string
@@ -744,7 +792,7 @@ export type PersonalInformationUpdateWithoutEmployeeInput = {
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  department?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
+  score?: Prisma.IntFieldUpdateOperationsInput | number
   officeEmail?: Prisma.StringFieldUpdateOperationsInput | string
   personalEmail?: Prisma.StringFieldUpdateOperationsInput | string
   personalNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -767,7 +815,7 @@ export type PersonalInformationUncheckedUpdateWithoutEmployeeInput = {
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  department?: Prisma.EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
+  score?: Prisma.IntFieldUpdateOperationsInput | number
   officeEmail?: Prisma.StringFieldUpdateOperationsInput | string
   personalEmail?: Prisma.StringFieldUpdateOperationsInput | string
   personalNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -792,7 +840,7 @@ export type PersonalInformationSelect<ExtArgs extends runtime.Types.Extensions.I
   fullName?: boolean
   imageUrl?: boolean
   role?: boolean
-  department?: boolean
+  score?: boolean
   officeEmail?: boolean
   personalEmail?: boolean
   personalNumber?: boolean
@@ -816,7 +864,7 @@ export type PersonalInformationSelectCreateManyAndReturn<ExtArgs extends runtime
   fullName?: boolean
   imageUrl?: boolean
   role?: boolean
-  department?: boolean
+  score?: boolean
   officeEmail?: boolean
   personalEmail?: boolean
   personalNumber?: boolean
@@ -839,7 +887,7 @@ export type PersonalInformationSelectUpdateManyAndReturn<ExtArgs extends runtime
   fullName?: boolean
   imageUrl?: boolean
   role?: boolean
-  department?: boolean
+  score?: boolean
   officeEmail?: boolean
   personalEmail?: boolean
   personalNumber?: boolean
@@ -862,7 +910,7 @@ export type PersonalInformationSelectScalar = {
   fullName?: boolean
   imageUrl?: boolean
   role?: boolean
-  department?: boolean
+  score?: boolean
   officeEmail?: boolean
   personalEmail?: boolean
   personalNumber?: boolean
@@ -880,7 +928,7 @@ export type PersonalInformationSelectScalar = {
   createdAt?: boolean
 }
 
-export type PersonalInformationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "imageUrl" | "role" | "department" | "officeEmail" | "personalEmail" | "personalNumber" | "officeNumber" | "employeeType" | "employeeStatus" | "nationality" | "disability" | "gender" | "religion" | "joiningDesignation" | "currentDesignation" | "dateOfBirth" | "dateOfConfirmation" | "createdAt", ExtArgs["result"]["personalInformation"]>
+export type PersonalInformationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "imageUrl" | "role" | "score" | "officeEmail" | "personalEmail" | "personalNumber" | "officeNumber" | "employeeType" | "employeeStatus" | "nationality" | "disability" | "gender" | "religion" | "joiningDesignation" | "currentDesignation" | "dateOfBirth" | "dateOfConfirmation" | "createdAt", ExtArgs["result"]["personalInformation"]>
 export type PersonalInformationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   employee?: boolean | Prisma.PersonalInformation$employeeArgs<ExtArgs>
 }
@@ -897,7 +945,7 @@ export type $PersonalInformationPayload<ExtArgs extends runtime.Types.Extensions
     fullName: string
     imageUrl: string
     role: $Enums.Role
-    department: $Enums.Department
+    score: number
     officeEmail: string
     personalEmail: string
     personalNumber: string
@@ -1341,7 +1389,7 @@ export interface PersonalInformationFieldRefs {
   readonly fullName: Prisma.FieldRef<"PersonalInformation", 'String'>
   readonly imageUrl: Prisma.FieldRef<"PersonalInformation", 'String'>
   readonly role: Prisma.FieldRef<"PersonalInformation", 'Role'>
-  readonly department: Prisma.FieldRef<"PersonalInformation", 'Department'>
+  readonly score: Prisma.FieldRef<"PersonalInformation", 'Int'>
   readonly officeEmail: Prisma.FieldRef<"PersonalInformation", 'String'>
   readonly personalEmail: Prisma.FieldRef<"PersonalInformation", 'String'>
   readonly personalNumber: Prisma.FieldRef<"PersonalInformation", 'String'>

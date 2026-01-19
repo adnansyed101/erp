@@ -20,8 +20,18 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  score: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  score: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -33,6 +43,7 @@ export type UserMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   role: string | null
+  score: number | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -44,6 +55,7 @@ export type UserMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   role: string | null
+  score: number | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -55,9 +67,18 @@ export type UserCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   role: number
+  score: number
   _all: number
 }
 
+
+export type UserAvgAggregateInputType = {
+  score?: true
+}
+
+export type UserSumAggregateInputType = {
+  score?: true
+}
 
 export type UserMinAggregateInputType = {
   id?: true
@@ -68,6 +89,7 @@ export type UserMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   role?: true
+  score?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -79,6 +101,7 @@ export type UserMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   role?: true
+  score?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -90,6 +113,7 @@ export type UserCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   role?: true
+  score?: true
   _all?: true
 }
 
@@ -131,6 +155,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -161,6 +197,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -174,7 +212,10 @@ export type UserGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   role: string
+  score: number
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -206,6 +247,7 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   role?: Prisma.StringFilter<"User"> | string
+  score?: Prisma.IntFilter<"User"> | number
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
@@ -220,6 +262,7 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  score?: Prisma.SortOrder
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   employee?: Prisma.EmployeeOrderByWithRelationInput
@@ -237,6 +280,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   role?: Prisma.StringFilter<"User"> | string
+  score?: Prisma.IntFilter<"User"> | number
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
@@ -251,9 +295,12 @@ export type UserOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  score?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -268,6 +315,7 @@ export type UserScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   role?: Prisma.StringWithAggregatesFilter<"User"> | string
+  score?: Prisma.IntWithAggregatesFilter<"User"> | number
 }
 
 export type UserCreateInput = {
@@ -279,6 +327,7 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   role?: string
+  score?: number
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
@@ -293,6 +342,7 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   role?: string
+  score?: number
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
@@ -307,6 +357,7 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  score?: Prisma.IntFieldUpdateOperationsInput | number
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
@@ -321,6 +372,7 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  score?: Prisma.IntFieldUpdateOperationsInput | number
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
@@ -335,6 +387,7 @@ export type UserCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   role?: string
+  score?: number
 }
 
 export type UserUpdateManyMutationInput = {
@@ -346,6 +399,7 @@ export type UserUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  score?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -357,6 +411,7 @@ export type UserUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  score?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type UserScalarRelationFilter = {
@@ -373,6 +428,11 @@ export type UserCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  score?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  score?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -384,6 +444,7 @@ export type UserMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  score?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -395,6 +456,11 @@ export type UserMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  score?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  score?: Prisma.SortOrder
 }
 
 export type UserCreateNestedOneWithoutEmployeeInput = {
@@ -448,6 +514,7 @@ export type UserCreateWithoutEmployeeInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   role?: string
+  score?: number
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
 }
@@ -461,6 +528,7 @@ export type UserUncheckedCreateWithoutEmployeeInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   role?: string
+  score?: number
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
 }
@@ -490,6 +558,7 @@ export type UserUpdateWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  score?: Prisma.IntFieldUpdateOperationsInput | number
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
 }
@@ -503,6 +572,7 @@ export type UserUncheckedUpdateWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  score?: Prisma.IntFieldUpdateOperationsInput | number
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -516,6 +586,7 @@ export type UserCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   role?: string
+  score?: number
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
 }
@@ -529,6 +600,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   role?: string
+  score?: number
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
 }
@@ -558,6 +630,7 @@ export type UserUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  score?: Prisma.IntFieldUpdateOperationsInput | number
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
 }
@@ -571,6 +644,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  score?: Prisma.IntFieldUpdateOperationsInput | number
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
 }
@@ -584,6 +658,7 @@ export type UserCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   role?: string
+  score?: number
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
 }
@@ -597,6 +672,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   role?: string
+  score?: number
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
 }
@@ -626,6 +702,7 @@ export type UserUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  score?: Prisma.IntFieldUpdateOperationsInput | number
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
 }
@@ -639,6 +716,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  score?: Prisma.IntFieldUpdateOperationsInput | number
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
 }
@@ -692,6 +770,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   role?: boolean
+  score?: boolean
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   employee?: boolean | Prisma.User$employeeArgs<ExtArgs>
@@ -707,6 +786,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   updatedAt?: boolean
   role?: boolean
+  score?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -718,6 +798,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   updatedAt?: boolean
   role?: boolean
+  score?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -729,9 +810,10 @@ export type UserSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   role?: boolean
+  score?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "role", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "role" | "score", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
@@ -757,6 +839,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     createdAt: Date
     updatedAt: Date
     role: string
+    score: number
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1191,6 +1274,7 @@ export interface UserFieldRefs {
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly role: Prisma.FieldRef<"User", 'String'>
+  readonly score: Prisma.FieldRef<"User", 'Int'>
 }
     
 
