@@ -16,8 +16,8 @@ const initialFormState: Employee = {
   personalInformation: {
     fullName: '',
     imageUrl: '',
-    role: 'DEVELOPER',
-    department: 'ENGINEERING',
+    role: '',
+    score: 60,
     officeEmail: '',
     personalEmail: '',
     personalNumber: '',
@@ -89,6 +89,11 @@ const initialFormState: Employee = {
     accountNumber: '',
     walletType: '',
     walletNumber: '',
+  },
+  remainingLeave: {
+    casual: 14,
+    sick: 10,
+    earned: 10,
   },
 }
 

@@ -37,6 +37,7 @@ import { ChevronDownIcon } from 'lucide-react'
 import { Calendar } from '@/components/ui/calendar'
 import { format } from 'date-fns'
 import { Spinner } from '@/components/ui/spinner'
+import { ERP_ROLES } from '@/lib/validators/roles.array'
 
 // Create Supabase client
 const supabase = createClient(
@@ -67,8 +68,8 @@ function PersonalInformationPage() {
     defaultValues: {
       fullName: employeeData.fullName || '',
       imageUrl: employeeData.imageUrl || '',
-      role: employeeData.role || 'DEVELOPER',
-      department: employeeData.department || 'ENGINEERING',
+      role: employeeData.role || '',
+      score: employeeData.score || 40,
       officeEmail: employeeData.officeEmail || '',
       personalEmail: employeeData.personalEmail || '',
       officeNumber: employeeData.officeNumber || '',
@@ -138,22 +139,15 @@ function PersonalInformationPage() {
                     >
                       <FormControl>
                         <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select type" />
+                          <SelectValue placeholder="Select Role" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="CEO">
-                          Chief Executive Officer (CEO)
-                        </SelectItem>
-                        <SelectItem value="CTO">
-                          Chief Technology Office (CTO)
-                        </SelectItem>
-                        <SelectItem value="PRODUCT">Product</SelectItem>
-                        <SelectItem value="DEVELOPER">Developer</SelectItem>
-                        <SelectItem value="Designer">Designer</SelectItem>
-                        <SelectItem value="Project_Manager">
-                          Project Manager
-                        </SelectItem>
+                        {ERP_ROLES.map((role) => (
+                          <SelectItem key={role.key} value={role.key}>
+                            {role.key}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -162,30 +156,21 @@ function PersonalInformationPage() {
               />
               <FormField
                 control={form.control}
-                name="department"
+                name="score"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Employee Department</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select type" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="EXECUTIVE">Executive</SelectItem>
-                        <SelectItem value="ENGINEERING">Engineering</SelectItem>
-                        <SelectItem value="PRODUCT">Product</SelectItem>
-                        <SelectItem value="DESIGN">Design</SelectItem>
-                        <SelectItem value="SALES">Sales</SelectItem>
-                        <SelectItem value="Project_Manager">
-                          Project Manager
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <FormLabel>Employee Score</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        disabled
+                        value={
+                          ERP_ROLES.find(
+                            (role) => role.key === form.watch('role'),
+                          )?.score
+                        }
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -523,12 +508,12 @@ function PersonalInformationPage() {
                                   type="button"
                                   onClick={() => {
                                     startTransition(async () => {
-                                      const fullName =
-                                        form.getValues('fullName')
+                                      const officeEmail =
+                                        form.getValues('officeEmail')
 
-                                      if (!fullName) {
+                                      if (!officeEmail) {
                                         toast.error(
-                                          'Enter full name before confirming image.',
+                                          'Enter office email before confirming image.',
                                         )
                                         return
                                       }
@@ -537,12 +522,12 @@ function PersonalInformationPage() {
                                         await supabase.storage
                                           .from('erp')
                                           .upload(
-                                            `employee-photos/${form.getValues('officeEmail')}`,
-                                            imageFile ? imageFile : '',
+                                            `employee-photos/${officeEmail}`,
+                                            imageFile,
                                           )
 
                                       if (error) {
-                                        toast.error('Some Error Occured.')
+                                        toast.error(error.message)
                                         return
                                       }
 
