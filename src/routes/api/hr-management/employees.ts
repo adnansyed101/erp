@@ -47,10 +47,13 @@ export const Route = createFileRoute('/api/hr-management/employees')({
             })
           }
 
+          const count = await prisma.employee.count()
+
           return Response.json({
             success: true,
             data: employees,
             message: 'Fetched all employees.',
+            count: count,
           })
         } catch (error) {
           return Response.json({
@@ -71,7 +74,9 @@ export const Route = createFileRoute('/api/hr-management/employees')({
               name: body.personalInformation.fullName,
               role: body.personalInformation.role,
               score: body.personalInformation.score,
-              image: body.personalInformation.imageUrl,
+              image: body.personalInformation.imageUrl
+                ? body.personalInformation.imageUrl
+                : '/person.jpeg',
             },
           })
 
