@@ -1,30 +1,17 @@
 import z from 'zod'
+import { ERP_ROLE_KEYS } from './roles.array'
 
 export const PersonalInformationSchema = z.object({
   fullName: z.string().min(2, 'At least 2 characters are needed.'),
   imageUrl: z.url().min(1, 'Image URL is required.'),
-  role: z.enum([
-    'CEO',
-    'CTO',
-    'ENGINEERING_MANAGER',
-    'TECH_LEAD',
-    'DEVELOPER',
-    'DESIGNER',
-    'PROJECT_MANAGER',
-  ]),
-  department: z.enum([
-    'EXECUTIVE',
-    'ENGINEERING',
-    'PRODUCT',
-    'DESIGN',
-    'SALES',
-  ]),
+  role: z.enum(ERP_ROLE_KEYS),
+  score: z.number().min(1, 'Score is required').max(100),
   officeEmail: z.email(),
   personalEmail: z.email(),
   personalNumber: z.string().min(2, 'Personal Phone Number is required.'),
   officeNumber: z.string().min(2, 'Office Phone Number is required.'),
   employeeType: z.string().min(2, 'Employee Type is required'),
-  employeeStatus: z.string().min(2, 'Employee Status is required'),
+  employeeStatus: z.enum(['active', 'on-leave', 'inactive']),
   nationality: z.string().min(2, 'Nationality is required.'),
   disability: z.boolean(),
   gender: z.enum(['Male', 'Female', 'Other']),
@@ -96,6 +83,12 @@ export const BankInformationSchema = z.object({
   walletNumber: z.string().optional(),
 })
 
+const leaveSchema = z.object({
+  casual: z.number().default(14),
+  sick: z.number().default(10),
+  earned: z.number().default(10),
+})
+
 export const EmployeeSchema = z.object({
   personalInformation: PersonalInformationSchema,
   bankInformation: BankInformationSchema,
@@ -104,6 +97,7 @@ export const EmployeeSchema = z.object({
   emergencyContact: EmergencyContactSchema,
   presentAddress: AddressSchema,
   permanentAddress: AddressSchema,
+  remainingLeave: leaveSchema,
 })
 
 export const EmployeeSchemaWithId = EmployeeSchema.extend({
