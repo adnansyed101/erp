@@ -4,7 +4,8 @@ import { Employee } from '@/lib/types/employee.types'
 import { prisma } from '@/db'
 import z from 'zod'
 import { auth } from '@/lib/auth'
-import { authApiMiddleware } from '@/middleware/auth'
+// import { authApiMiddleware } from '@/middleware/auth'
+import { Role } from '@/generated/prisma/enums'
 
 const employeesSearchSchema = z.object({
   limit: z.number(),
@@ -14,7 +15,7 @@ const employeesSearchSchema = z.object({
 export const Route = createFileRoute('/api/hr-management/employees')({
   validateSearch: (search) => employeesSearchSchema.parse(search),
   server: {
-    middleware: [authApiMiddleware],
+    // middleware: [authApiMiddleware],
     handlers: {
       GET: async ({ request }) => {
         const { searchParams } = new URL(request.url)
@@ -69,6 +70,7 @@ export const Route = createFileRoute('/api/hr-management/employees')({
               password: 'Arbree@2026',
               name: body.personalInformation.fullName,
               role: body.personalInformation.role,
+              score: body.personalInformation.score,
               image: body.personalInformation.imageUrl,
             },
           })
@@ -78,6 +80,10 @@ export const Route = createFileRoute('/api/hr-management/employees')({
               personalInformation: {
                 create: {
                   ...body.personalInformation,
+                  role: body.personalInformation.role as Role,
+                  imageUrl: body.personalInformation.imageUrl
+                    ? body.personalInformation.imageUrl
+                    : '/person.jpeg',
                 },
               },
               additionalInformation: {
@@ -108,6 +114,13 @@ export const Route = createFileRoute('/api/hr-management/employees')({
               bankInformation: {
                 create: {
                   ...body.bankInformation,
+                },
+              },
+              remainingLeave: {
+                create: {
+                  casual: 14,
+                  sick: 10,
+                  earned: 10,
                 },
               },
               user: {
