@@ -23,7 +23,7 @@ const initialFormState: Employee = {
     personalNumber: '',
     officeNumber: '',
     employeeType: '',
-    employeeStatus: '',
+    employeeStatus: 'active',
     nationality: '',
     disability: false,
     gender: 'Male',
