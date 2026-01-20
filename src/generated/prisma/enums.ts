@@ -87,3 +87,12 @@ export const LeaveStatus = {
 } as const
 
 export type LeaveStatus = (typeof LeaveStatus)[keyof typeof LeaveStatus]
+
+
+export const LeaveType = {
+  casual: 'casual',
+  sick: 'sick',
+  earned: 'earned'
+} as const
+
+export type LeaveType = (typeof LeaveType)[keyof typeof LeaveType]

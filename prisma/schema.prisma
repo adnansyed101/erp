@@ -208,11 +208,18 @@ enum LeaveStatus {
   rejected
 }
 
+enum LeaveType {
+  casual
+  sick
+  earned
+}
+
 model LeaveManagement {
   id                     String      @id @default(uuid())
-  leaveType              String
+  leaveType              LeaveType
   leaveFrom              DateTime
   leaveTO                DateTime
+  totalDays              String
   purposeOfLeave         String
   addressDuringLeave     String
   emergencyContactNumber String

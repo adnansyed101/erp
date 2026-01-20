@@ -1551,6 +1551,7 @@ export const LeaveManagementScalarFieldEnum = {
   leaveType: 'leaveType',
   leaveFrom: 'leaveFrom',
   leaveTO: 'leaveTO',
+  totalDays: 'totalDays',
   purposeOfLeave: 'purposeOfLeave',
   addressDuringLeave: 'addressDuringLeave',
   emergencyContactNumber: 'emergencyContactNumber',
@@ -1754,6 +1755,20 @@ export type EnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'AttendanceStatus[]'
  */
 export type ListEnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttendanceStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'LeaveType'
+ */
+export type EnumLeaveTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeaveType'>
+    
+
+
+/**
+ * Reference to a field of type 'LeaveType[]'
+ */
+export type ListEnumLeaveTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeaveType[]'>
     
 
 

@@ -216,6 +216,7 @@ export const LeaveManagementScalarFieldEnum = {
   leaveType: 'leaveType',
   leaveFrom: 'leaveFrom',
   leaveTO: 'leaveTO',
+  totalDays: 'totalDays',
   purposeOfLeave: 'purposeOfLeave',
   addressDuringLeave: 'addressDuringLeave',
   emergencyContactNumber: 'emergencyContactNumber',
