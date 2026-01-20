@@ -80,15 +80,6 @@ export const AttendanceStatus = {
 export type AttendanceStatus = (typeof AttendanceStatus)[keyof typeof AttendanceStatus]
 
 
-export const LeaveStatus = {
-  pending: 'pending',
-  accepted: 'accepted',
-  rejected: 'rejected'
-} as const
-
-export type LeaveStatus = (typeof LeaveStatus)[keyof typeof LeaveStatus]
-
-
 export const LeaveType = {
   casual: 'casual',
   sick: 'sick',
@@ -96,3 +87,12 @@ export const LeaveType = {
 } as const
 
 export type LeaveType = (typeof LeaveType)[keyof typeof LeaveType]
+
+
+export const LeaveStatus = {
+  pending: 'pending',
+  accepted: 'accepted',
+  rejected: 'rejected'
+} as const
+
+export type LeaveStatus = (typeof LeaveStatus)[keyof typeof LeaveStatus]

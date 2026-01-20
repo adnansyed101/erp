@@ -185,10 +185,12 @@ export type AttendanceScalarFieldEnum = (typeof AttendanceScalarFieldEnum)[keyof
 
 export const LeaveScalarFieldEnum = {
   id: 'id',
-  casual: 'casual',
-  sick: 'sick',
-  earned: 'earned',
-  createdAt: 'createdAt'
+  leaveType: 'leaveType',
+  yearlyLeave: 'yearlyLeave',
+  leaveTaken: 'leaveTaken',
+  balance: 'balance',
+  createdAt: 'createdAt',
+  employeeId: 'employeeId'
 } as const
 
 export type LeaveScalarFieldEnum = (typeof LeaveScalarFieldEnum)[keyof typeof LeaveScalarFieldEnum]
@@ -204,7 +206,6 @@ export const EmployeeScalarFieldEnum = {
   permanentAddressId: 'permanentAddressId',
   spouseInformationId: 'spouseInformationId',
   emergencyContactId: 'emergencyContactId',
-  remainingLeaveId: 'remainingLeaveId',
   userId: 'userId'
 } as const
 
@@ -215,7 +216,7 @@ export const LeaveManagementScalarFieldEnum = {
   id: 'id',
   leaveType: 'leaveType',
   leaveFrom: 'leaveFrom',
-  leaveTO: 'leaveTO',
+  leaveTo: 'leaveTo',
   totalDays: 'totalDays',
   purposeOfLeave: 'purposeOfLeave',
   addressDuringLeave: 'addressDuringLeave',

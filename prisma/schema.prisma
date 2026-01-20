@@ -157,13 +157,22 @@ model Attendance {
   employeeId       String?
 }
 
+enum LeaveType {
+  casual
+  sick
+  earned
+}
+
 model Leave {
-  id        String    @id @default(uuid())
-  casual    Int       @default(14)
-  sick      Int       @default(10)
-  earned    Int       @default(10)
-  createdAt DateTime  @default(now())
-  employee  Employee?
+  id          String    @id @default(uuid())
+  leaveType   LeaveType @default(casual)
+  yearlyLeave Int       @default(10)
+  leaveTaken  Int       @default(10)
+  balance     Int       @default(10)
+  createdAt   DateTime  @default(now())
+
+  employee   Employee? @relation(fields: [employeeId], references: [id])
+  employeeId String?
 }
 
 model Employee {
@@ -192,8 +201,7 @@ model Employee {
   // Attendance
   attendance             Attendance[]
   // Leave Relation
-  remainingLeave         Leave                 @relation(fields: [remainingLeaveId], references: [id], onDelete: Cascade)
-  remainingLeaveId       String                @unique
+  remainingLeave         Leave[]
   // User Relation
   user                   User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId                 String                @unique
@@ -208,17 +216,11 @@ enum LeaveStatus {
   rejected
 }
 
-enum LeaveType {
-  casual
-  sick
-  earned
-}
-
 model LeaveManagement {
   id                     String      @id @default(uuid())
   leaveType              LeaveType
   leaveFrom              DateTime
-  leaveTO                DateTime
+  leaveTo                DateTime
   totalDays              String
   purposeOfLeave         String
   addressDuringLeave     String

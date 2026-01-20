@@ -27,77 +27,89 @@ export type AggregateLeave = {
 }
 
 export type LeaveAvgAggregateOutputType = {
-  casual: number | null
-  sick: number | null
-  earned: number | null
+  yearlyLeave: number | null
+  leaveTaken: number | null
+  balance: number | null
 }
 
 export type LeaveSumAggregateOutputType = {
-  casual: number | null
-  sick: number | null
-  earned: number | null
+  yearlyLeave: number | null
+  leaveTaken: number | null
+  balance: number | null
 }
 
 export type LeaveMinAggregateOutputType = {
   id: string | null
-  casual: number | null
-  sick: number | null
-  earned: number | null
+  leaveType: $Enums.LeaveType | null
+  yearlyLeave: number | null
+  leaveTaken: number | null
+  balance: number | null
   createdAt: Date | null
+  employeeId: string | null
 }
 
 export type LeaveMaxAggregateOutputType = {
   id: string | null
-  casual: number | null
-  sick: number | null
-  earned: number | null
+  leaveType: $Enums.LeaveType | null
+  yearlyLeave: number | null
+  leaveTaken: number | null
+  balance: number | null
   createdAt: Date | null
+  employeeId: string | null
 }
 
 export type LeaveCountAggregateOutputType = {
   id: number
-  casual: number
-  sick: number
-  earned: number
+  leaveType: number
+  yearlyLeave: number
+  leaveTaken: number
+  balance: number
   createdAt: number
+  employeeId: number
   _all: number
 }
 
 
 export type LeaveAvgAggregateInputType = {
-  casual?: true
-  sick?: true
-  earned?: true
+  yearlyLeave?: true
+  leaveTaken?: true
+  balance?: true
 }
 
 export type LeaveSumAggregateInputType = {
-  casual?: true
-  sick?: true
-  earned?: true
+  yearlyLeave?: true
+  leaveTaken?: true
+  balance?: true
 }
 
 export type LeaveMinAggregateInputType = {
   id?: true
-  casual?: true
-  sick?: true
-  earned?: true
+  leaveType?: true
+  yearlyLeave?: true
+  leaveTaken?: true
+  balance?: true
   createdAt?: true
+  employeeId?: true
 }
 
 export type LeaveMaxAggregateInputType = {
   id?: true
-  casual?: true
-  sick?: true
-  earned?: true
+  leaveType?: true
+  yearlyLeave?: true
+  leaveTaken?: true
+  balance?: true
   createdAt?: true
+  employeeId?: true
 }
 
 export type LeaveCountAggregateInputType = {
   id?: true
-  casual?: true
-  sick?: true
-  earned?: true
+  leaveType?: true
+  yearlyLeave?: true
+  leaveTaken?: true
+  balance?: true
   createdAt?: true
+  employeeId?: true
   _all?: true
 }
 
@@ -189,10 +201,12 @@ export type LeaveGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 
 export type LeaveGroupByOutputType = {
   id: string
-  casual: number
-  sick: number
-  earned: number
+  leaveType: $Enums.LeaveType
+  yearlyLeave: number
+  leaveTaken: number
+  balance: number
   createdAt: Date
+  employeeId: string | null
   _count: LeaveCountAggregateOutputType | null
   _avg: LeaveAvgAggregateOutputType | null
   _sum: LeaveSumAggregateOutputType | null
@@ -220,19 +234,23 @@ export type LeaveWhereInput = {
   OR?: Prisma.LeaveWhereInput[]
   NOT?: Prisma.LeaveWhereInput | Prisma.LeaveWhereInput[]
   id?: Prisma.StringFilter<"Leave"> | string
-  casual?: Prisma.IntFilter<"Leave"> | number
-  sick?: Prisma.IntFilter<"Leave"> | number
-  earned?: Prisma.IntFilter<"Leave"> | number
+  leaveType?: Prisma.EnumLeaveTypeFilter<"Leave"> | $Enums.LeaveType
+  yearlyLeave?: Prisma.IntFilter<"Leave"> | number
+  leaveTaken?: Prisma.IntFilter<"Leave"> | number
+  balance?: Prisma.IntFilter<"Leave"> | number
   createdAt?: Prisma.DateTimeFilter<"Leave"> | Date | string
+  employeeId?: Prisma.StringNullableFilter<"Leave"> | string | null
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type LeaveOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  casual?: Prisma.SortOrder
-  sick?: Prisma.SortOrder
-  earned?: Prisma.SortOrder
+  leaveType?: Prisma.SortOrder
+  yearlyLeave?: Prisma.SortOrder
+  leaveTaken?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  employeeId?: Prisma.SortOrderInput | Prisma.SortOrder
   employee?: Prisma.EmployeeOrderByWithRelationInput
 }
 
@@ -241,19 +259,23 @@ export type LeaveWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.LeaveWhereInput | Prisma.LeaveWhereInput[]
   OR?: Prisma.LeaveWhereInput[]
   NOT?: Prisma.LeaveWhereInput | Prisma.LeaveWhereInput[]
-  casual?: Prisma.IntFilter<"Leave"> | number
-  sick?: Prisma.IntFilter<"Leave"> | number
-  earned?: Prisma.IntFilter<"Leave"> | number
+  leaveType?: Prisma.EnumLeaveTypeFilter<"Leave"> | $Enums.LeaveType
+  yearlyLeave?: Prisma.IntFilter<"Leave"> | number
+  leaveTaken?: Prisma.IntFilter<"Leave"> | number
+  balance?: Prisma.IntFilter<"Leave"> | number
   createdAt?: Prisma.DateTimeFilter<"Leave"> | Date | string
+  employeeId?: Prisma.StringNullableFilter<"Leave"> | string | null
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type LeaveOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  casual?: Prisma.SortOrder
-  sick?: Prisma.SortOrder
-  earned?: Prisma.SortOrder
+  leaveType?: Prisma.SortOrder
+  yearlyLeave?: Prisma.SortOrder
+  leaveTaken?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  employeeId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.LeaveCountOrderByAggregateInput
   _avg?: Prisma.LeaveAvgOrderByAggregateInput
   _max?: Prisma.LeaveMaxOrderByAggregateInput
@@ -266,140 +288,196 @@ export type LeaveScalarWhereWithAggregatesInput = {
   OR?: Prisma.LeaveScalarWhereWithAggregatesInput[]
   NOT?: Prisma.LeaveScalarWhereWithAggregatesInput | Prisma.LeaveScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Leave"> | string
-  casual?: Prisma.IntWithAggregatesFilter<"Leave"> | number
-  sick?: Prisma.IntWithAggregatesFilter<"Leave"> | number
-  earned?: Prisma.IntWithAggregatesFilter<"Leave"> | number
+  leaveType?: Prisma.EnumLeaveTypeWithAggregatesFilter<"Leave"> | $Enums.LeaveType
+  yearlyLeave?: Prisma.IntWithAggregatesFilter<"Leave"> | number
+  leaveTaken?: Prisma.IntWithAggregatesFilter<"Leave"> | number
+  balance?: Prisma.IntWithAggregatesFilter<"Leave"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Leave"> | Date | string
+  employeeId?: Prisma.StringNullableWithAggregatesFilter<"Leave"> | string | null
 }
 
 export type LeaveCreateInput = {
   id?: string
-  casual?: number
-  sick?: number
-  earned?: number
+  leaveType?: $Enums.LeaveType
+  yearlyLeave?: number
+  leaveTaken?: number
+  balance?: number
   createdAt?: Date | string
   employee?: Prisma.EmployeeCreateNestedOneWithoutRemainingLeaveInput
 }
 
 export type LeaveUncheckedCreateInput = {
   id?: string
-  casual?: number
-  sick?: number
-  earned?: number
+  leaveType?: $Enums.LeaveType
+  yearlyLeave?: number
+  leaveTaken?: number
+  balance?: number
   createdAt?: Date | string
-  employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutRemainingLeaveInput
+  employeeId?: string | null
 }
 
 export type LeaveUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  casual?: Prisma.IntFieldUpdateOperationsInput | number
-  sick?: Prisma.IntFieldUpdateOperationsInput | number
-  earned?: Prisma.IntFieldUpdateOperationsInput | number
+  leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
+  yearlyLeave?: Prisma.IntFieldUpdateOperationsInput | number
+  leaveTaken?: Prisma.IntFieldUpdateOperationsInput | number
+  balance?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   employee?: Prisma.EmployeeUpdateOneWithoutRemainingLeaveNestedInput
 }
 
 export type LeaveUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  casual?: Prisma.IntFieldUpdateOperationsInput | number
-  sick?: Prisma.IntFieldUpdateOperationsInput | number
-  earned?: Prisma.IntFieldUpdateOperationsInput | number
+  leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
+  yearlyLeave?: Prisma.IntFieldUpdateOperationsInput | number
+  leaveTaken?: Prisma.IntFieldUpdateOperationsInput | number
+  balance?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  employee?: Prisma.EmployeeUncheckedUpdateOneWithoutRemainingLeaveNestedInput
+  employeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LeaveCreateManyInput = {
   id?: string
-  casual?: number
-  sick?: number
-  earned?: number
+  leaveType?: $Enums.LeaveType
+  yearlyLeave?: number
+  leaveTaken?: number
+  balance?: number
   createdAt?: Date | string
+  employeeId?: string | null
 }
 
 export type LeaveUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  casual?: Prisma.IntFieldUpdateOperationsInput | number
-  sick?: Prisma.IntFieldUpdateOperationsInput | number
-  earned?: Prisma.IntFieldUpdateOperationsInput | number
+  leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
+  yearlyLeave?: Prisma.IntFieldUpdateOperationsInput | number
+  leaveTaken?: Prisma.IntFieldUpdateOperationsInput | number
+  balance?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LeaveUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  casual?: Prisma.IntFieldUpdateOperationsInput | number
-  sick?: Prisma.IntFieldUpdateOperationsInput | number
-  earned?: Prisma.IntFieldUpdateOperationsInput | number
+  leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
+  yearlyLeave?: Prisma.IntFieldUpdateOperationsInput | number
+  leaveTaken?: Prisma.IntFieldUpdateOperationsInput | number
+  balance?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LeaveCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  casual?: Prisma.SortOrder
-  sick?: Prisma.SortOrder
-  earned?: Prisma.SortOrder
+  leaveType?: Prisma.SortOrder
+  yearlyLeave?: Prisma.SortOrder
+  leaveTaken?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  employeeId?: Prisma.SortOrder
 }
 
 export type LeaveAvgOrderByAggregateInput = {
-  casual?: Prisma.SortOrder
-  sick?: Prisma.SortOrder
-  earned?: Prisma.SortOrder
+  yearlyLeave?: Prisma.SortOrder
+  leaveTaken?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
 }
 
 export type LeaveMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  casual?: Prisma.SortOrder
-  sick?: Prisma.SortOrder
-  earned?: Prisma.SortOrder
+  leaveType?: Prisma.SortOrder
+  yearlyLeave?: Prisma.SortOrder
+  leaveTaken?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  employeeId?: Prisma.SortOrder
 }
 
 export type LeaveMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  casual?: Prisma.SortOrder
-  sick?: Prisma.SortOrder
-  earned?: Prisma.SortOrder
+  leaveType?: Prisma.SortOrder
+  yearlyLeave?: Prisma.SortOrder
+  leaveTaken?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  employeeId?: Prisma.SortOrder
 }
 
 export type LeaveSumOrderByAggregateInput = {
-  casual?: Prisma.SortOrder
-  sick?: Prisma.SortOrder
-  earned?: Prisma.SortOrder
+  yearlyLeave?: Prisma.SortOrder
+  leaveTaken?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
 }
 
-export type LeaveScalarRelationFilter = {
-  is?: Prisma.LeaveWhereInput
-  isNot?: Prisma.LeaveWhereInput
+export type LeaveListRelationFilter = {
+  every?: Prisma.LeaveWhereInput
+  some?: Prisma.LeaveWhereInput
+  none?: Prisma.LeaveWhereInput
 }
 
-export type LeaveCreateNestedOneWithoutEmployeeInput = {
-  create?: Prisma.XOR<Prisma.LeaveCreateWithoutEmployeeInput, Prisma.LeaveUncheckedCreateWithoutEmployeeInput>
-  connectOrCreate?: Prisma.LeaveCreateOrConnectWithoutEmployeeInput
-  connect?: Prisma.LeaveWhereUniqueInput
+export type LeaveOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
-export type LeaveUpdateOneRequiredWithoutEmployeeNestedInput = {
-  create?: Prisma.XOR<Prisma.LeaveCreateWithoutEmployeeInput, Prisma.LeaveUncheckedCreateWithoutEmployeeInput>
-  connectOrCreate?: Prisma.LeaveCreateOrConnectWithoutEmployeeInput
-  upsert?: Prisma.LeaveUpsertWithoutEmployeeInput
-  connect?: Prisma.LeaveWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.LeaveUpdateToOneWithWhereWithoutEmployeeInput, Prisma.LeaveUpdateWithoutEmployeeInput>, Prisma.LeaveUncheckedUpdateWithoutEmployeeInput>
+export type EnumLeaveTypeFieldUpdateOperationsInput = {
+  set?: $Enums.LeaveType
+}
+
+export type LeaveCreateNestedManyWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.LeaveCreateWithoutEmployeeInput, Prisma.LeaveUncheckedCreateWithoutEmployeeInput> | Prisma.LeaveCreateWithoutEmployeeInput[] | Prisma.LeaveUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.LeaveCreateOrConnectWithoutEmployeeInput | Prisma.LeaveCreateOrConnectWithoutEmployeeInput[]
+  createMany?: Prisma.LeaveCreateManyEmployeeInputEnvelope
+  connect?: Prisma.LeaveWhereUniqueInput | Prisma.LeaveWhereUniqueInput[]
+}
+
+export type LeaveUncheckedCreateNestedManyWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.LeaveCreateWithoutEmployeeInput, Prisma.LeaveUncheckedCreateWithoutEmployeeInput> | Prisma.LeaveCreateWithoutEmployeeInput[] | Prisma.LeaveUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.LeaveCreateOrConnectWithoutEmployeeInput | Prisma.LeaveCreateOrConnectWithoutEmployeeInput[]
+  createMany?: Prisma.LeaveCreateManyEmployeeInputEnvelope
+  connect?: Prisma.LeaveWhereUniqueInput | Prisma.LeaveWhereUniqueInput[]
+}
+
+export type LeaveUpdateManyWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.LeaveCreateWithoutEmployeeInput, Prisma.LeaveUncheckedCreateWithoutEmployeeInput> | Prisma.LeaveCreateWithoutEmployeeInput[] | Prisma.LeaveUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.LeaveCreateOrConnectWithoutEmployeeInput | Prisma.LeaveCreateOrConnectWithoutEmployeeInput[]
+  upsert?: Prisma.LeaveUpsertWithWhereUniqueWithoutEmployeeInput | Prisma.LeaveUpsertWithWhereUniqueWithoutEmployeeInput[]
+  createMany?: Prisma.LeaveCreateManyEmployeeInputEnvelope
+  set?: Prisma.LeaveWhereUniqueInput | Prisma.LeaveWhereUniqueInput[]
+  disconnect?: Prisma.LeaveWhereUniqueInput | Prisma.LeaveWhereUniqueInput[]
+  delete?: Prisma.LeaveWhereUniqueInput | Prisma.LeaveWhereUniqueInput[]
+  connect?: Prisma.LeaveWhereUniqueInput | Prisma.LeaveWhereUniqueInput[]
+  update?: Prisma.LeaveUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.LeaveUpdateWithWhereUniqueWithoutEmployeeInput[]
+  updateMany?: Prisma.LeaveUpdateManyWithWhereWithoutEmployeeInput | Prisma.LeaveUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.LeaveScalarWhereInput | Prisma.LeaveScalarWhereInput[]
+}
+
+export type LeaveUncheckedUpdateManyWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.LeaveCreateWithoutEmployeeInput, Prisma.LeaveUncheckedCreateWithoutEmployeeInput> | Prisma.LeaveCreateWithoutEmployeeInput[] | Prisma.LeaveUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.LeaveCreateOrConnectWithoutEmployeeInput | Prisma.LeaveCreateOrConnectWithoutEmployeeInput[]
+  upsert?: Prisma.LeaveUpsertWithWhereUniqueWithoutEmployeeInput | Prisma.LeaveUpsertWithWhereUniqueWithoutEmployeeInput[]
+  createMany?: Prisma.LeaveCreateManyEmployeeInputEnvelope
+  set?: Prisma.LeaveWhereUniqueInput | Prisma.LeaveWhereUniqueInput[]
+  disconnect?: Prisma.LeaveWhereUniqueInput | Prisma.LeaveWhereUniqueInput[]
+  delete?: Prisma.LeaveWhereUniqueInput | Prisma.LeaveWhereUniqueInput[]
+  connect?: Prisma.LeaveWhereUniqueInput | Prisma.LeaveWhereUniqueInput[]
+  update?: Prisma.LeaveUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.LeaveUpdateWithWhereUniqueWithoutEmployeeInput[]
+  updateMany?: Prisma.LeaveUpdateManyWithWhereWithoutEmployeeInput | Prisma.LeaveUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.LeaveScalarWhereInput | Prisma.LeaveScalarWhereInput[]
 }
 
 export type LeaveCreateWithoutEmployeeInput = {
   id?: string
-  casual?: number
-  sick?: number
-  earned?: number
+  leaveType?: $Enums.LeaveType
+  yearlyLeave?: number
+  leaveTaken?: number
+  balance?: number
   createdAt?: Date | string
 }
 
 export type LeaveUncheckedCreateWithoutEmployeeInput = {
   id?: string
-  casual?: number
-  sick?: number
-  earned?: number
+  leaveType?: $Enums.LeaveType
+  yearlyLeave?: number
+  leaveTaken?: number
+  balance?: number
   createdAt?: Date | string
 }
 
@@ -408,30 +486,73 @@ export type LeaveCreateOrConnectWithoutEmployeeInput = {
   create: Prisma.XOR<Prisma.LeaveCreateWithoutEmployeeInput, Prisma.LeaveUncheckedCreateWithoutEmployeeInput>
 }
 
-export type LeaveUpsertWithoutEmployeeInput = {
-  update: Prisma.XOR<Prisma.LeaveUpdateWithoutEmployeeInput, Prisma.LeaveUncheckedUpdateWithoutEmployeeInput>
-  create: Prisma.XOR<Prisma.LeaveCreateWithoutEmployeeInput, Prisma.LeaveUncheckedCreateWithoutEmployeeInput>
-  where?: Prisma.LeaveWhereInput
+export type LeaveCreateManyEmployeeInputEnvelope = {
+  data: Prisma.LeaveCreateManyEmployeeInput | Prisma.LeaveCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
 }
 
-export type LeaveUpdateToOneWithWhereWithoutEmployeeInput = {
-  where?: Prisma.LeaveWhereInput
+export type LeaveUpsertWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.LeaveWhereUniqueInput
+  update: Prisma.XOR<Prisma.LeaveUpdateWithoutEmployeeInput, Prisma.LeaveUncheckedUpdateWithoutEmployeeInput>
+  create: Prisma.XOR<Prisma.LeaveCreateWithoutEmployeeInput, Prisma.LeaveUncheckedCreateWithoutEmployeeInput>
+}
+
+export type LeaveUpdateWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.LeaveWhereUniqueInput
   data: Prisma.XOR<Prisma.LeaveUpdateWithoutEmployeeInput, Prisma.LeaveUncheckedUpdateWithoutEmployeeInput>
+}
+
+export type LeaveUpdateManyWithWhereWithoutEmployeeInput = {
+  where: Prisma.LeaveScalarWhereInput
+  data: Prisma.XOR<Prisma.LeaveUpdateManyMutationInput, Prisma.LeaveUncheckedUpdateManyWithoutEmployeeInput>
+}
+
+export type LeaveScalarWhereInput = {
+  AND?: Prisma.LeaveScalarWhereInput | Prisma.LeaveScalarWhereInput[]
+  OR?: Prisma.LeaveScalarWhereInput[]
+  NOT?: Prisma.LeaveScalarWhereInput | Prisma.LeaveScalarWhereInput[]
+  id?: Prisma.StringFilter<"Leave"> | string
+  leaveType?: Prisma.EnumLeaveTypeFilter<"Leave"> | $Enums.LeaveType
+  yearlyLeave?: Prisma.IntFilter<"Leave"> | number
+  leaveTaken?: Prisma.IntFilter<"Leave"> | number
+  balance?: Prisma.IntFilter<"Leave"> | number
+  createdAt?: Prisma.DateTimeFilter<"Leave"> | Date | string
+  employeeId?: Prisma.StringNullableFilter<"Leave"> | string | null
+}
+
+export type LeaveCreateManyEmployeeInput = {
+  id?: string
+  leaveType?: $Enums.LeaveType
+  yearlyLeave?: number
+  leaveTaken?: number
+  balance?: number
+  createdAt?: Date | string
 }
 
 export type LeaveUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  casual?: Prisma.IntFieldUpdateOperationsInput | number
-  sick?: Prisma.IntFieldUpdateOperationsInput | number
-  earned?: Prisma.IntFieldUpdateOperationsInput | number
+  leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
+  yearlyLeave?: Prisma.IntFieldUpdateOperationsInput | number
+  leaveTaken?: Prisma.IntFieldUpdateOperationsInput | number
+  balance?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LeaveUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  casual?: Prisma.IntFieldUpdateOperationsInput | number
-  sick?: Prisma.IntFieldUpdateOperationsInput | number
-  earned?: Prisma.IntFieldUpdateOperationsInput | number
+  leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
+  yearlyLeave?: Prisma.IntFieldUpdateOperationsInput | number
+  leaveTaken?: Prisma.IntFieldUpdateOperationsInput | number
+  balance?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type LeaveUncheckedUpdateManyWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
+  yearlyLeave?: Prisma.IntFieldUpdateOperationsInput | number
+  leaveTaken?: Prisma.IntFieldUpdateOperationsInput | number
+  balance?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -439,43 +560,57 @@ export type LeaveUncheckedUpdateWithoutEmployeeInput = {
 
 export type LeaveSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  casual?: boolean
-  sick?: boolean
-  earned?: boolean
+  leaveType?: boolean
+  yearlyLeave?: boolean
+  leaveTaken?: boolean
+  balance?: boolean
   createdAt?: boolean
+  employeeId?: boolean
   employee?: boolean | Prisma.Leave$employeeArgs<ExtArgs>
 }, ExtArgs["result"]["leave"]>
 
 export type LeaveSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  casual?: boolean
-  sick?: boolean
-  earned?: boolean
+  leaveType?: boolean
+  yearlyLeave?: boolean
+  leaveTaken?: boolean
+  balance?: boolean
   createdAt?: boolean
+  employeeId?: boolean
+  employee?: boolean | Prisma.Leave$employeeArgs<ExtArgs>
 }, ExtArgs["result"]["leave"]>
 
 export type LeaveSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  casual?: boolean
-  sick?: boolean
-  earned?: boolean
+  leaveType?: boolean
+  yearlyLeave?: boolean
+  leaveTaken?: boolean
+  balance?: boolean
   createdAt?: boolean
+  employeeId?: boolean
+  employee?: boolean | Prisma.Leave$employeeArgs<ExtArgs>
 }, ExtArgs["result"]["leave"]>
 
 export type LeaveSelectScalar = {
   id?: boolean
-  casual?: boolean
-  sick?: boolean
-  earned?: boolean
+  leaveType?: boolean
+  yearlyLeave?: boolean
+  leaveTaken?: boolean
+  balance?: boolean
   createdAt?: boolean
+  employeeId?: boolean
 }
 
-export type LeaveOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "casual" | "sick" | "earned" | "createdAt", ExtArgs["result"]["leave"]>
+export type LeaveOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "leaveType" | "yearlyLeave" | "leaveTaken" | "balance" | "createdAt" | "employeeId", ExtArgs["result"]["leave"]>
 export type LeaveInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   employee?: boolean | Prisma.Leave$employeeArgs<ExtArgs>
 }
-export type LeaveIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type LeaveIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type LeaveIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  employee?: boolean | Prisma.Leave$employeeArgs<ExtArgs>
+}
+export type LeaveIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  employee?: boolean | Prisma.Leave$employeeArgs<ExtArgs>
+}
 
 export type $LeavePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Leave"
@@ -484,10 +619,12 @@ export type $LeavePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    casual: number
-    sick: number
-    earned: number
+    leaveType: $Enums.LeaveType
+    yearlyLeave: number
+    leaveTaken: number
+    balance: number
     createdAt: Date
+    employeeId: string | null
   }, ExtArgs["result"]["leave"]>
   composites: {}
 }
@@ -913,10 +1050,12 @@ export interface Prisma__LeaveClient<T, Null = never, ExtArgs extends runtime.Ty
  */
 export interface LeaveFieldRefs {
   readonly id: Prisma.FieldRef<"Leave", 'String'>
-  readonly casual: Prisma.FieldRef<"Leave", 'Int'>
-  readonly sick: Prisma.FieldRef<"Leave", 'Int'>
-  readonly earned: Prisma.FieldRef<"Leave", 'Int'>
+  readonly leaveType: Prisma.FieldRef<"Leave", 'LeaveType'>
+  readonly yearlyLeave: Prisma.FieldRef<"Leave", 'Int'>
+  readonly leaveTaken: Prisma.FieldRef<"Leave", 'Int'>
+  readonly balance: Prisma.FieldRef<"Leave", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Leave", 'DateTime'>
+  readonly employeeId: Prisma.FieldRef<"Leave", 'String'>
 }
     
 
@@ -1166,6 +1305,10 @@ export type LeaveCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extension
    */
   data: Prisma.LeaveCreateManyInput | Prisma.LeaveCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeaveIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1236,6 +1379,10 @@ export type LeaveUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many Leaves to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeaveIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
