@@ -72,16 +72,20 @@ export function SearchDropdown({
                       <button
                         onClick={() => handleSelect(item)}
                         className={cn(
-                          'w-full px-4 py-2 text-left hover:bg-accent transition-colors flex items-center justify-between',
+                          'w-full px-4 py-2 text-left hover:bg-accent transition-colors flex flex-col md:flex-row md:items-center md:justify-between',
                           selected?.id === item.id && 'bg-accent',
                         )}
                       >
-                        <div className="font-medium text-foreground">
-                          {item.personalInformation.fullName}
-                        </div>
-                        <div className="text-sm text-muted-foreground">
+                        <p className="font-medium text-foreground">
+                          {item.personalInformation.fullName} -{' '}
                           {item.personalInformation.officeEmail}
-                        </div>
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {item.personalInformation.role}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {item.personalInformation.currentDesignation}
+                        </p>
                         {selected?.id === item.id && (
                           <Check className="w-4 h-4" />
                         )}
