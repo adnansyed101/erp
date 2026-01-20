@@ -122,11 +122,26 @@ export const Route = createFileRoute('/api/hr-management/employees')({
                 },
               },
               remainingLeave: {
-                create: {
-                  casual: 14,
-                  sick: 10,
-                  earned: 10,
-                },
+                create: [
+                  {
+                    leaveType: 'casual',
+                    yearlyLeave: 14.0,
+                    leaveTaken: 0,
+                    balance: 14.0,
+                  },
+                  {
+                    leaveType: 'sick',
+                    yearlyLeave: 10.0,
+                    leaveTaken: 0.0,
+                    balance: 10.0,
+                  },
+                  {
+                    leaveType: 'earned',
+                    yearlyLeave: 10.0,
+                    leaveTaken: 0.0,
+                    balance: 10.0,
+                  },
+                ],
               },
               user: {
                 connect: { id: signUpData.user.id },
