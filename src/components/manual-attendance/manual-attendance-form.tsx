@@ -21,7 +21,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { SearchDropdown } from './search-dropdown'
+import { SearchDropdown } from '../shared/search-dropdown'
 import { Attendance } from '@/lib/types/attendance.type'
 import { toast } from 'sonner'
 import { formatTime } from '@/lib/utils'
