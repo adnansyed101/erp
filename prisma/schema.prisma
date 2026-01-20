@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -198,6 +197,30 @@ model Employee {
   // User Relation
   user                   User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId                 String                @unique
+  // Leave Management Relation
+  approver               LeaveManagement?      @relation("approverEmployee")
+  leavesTaken            LeaveManagement[]     @relation("employeeLeavesTaken")
+}
+
+enum LeaveStatus {
+  pending
+  accepted
+  rejected
+}
+
+model LeaveManagement {
+  id                     String      @id @default(uuid())
+  leaveType              String
+  leaveFrom              DateTime
+  leaveTO                DateTime
+  purposeOfLeave         String
+  addressDuringLeave     String
+  emergencyContactNumber String
+  approved               LeaveStatus @default(pending)
+  approverId             String      @unique
+  approvedBy             Employee    @relation(name: "approverEmployee", fields: [approverId], references: [id])
+  employee               Employee    @relation(name: "employeeLeavesTaken", fields: [employeeId], references: [id])
+  employeeId             String
 }
 
 model User {
@@ -212,7 +235,8 @@ model User {
   sessions      Session[]
   accounts      Account[]
   employee      Employee?
-  score Int @default(60)
+  score         Int       @default(60)
+
   @@unique([email])
   @@map("user")
 }

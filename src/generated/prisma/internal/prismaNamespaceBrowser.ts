@@ -59,6 +59,7 @@ export const ModelName = {
   Attendance: 'Attendance',
   Leave: 'Leave',
   Employee: 'Employee',
+  LeaveManagement: 'LeaveManagement',
   User: 'User',
   Session: 'Session',
   Account: 'Account',
@@ -208,6 +209,22 @@ export const EmployeeScalarFieldEnum = {
 } as const
 
 export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
+
+
+export const LeaveManagementScalarFieldEnum = {
+  id: 'id',
+  leaveType: 'leaveType',
+  leaveFrom: 'leaveFrom',
+  leaveTO: 'leaveTO',
+  purposeOfLeave: 'purposeOfLeave',
+  addressDuringLeave: 'addressDuringLeave',
+  emergencyContactNumber: 'emergencyContactNumber',
+  approved: 'approved',
+  approverId: 'approverId',
+  employeeId: 'employeeId'
+} as const
+
+export type LeaveManagementScalarFieldEnum = (typeof LeaveManagementScalarFieldEnum)[keyof typeof LeaveManagementScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {

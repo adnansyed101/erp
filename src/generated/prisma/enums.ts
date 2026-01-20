@@ -78,3 +78,12 @@ export const AttendanceStatus = {
 } as const
 
 export type AttendanceStatus = (typeof AttendanceStatus)[keyof typeof AttendanceStatus]
+
+
+export const LeaveStatus = {
+  pending: 'pending',
+  accepted: 'accepted',
+  rejected: 'rejected'
+} as const
+
+export type LeaveStatus = (typeof LeaveStatus)[keyof typeof LeaveStatus]

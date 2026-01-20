@@ -80,6 +80,11 @@ export type Leave = Prisma.LeaveModel
  */
 export type Employee = Prisma.EmployeeModel
 /**
+ * Model LeaveManagement
+ * 
+ */
+export type LeaveManagement = Prisma.LeaveManagementModel
+/**
  * Model User
  * 
  */
