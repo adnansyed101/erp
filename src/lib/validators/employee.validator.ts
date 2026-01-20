@@ -1,5 +1,5 @@
 import z from 'zod'
-import { ERP_ROLE_KEYS } from './roles.array'
+import { ERP_ROLE_KEYS } from '../constant.array'
 
 export const PersonalInformationSchema = z.object({
   fullName: z.string().min(2, 'At least 2 characters are needed.'),
@@ -84,9 +84,7 @@ export const BankInformationSchema = z.object({
 })
 
 const leaveSchema = z.object({
-  casual: z.number().default(14),
-  sick: z.number().default(10),
-  earned: z.number().default(10),
+  leaveType: z.enum(['casual', 'sick', 'earned']),
 })
 
 export const EmployeeSchema = z.object({

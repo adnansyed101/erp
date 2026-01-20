@@ -37,7 +37,7 @@ import { ChevronDownIcon } from 'lucide-react'
 import { Calendar } from '@/components/ui/calendar'
 import { format } from 'date-fns'
 import { Spinner } from '@/components/ui/spinner'
-import { ERP_ROLES } from '@/lib/validators/roles.array'
+import { ERP_ROLES } from '@/lib/constant.array'
 
 // Create Supabase client
 const supabase = createClient(
