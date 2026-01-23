@@ -28,10 +28,12 @@ import { Route as HrManagementCreateEmployeeBankInformationRouteImport } from '.
 import { Route as HrManagementCreateEmployeeAdditionalInformationRouteImport } from './routes/hr-management/create-employee/additional-information'
 import { Route as HrManagementAttendanceManualAttendanceRouteImport } from './routes/hr-management/attendance/manual-attendance'
 import { Route as HrManagementAttendanceAttendanceManagementRouteImport } from './routes/hr-management/attendance/attendance-management'
+import { Route as ApiHrManagementLeaveManagementRouteImport } from './routes/api/hr-management/leave-management'
 import { Route as ApiHrManagementEmployeesRouteImport } from './routes/api/hr-management/employees'
 import { Route as ApiHrManagementAttendanceRouteImport } from './routes/api/hr-management/attendance'
 import { Route as ApiHrManagementEmployeeIdRouteImport } from './routes/api/hr-management/$employeeId'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiHrManagementEmployeeGetByIdRouteImport } from './routes/api/hr-management/employee/$getById'
 
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
@@ -142,6 +144,12 @@ const HrManagementAttendanceAttendanceManagementRoute =
     path: '/attendance/attendance-management',
     getParentRoute: () => HrManagementRouteRoute,
   } as any)
+const ApiHrManagementLeaveManagementRoute =
+  ApiHrManagementLeaveManagementRouteImport.update({
+    id: '/api/hr-management/leave-management',
+    path: '/api/hr-management/leave-management',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiHrManagementEmployeesRoute =
   ApiHrManagementEmployeesRouteImport.update({
     id: '/api/hr-management/employees',
@@ -165,6 +173,12 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiHrManagementEmployeeGetByIdRoute =
+  ApiHrManagementEmployeeGetByIdRouteImport.update({
+    id: '/api/hr-management/employee/$getById',
+    path: '/api/hr-management/employee/$getById',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -179,6 +193,7 @@ export interface FileRoutesByFullPath {
   '/api/hr-management/$employeeId': typeof ApiHrManagementEmployeeIdRoute
   '/api/hr-management/attendance': typeof ApiHrManagementAttendanceRoute
   '/api/hr-management/employees': typeof ApiHrManagementEmployeesRoute
+  '/api/hr-management/leave-management': typeof ApiHrManagementLeaveManagementRoute
   '/hr-management/attendance/attendance-management': typeof HrManagementAttendanceAttendanceManagementRoute
   '/hr-management/attendance/manual-attendance': typeof HrManagementAttendanceManualAttendanceRoute
   '/hr-management/create-employee/additional-information': typeof HrManagementCreateEmployeeAdditionalInformationRoute
@@ -190,6 +205,7 @@ export interface FileRoutesByFullPath {
   '/hr-management/create-employee/spouse-information': typeof HrManagementCreateEmployeeSpouseInformationRoute
   '/hr-management/leave/apply-leave': typeof HrManagementLeaveApplyLeaveRoute
   '/hr-management/leave/leave-management': typeof HrManagementLeaveLeaveManagementRoute
+  '/api/hr-management/employee/$getById': typeof ApiHrManagementEmployeeGetByIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -204,6 +220,7 @@ export interface FileRoutesByTo {
   '/api/hr-management/$employeeId': typeof ApiHrManagementEmployeeIdRoute
   '/api/hr-management/attendance': typeof ApiHrManagementAttendanceRoute
   '/api/hr-management/employees': typeof ApiHrManagementEmployeesRoute
+  '/api/hr-management/leave-management': typeof ApiHrManagementLeaveManagementRoute
   '/hr-management/attendance/attendance-management': typeof HrManagementAttendanceAttendanceManagementRoute
   '/hr-management/attendance/manual-attendance': typeof HrManagementAttendanceManualAttendanceRoute
   '/hr-management/create-employee/additional-information': typeof HrManagementCreateEmployeeAdditionalInformationRoute
@@ -215,6 +232,7 @@ export interface FileRoutesByTo {
   '/hr-management/create-employee/spouse-information': typeof HrManagementCreateEmployeeSpouseInformationRoute
   '/hr-management/leave/apply-leave': typeof HrManagementLeaveApplyLeaveRoute
   '/hr-management/leave/leave-management': typeof HrManagementLeaveLeaveManagementRoute
+  '/api/hr-management/employee/$getById': typeof ApiHrManagementEmployeeGetByIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -230,6 +248,7 @@ export interface FileRoutesById {
   '/api/hr-management/$employeeId': typeof ApiHrManagementEmployeeIdRoute
   '/api/hr-management/attendance': typeof ApiHrManagementAttendanceRoute
   '/api/hr-management/employees': typeof ApiHrManagementEmployeesRoute
+  '/api/hr-management/leave-management': typeof ApiHrManagementLeaveManagementRoute
   '/hr-management/attendance/attendance-management': typeof HrManagementAttendanceAttendanceManagementRoute
   '/hr-management/attendance/manual-attendance': typeof HrManagementAttendanceManualAttendanceRoute
   '/hr-management/create-employee/additional-information': typeof HrManagementCreateEmployeeAdditionalInformationRoute
@@ -241,6 +260,7 @@ export interface FileRoutesById {
   '/hr-management/create-employee/spouse-information': typeof HrManagementCreateEmployeeSpouseInformationRoute
   '/hr-management/leave/apply-leave': typeof HrManagementLeaveApplyLeaveRoute
   '/hr-management/leave/leave-management': typeof HrManagementLeaveLeaveManagementRoute
+  '/api/hr-management/employee/$getById': typeof ApiHrManagementEmployeeGetByIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -257,6 +277,7 @@ export interface FileRouteTypes {
     | '/api/hr-management/$employeeId'
     | '/api/hr-management/attendance'
     | '/api/hr-management/employees'
+    | '/api/hr-management/leave-management'
     | '/hr-management/attendance/attendance-management'
     | '/hr-management/attendance/manual-attendance'
     | '/hr-management/create-employee/additional-information'
@@ -268,6 +289,7 @@ export interface FileRouteTypes {
     | '/hr-management/create-employee/spouse-information'
     | '/hr-management/leave/apply-leave'
     | '/hr-management/leave/leave-management'
+    | '/api/hr-management/employee/$getById'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -282,6 +304,7 @@ export interface FileRouteTypes {
     | '/api/hr-management/$employeeId'
     | '/api/hr-management/attendance'
     | '/api/hr-management/employees'
+    | '/api/hr-management/leave-management'
     | '/hr-management/attendance/attendance-management'
     | '/hr-management/attendance/manual-attendance'
     | '/hr-management/create-employee/additional-information'
@@ -293,6 +316,7 @@ export interface FileRouteTypes {
     | '/hr-management/create-employee/spouse-information'
     | '/hr-management/leave/apply-leave'
     | '/hr-management/leave/leave-management'
+    | '/api/hr-management/employee/$getById'
   id:
     | '__root__'
     | '/'
@@ -307,6 +331,7 @@ export interface FileRouteTypes {
     | '/api/hr-management/$employeeId'
     | '/api/hr-management/attendance'
     | '/api/hr-management/employees'
+    | '/api/hr-management/leave-management'
     | '/hr-management/attendance/attendance-management'
     | '/hr-management/attendance/manual-attendance'
     | '/hr-management/create-employee/additional-information'
@@ -318,6 +343,7 @@ export interface FileRouteTypes {
     | '/hr-management/create-employee/spouse-information'
     | '/hr-management/leave/apply-leave'
     | '/hr-management/leave/leave-management'
+    | '/api/hr-management/employee/$getById'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -328,6 +354,8 @@ export interface RootRouteChildren {
   ApiHrManagementEmployeeIdRoute: typeof ApiHrManagementEmployeeIdRoute
   ApiHrManagementAttendanceRoute: typeof ApiHrManagementAttendanceRoute
   ApiHrManagementEmployeesRoute: typeof ApiHrManagementEmployeesRoute
+  ApiHrManagementLeaveManagementRoute: typeof ApiHrManagementLeaveManagementRoute
+  ApiHrManagementEmployeeGetByIdRoute: typeof ApiHrManagementEmployeeGetByIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -465,6 +493,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HrManagementAttendanceAttendanceManagementRouteImport
       parentRoute: typeof HrManagementRouteRoute
     }
+    '/api/hr-management/leave-management': {
+      id: '/api/hr-management/leave-management'
+      path: '/api/hr-management/leave-management'
+      fullPath: '/api/hr-management/leave-management'
+      preLoaderRoute: typeof ApiHrManagementLeaveManagementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/hr-management/employees': {
       id: '/api/hr-management/employees'
       path: '/api/hr-management/employees'
@@ -491,6 +526,13 @@ declare module '@tanstack/react-router' {
       path: '/api/auth/$'
       fullPath: '/api/auth/$'
       preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/hr-management/employee/$getById': {
+      id: '/api/hr-management/employee/$getById'
+      path: '/api/hr-management/employee/$getById'
+      fullPath: '/api/hr-management/employee/$getById'
+      preLoaderRoute: typeof ApiHrManagementEmployeeGetByIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -568,6 +610,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiHrManagementEmployeeIdRoute: ApiHrManagementEmployeeIdRoute,
   ApiHrManagementAttendanceRoute: ApiHrManagementAttendanceRoute,
   ApiHrManagementEmployeesRoute: ApiHrManagementEmployeesRoute,
+  ApiHrManagementLeaveManagementRoute: ApiHrManagementLeaveManagementRoute,
+  ApiHrManagementEmployeeGetByIdRoute: ApiHrManagementEmployeeGetByIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
