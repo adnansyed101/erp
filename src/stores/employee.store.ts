@@ -90,11 +90,26 @@ const initialFormState: Employee = {
     walletType: '',
     walletNumber: '',
   },
-  remainingLeave: {
-    casual: 14,
-    sick: 10,
-    earned: 10,
-  },
+  remainingLeave: [
+    {
+      leaveType: 'casual',
+      yearlyLeave: 14.0,
+      leaveTaken: 0,
+      balance: 14.0,
+    },
+    {
+      leaveType: 'sick',
+      yearlyLeave: 10.0,
+      leaveTaken: 0.0,
+      balance: 10.0,
+    },
+    {
+      leaveType: 'earned',
+      yearlyLeave: 10.0,
+      leaveTaken: 0.0,
+      balance: 10.0,
+    },
+  ],
 }
 
 export const useEmployeeStore = create<FormState>()(
