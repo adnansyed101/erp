@@ -2,21 +2,56 @@ import { ApplyLeaveForm } from '@/components/apply-leave/apply-leave-form'
 import { ApprovalMatrixPanel } from '@/components/apply-leave/approval-matrix-panel'
 import { LeaveBalancePanel } from '@/components/apply-leave/leave-balance-panel'
 import { LeaveRegisterTable } from '@/components/apply-leave/leave-register-table'
+import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
+import { Employee } from '@/lib/types/employee.types'
+import { authClient } from '@/lib/auth-cilent'
+import { authMiddleware } from '@/middleware/auth'
+import DefaultLoadingComponent from '@/components/shared/default-loading-component'
 
 export const Route = createFileRoute('/hr-management/leave/apply-leave')({
+  server: {
+    middleware: [authMiddleware],
+  },
   component: ApplyLeavePage,
 })
 
 function ApplyLeavePage() {
-  const leaveBalances = [
-    { leaveType: 'Casual Leave', yearlyLeave: 14.0, taken: 0.0, balance: 14.0 },
-    { leaveType: 'Sick Leave', yearlyLeave: 10.0, taken: 1.0, balance: 9.0 },
-  ]
-
   const approverInfo = {
     name: 'MD. JAFAR IQBAL',
     designation: 'Managing Director & CEO',
+  }
+
+  const { data: session } = authClient.useSession()
+
+  const {
+    data: employee,
+    isPending,
+    error,
+  } = useQuery({
+    queryKey: ['employee-leave-search'],
+    queryFn: async (): Promise<{
+      success: boolean
+      message: string
+      data: Employee
+    }> => {
+      const response = await fetch(
+        `/api/hr-management/employee/${session?.user.id}`,
+      )
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch employee by id.')
+      }
+
+      return response.json()
+    },
+    enabled: !!session?.user.id,
+  })
+
+  if (error) return 'An error has occurred: ' + error.message
+
+  if (isPending) {
+    return <DefaultLoadingComponent />
   }
 
   return (
@@ -32,7 +67,7 @@ function ApplyLeavePage() {
             <ApplyLeaveForm />
           </div>
           <div className="space-y-6">
-            <LeaveBalancePanel leaves={leaveBalances} />
+            <LeaveBalancePanel leaves={employee.data.remainingLeave} />
             <ApprovalMatrixPanel approver={approverInfo} />
           </div>
         </div>
