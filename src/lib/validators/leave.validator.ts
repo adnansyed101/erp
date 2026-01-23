@@ -1,16 +1,15 @@
 import { z } from 'zod'
+import { LEAVE_TYPES } from '../constant.array'
 
 export const applyLeaveSchema = z.object({
-  leaveType: z.string().min(1, 'Leave type is required'),
-  leaveBalance: z.string().optional(),
-  whenLeave: z.enum(['pre', 'post']),
+  leaveType: z.enum(LEAVE_TYPES),
   leaveFrom: z.date().min(1, 'Leave from date is required'),
   leaveTo: z.date().min(1, 'Leave to date is required'),
-  totalDays: z.string().optional(),
-  purpose: z.string().optional(),
-  address: z.string().optional(),
-  emergencyNo: z.string().optional(),
-  reliever: z.string().optional(),
-  designation: z.string().optional(),
+  totalDays: z.string(),
+  purposeOfLeave: z.string(),
+  addressDuringLeave: z.string(),
+  emergencyContactNumber: z.string(),
+  approved: z.enum(['pending', 'accepted', 'rejected']),
+  approverId: z.string(),
+  employeeId: z.string(),
 })
-
