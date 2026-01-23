@@ -1,8 +1,12 @@
 import ActivityCard from '@/components/shared/activity-card'
 import DefaultLoadingComponent from '@/components/shared/default-loading-component'
+import { authClient } from '@/lib/auth-cilent'
+import { EmployeeWithId } from '@/lib/types/employee.types'
 import type { Links } from '@/lib/types/general.types'
 import { authMiddleware } from '@/middleware/auth'
 import MainLayout from '@/providers/main-layout'
+import { useCustomUserStore } from '@/stores/user.store'
+import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import {
   Boxes,
@@ -28,14 +32,47 @@ import {
 } from 'lucide-react'
 
 export const Route = createFileRoute('/home')({
-  component: RouteComponent,
+  component: HomePage,
   pendingComponent: DefaultLoadingComponent,
   server: {
     middleware: [authMiddleware],
   },
 })
 
-function RouteComponent() {
+function HomePage() {
+  const updateData = useCustomUserStore((state) => state.updateUserData)
+
+  const { data: session } = authClient.useSession()
+
+  const { data: employee, isPending } = useQuery({
+    queryKey: ['employee'],
+    queryFn: async (): Promise<{
+      success: boolean
+      message: string
+      data: EmployeeWithId
+    }> => {
+      const response = await fetch(
+        `/api/hr-management/employee/${session?.user.id}`,
+      )
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch employee by id.')
+      }
+
+      return response.json()
+    },
+    enabled: !!session?.session.token,
+  })
+
+  if (!isPending)
+    updateData({
+      userId: session?.user.id ?? '',
+      employeeId: employee?.data.id ?? '',
+      email: session?.user.email ?? '',
+      role: employee?.data.personalInformation.role ?? '',
+      name: session?.user.name ?? '',
+    })
+
   const activities = [
     {
       icon: Boxes,
