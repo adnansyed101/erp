@@ -1,6 +1,6 @@
-import * as React from "react";
-import { NavMain } from "@/components/sidebar/nav-main";
-import { NavUser } from "@/components/sidebar/nav-user";
+import * as React from 'react'
+import { NavMain } from '@/components/sidebar/nav-main'
+import { NavUser } from '@/components/sidebar/nav-user'
 import {
   Sidebar,
   SidebarContent,
@@ -8,22 +8,14 @@ import {
   SidebarHeader,
   SidebarMenuButton,
   SidebarRail,
-} from "@/components/ui/sidebar";
-import { Image } from "@unpic/react";
-import { Links } from "@/lib/types/general.types";
-
-// This is sample data.
-const user = {
-  name: "Md Adnan",
-  email: "adnan.arbree.solutions@gmail.com",
-  avatar: "/demo.jpg",
-  role: "hr",
-};
+} from '@/components/ui/sidebar'
+import { Image } from '@unpic/react'
+import { Links } from '@/lib/types/general.types'
 
 type AppSidebarProps = {
-  links: Links;
-  props?: React.ComponentProps<typeof Sidebar>;
-};
+  links: Links
+  props?: React.ComponentProps<typeof Sidebar>
+}
 
 export const AppSidebar: React.FC<AppSidebarProps> = ({ links, ...props }) => {
   return (
@@ -52,9 +44,9 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({ links, ...props }) => {
         ))}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={user} />
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  );
-};
+  )
+}
