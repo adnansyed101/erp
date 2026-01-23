@@ -1,5 +1,5 @@
 import z from 'zod'
-import { ERP_ROLE_KEYS } from '../constant.array'
+import { ERP_ROLE_KEYS, LEAVE_TYPES } from '../constant.array'
 
 export const PersonalInformationSchema = z.object({
   fullName: z.string().min(2, 'At least 2 characters are needed.'),
@@ -84,7 +84,11 @@ export const BankInformationSchema = z.object({
 })
 
 const leaveSchema = z.object({
-  leaveType: z.enum(['casual', 'sick', 'earned']),
+  // id: z.string(),
+  leaveType: z.enum(LEAVE_TYPES),
+  yearlyLeave: z.number(),
+  leaveTaken: z.number(),
+  balance: z.number(),
 })
 
 export const EmployeeSchema = z.object({
@@ -95,7 +99,7 @@ export const EmployeeSchema = z.object({
   emergencyContact: EmergencyContactSchema,
   presentAddress: AddressSchema,
   permanentAddress: AddressSchema,
-  remainingLeave: leaveSchema,
+  remainingLeave: leaveSchema.array(),
 })
 
 export const EmployeeSchemaWithId = EmployeeSchema.extend({
