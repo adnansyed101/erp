@@ -1,6 +1,45 @@
-import { LeaveStatus, LeaveType, Role } from '@/generated/prisma/enums'
+import { LeaveStatus, LeaveType } from '@/generated/prisma/enums'
 
-export const ERP_ROLE_KEYS = Role
+export const ERP_ROLE_KEYS = [
+  'ADMIN',
+  'BOARD_OWNER',
+  'CEO_MANAGING_DIRECTOR',
+  'CTO',
+  'COO',
+  'DEPARTMENT_HEAD',
+  'ENGINEERING_HEAD',
+  'DESIGN_HEAD',
+  'PROJECT_MANAGEMENT_HEAD',
+  'PRODUCT_HEAD',
+  'HR_HEAD',
+  'FINANCE_HEAD',
+  'SALES_MARKETING_HEAD',
+  'SUPPORT_OPERATIONS_HEAD',
+  'TECH_LEAD',
+  'QA_LEAD',
+  'DEVOPS_ENGINEER',
+  'PRODUCT_MANAGER',
+  'PROJECT_MANAGER',
+  'SENIOR_DEVELOPER',
+  'SCRUM_MASTER',
+  'HR_MANAGER',
+  'SALES_MANAGER',
+  'MID_LEVEL_DEVELOPER',
+  'UI_UX_DESIGNER',
+  'ACCOUNTANT',
+  'BUSINESS_DEVELOPMENT_EXECUTIVE',
+  'QA_ENGINEER',
+  'PAYROLL_OFFICER',
+  'JUNIOR_DEVELOPER',
+  'GRAPHIC_DESIGNER',
+  'HR_EXECUTIVE',
+  'MARKETING_EXECUTIVE',
+  'OFFICE_ADMIN',
+  'IT_SUPPORT',
+  'INTERN',
+  'CLIENT',
+]
+
 // Scoring system to be followed
 export const ERP_ROLES = [
   { key: 'ADMIN', score: 100 },
