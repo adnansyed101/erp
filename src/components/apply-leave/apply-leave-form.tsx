@@ -20,42 +20,96 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { applyLeaveSchema } from '@/lib/validators/leave.validator'
-import { ApplyLeaveFormValues } from '@/lib/types/leave.types'
-import { addDays } from 'date-fns'
+import type { ApplyLeave } from '@/lib/types/leave.types'
+import { addDays, differenceInDays, format } from 'date-fns'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { ChevronDownIcon } from 'lucide-react'
 import { Calendar } from '../ui/calendar'
+import { EmployeeWithId } from '@/lib/types/employee.types'
+import { SearchDropdown } from '../shared/search-dropdown'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import useDebounce from '@/hooks/useDebouncer'
+import { toast } from 'sonner'
+import { useCustomUserStore } from '@/stores/user.store'
+
+type ResponseType = {
+  success: boolean
+  message: string
+  data: EmployeeWithId[]
+}
 
 export function ApplyLeaveForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [search, setSearch] = useState('')
+  const debouncedSearch = useDebounce(search, 300)
+  const queryClient = useQueryClient()
+  const customUserData = useCustomUserStore((data) => data.userData)
 
-  const form = useForm<ApplyLeaveFormValues>({
+  const form = useForm<ApplyLeave>({
     resolver: zodResolver(applyLeaveSchema),
     defaultValues: {
-      leaveType: '',
-      leaveBalance: '',
-      whenLeave: 'pre',
+      leaveType: 'casual',
       leaveFrom: new Date(),
       leaveTo: addDays(new Date(), 1),
-      totalDays: '',
-      purpose: '',
-      address: '',
-      emergencyNo: '',
-      reliever: '',
-      designation: '',
+      totalDays: '1',
+      purposeOfLeave: '',
+      addressDuringLeave: '',
+      emergencyContactNumber: '',
+      approved: 'pending',
+      approverId: '',
+      employeeId: customUserData.employeeId,
     },
   })
 
-  const onSubmit = async (values: ApplyLeaveFormValues) => {
-    setIsSubmitting(true)
-    try {
-      console.log('Form submitted:', values)
-      // Add your submit logic here
-    } catch (error) {
-      console.error('Form submission error:', error)
-    } finally {
-      setIsSubmitting(false)
+  // Get the attendances
+  const { data: employees, isLoading } = useQuery({
+    queryKey: ['employees-search', debouncedSearch],
+    queryFn: async (): Promise<ResponseType> => {
+      const response = await fetch(
+        `/api/hr-management/employees?limit=5&search=${debouncedSearch}`,
+      )
+      if (!response.ok) throw new Error('Failed to fetch employees')
+      return response.json()
+    },
+  })
+
+  const { mutate } = useMutation({
+    mutationKey: ['apply-leave'],
+    mutationFn: async (newLeave: ApplyLeave) => {
+      const response = await fetch('/api/hr-management/leave-management', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newLeave),
+      })
+      if (!response.ok) {
+        throw new Error('Failed to apply leave')
+      }
+      return response.json()
+    },
+    onSuccess: (data: ResponseType) => {
+      if (data.success === true) {
+        queryClient.invalidateQueries({
+          queryKey: ['leaves-list'],
+        })
+        return toast.success(data.message)
+      } else if (data.data === null && data.success === false) {
+        return toast.error(data.message)
+      } else {
+        return toast.error(data.message)
+      }
+    },
+  })
+
+  const onSubmit = async (values: ApplyLeave) => {
+    const payload: ApplyLeave = {
+      ...values,
+      totalDays: differenceInDays(
+        form.watch('leaveTo'),
+        form.watch('leaveFrom'),
+      ).toString(),
     }
+    return mutate(payload)
   }
 
   return (
@@ -98,47 +152,6 @@ export function ApplyLeaveForm() {
 
               <FormField
                 control={form.control}
-                name="leaveBalance"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Leave Balance</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Leave Balance" {...field} disabled />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="whenLeave"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      When Leave?<span className="text-red-500">*</span>
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="pre">Pre Leave</SelectItem>
-                        <SelectItem value="post">Post Leave</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
                 name="leaveFrom"
                 render={({ field }) => (
                   <FormItem>
@@ -153,7 +166,7 @@ export function ApplyLeaveForm() {
                             className="w-full justify-between"
                           >
                             {field.value
-                              ? field.value.toLocaleDateString()
+                              ? format(field.value, 'PP')
                               : 'Select date'}
                             <ChevronDownIcon />
                           </Button>
@@ -190,7 +203,7 @@ export function ApplyLeaveForm() {
                             className="w-full justify-between"
                           >
                             {field.value
-                              ? field.value.toLocaleDateString()
+                              ? format(field.value, 'PP')
                               : 'Select date'}
                             <ChevronDownIcon />
                           </Button>
@@ -214,11 +227,18 @@ export function ApplyLeaveForm() {
               <FormField
                 control={form.control}
                 name="totalDays"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
                     <FormLabel>Total Days</FormLabel>
                     <FormControl>
-                      <Input placeholder="Total Days" disabled {...field} />
+                      <Input
+                        placeholder="Total Days"
+                        disabled
+                        value={differenceInDays(
+                          form.watch('leaveTo'),
+                          form.watch('leaveFrom'),
+                        )}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -227,7 +247,7 @@ export function ApplyLeaveForm() {
 
               <FormField
                 control={form.control}
-                name="purpose"
+                name="purposeOfLeave"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Purpose Of Leave</FormLabel>
@@ -241,7 +261,7 @@ export function ApplyLeaveForm() {
 
               <FormField
                 control={form.control}
-                name="address"
+                name="addressDuringLeave"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Address During Leave</FormLabel>
@@ -255,28 +275,13 @@ export function ApplyLeaveForm() {
 
               <FormField
                 control={form.control}
-                name="emergencyNo"
+                name="emergencyContactNumber"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Emergency No</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Emergency Number" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="reliever"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Reliever's Employee Name</FormLabel>
+                    <FormLabel>Emergency Contact Number</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Search by Employee Code or Name..."
+                        placeholder="Emergency Contact Number"
                         {...field}
                       />
                     </FormControl>
@@ -284,15 +289,22 @@ export function ApplyLeaveForm() {
                   </FormItem>
                 )}
               />
-
+            </div>
+            <div>
               <FormField
                 control={form.control}
-                name="designation"
+                name="approverId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Designation</FormLabel>
+                    <FormLabel>Reliever's Employee Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Designation" disabled {...field} />
+                      <SearchDropdown
+                        items={employees?.data ? employees.data : []}
+                        onSelect={(emp) => field.onChange(emp.id)}
+                        search={search}
+                        setSearch={setSearch}
+                        isLoading={isLoading}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -312,9 +324,9 @@ export function ApplyLeaveForm() {
               <Button
                 type="submit"
                 className="flex-1 bg-blue-600 hover:bg-blue-700"
-                disabled={isSubmitting}
+                disabled={form.formState.isSubmitting}
               >
-                {isSubmitting ? 'Submitting...' : 'Submit'}
+                {form.formState.isSubmitting ? 'Submitting...' : 'Submit'}
               </Button>
             </div>
           </form>
