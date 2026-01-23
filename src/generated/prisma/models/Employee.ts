@@ -232,7 +232,7 @@ export type EmployeeWhereInput = {
   attendance?: Prisma.AttendanceListRelationFilter
   remainingLeave?: Prisma.LeaveListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  approver?: Prisma.XOR<Prisma.LeaveManagementNullableScalarRelationFilter, Prisma.LeaveManagementWhereInput> | null
+  approver?: Prisma.LeaveManagementListRelationFilter
   leavesTaken?: Prisma.LeaveManagementListRelationFilter
 }
 
@@ -257,7 +257,7 @@ export type EmployeeOrderByWithRelationInput = {
   attendance?: Prisma.AttendanceOrderByRelationAggregateInput
   remainingLeave?: Prisma.LeaveOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
-  approver?: Prisma.LeaveManagementOrderByWithRelationInput
+  approver?: Prisma.LeaveManagementOrderByRelationAggregateInput
   leavesTaken?: Prisma.LeaveManagementOrderByRelationAggregateInput
 }
 
@@ -285,7 +285,7 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   attendance?: Prisma.AttendanceListRelationFilter
   remainingLeave?: Prisma.LeaveListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  approver?: Prisma.XOR<Prisma.LeaveManagementNullableScalarRelationFilter, Prisma.LeaveManagementWhereInput> | null
+  approver?: Prisma.LeaveManagementListRelationFilter
   leavesTaken?: Prisma.LeaveManagementListRelationFilter
 }, "id" | "personalInformationId" | "addtionalInformationId" | "presentAddressId" | "permanentAddressId" | "spouseInformationId" | "emergencyContactId" | "userId">
 
@@ -334,7 +334,7 @@ export type EmployeeCreateInput = {
   attendance?: Prisma.AttendanceCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveCreateNestedManyWithoutEmployeeInput
   user: Prisma.UserCreateNestedOneWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementCreateNestedManyWithoutEmployeeInput
 }
 
@@ -351,7 +351,7 @@ export type EmployeeUncheckedCreateInput = {
   userId: string
   attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveUncheckedCreateNestedManyWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementUncheckedCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
@@ -368,7 +368,7 @@ export type EmployeeUpdateInput = {
   attendance?: Prisma.AttendanceUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUpdateManyWithoutEmployeeNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -385,7 +385,7 @@ export type EmployeeUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUncheckedUpdateManyWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUncheckedUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUncheckedUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -817,7 +817,7 @@ export type EmployeeCreateWithoutPresentAddressInput = {
   attendance?: Prisma.AttendanceCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveCreateNestedManyWithoutEmployeeInput
   user: Prisma.UserCreateNestedOneWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementCreateNestedManyWithoutEmployeeInput
 }
 
@@ -833,7 +833,7 @@ export type EmployeeUncheckedCreateWithoutPresentAddressInput = {
   userId: string
   attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveUncheckedCreateNestedManyWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementUncheckedCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
@@ -854,7 +854,7 @@ export type EmployeeCreateWithoutPermanentAddressInput = {
   attendance?: Prisma.AttendanceCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveCreateNestedManyWithoutEmployeeInput
   user: Prisma.UserCreateNestedOneWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementCreateNestedManyWithoutEmployeeInput
 }
 
@@ -870,7 +870,7 @@ export type EmployeeUncheckedCreateWithoutPermanentAddressInput = {
   userId: string
   attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveUncheckedCreateNestedManyWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementUncheckedCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
@@ -902,7 +902,7 @@ export type EmployeeUpdateWithoutPresentAddressInput = {
   attendance?: Prisma.AttendanceUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUpdateManyWithoutEmployeeNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -918,7 +918,7 @@ export type EmployeeUncheckedUpdateWithoutPresentAddressInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUncheckedUpdateManyWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUncheckedUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUncheckedUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -945,7 +945,7 @@ export type EmployeeUpdateWithoutPermanentAddressInput = {
   attendance?: Prisma.AttendanceUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUpdateManyWithoutEmployeeNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -961,7 +961,7 @@ export type EmployeeUncheckedUpdateWithoutPermanentAddressInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUncheckedUpdateManyWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUncheckedUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUncheckedUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -977,7 +977,7 @@ export type EmployeeCreateWithoutSpouseInformationInput = {
   attendance?: Prisma.AttendanceCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveCreateNestedManyWithoutEmployeeInput
   user: Prisma.UserCreateNestedOneWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementCreateNestedManyWithoutEmployeeInput
 }
 
@@ -993,7 +993,7 @@ export type EmployeeUncheckedCreateWithoutSpouseInformationInput = {
   userId: string
   attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveUncheckedCreateNestedManyWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementUncheckedCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
@@ -1014,7 +1014,7 @@ export type EmployeeCreateWithoutEmergencyContactInput = {
   attendance?: Prisma.AttendanceCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveCreateNestedManyWithoutEmployeeInput
   user: Prisma.UserCreateNestedOneWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementCreateNestedManyWithoutEmployeeInput
 }
 
@@ -1030,7 +1030,7 @@ export type EmployeeUncheckedCreateWithoutEmergencyContactInput = {
   userId: string
   attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveUncheckedCreateNestedManyWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementUncheckedCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
@@ -1062,7 +1062,7 @@ export type EmployeeUpdateWithoutSpouseInformationInput = {
   attendance?: Prisma.AttendanceUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUpdateManyWithoutEmployeeNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1078,7 +1078,7 @@ export type EmployeeUncheckedUpdateWithoutSpouseInformationInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUncheckedUpdateManyWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUncheckedUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUncheckedUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1105,7 +1105,7 @@ export type EmployeeUpdateWithoutEmergencyContactInput = {
   attendance?: Prisma.AttendanceUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUpdateManyWithoutEmployeeNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1121,7 +1121,7 @@ export type EmployeeUncheckedUpdateWithoutEmergencyContactInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUncheckedUpdateManyWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUncheckedUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUncheckedUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1137,7 +1137,7 @@ export type EmployeeCreateWithoutAdditionalInformationInput = {
   attendance?: Prisma.AttendanceCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveCreateNestedManyWithoutEmployeeInput
   user: Prisma.UserCreateNestedOneWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementCreateNestedManyWithoutEmployeeInput
 }
 
@@ -1153,7 +1153,7 @@ export type EmployeeUncheckedCreateWithoutAdditionalInformationInput = {
   userId: string
   attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveUncheckedCreateNestedManyWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementUncheckedCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
@@ -1185,7 +1185,7 @@ export type EmployeeUpdateWithoutAdditionalInformationInput = {
   attendance?: Prisma.AttendanceUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUpdateManyWithoutEmployeeNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1201,7 +1201,7 @@ export type EmployeeUncheckedUpdateWithoutAdditionalInformationInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUncheckedUpdateManyWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUncheckedUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUncheckedUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1217,7 +1217,7 @@ export type EmployeeCreateWithoutPersonalInformationInput = {
   attendance?: Prisma.AttendanceCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveCreateNestedManyWithoutEmployeeInput
   user: Prisma.UserCreateNestedOneWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementCreateNestedManyWithoutEmployeeInput
 }
 
@@ -1233,7 +1233,7 @@ export type EmployeeUncheckedCreateWithoutPersonalInformationInput = {
   userId: string
   attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveUncheckedCreateNestedManyWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementUncheckedCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
@@ -1265,7 +1265,7 @@ export type EmployeeUpdateWithoutPersonalInformationInput = {
   attendance?: Prisma.AttendanceUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUpdateManyWithoutEmployeeNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1281,7 +1281,7 @@ export type EmployeeUncheckedUpdateWithoutPersonalInformationInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUncheckedUpdateManyWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUncheckedUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUncheckedUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1297,7 +1297,7 @@ export type EmployeeCreateWithoutBankInformationInput = {
   attendance?: Prisma.AttendanceCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveCreateNestedManyWithoutEmployeeInput
   user: Prisma.UserCreateNestedOneWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementCreateNestedManyWithoutEmployeeInput
 }
 
@@ -1313,7 +1313,7 @@ export type EmployeeUncheckedCreateWithoutBankInformationInput = {
   userId: string
   attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveUncheckedCreateNestedManyWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementUncheckedCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
@@ -1371,7 +1371,7 @@ export type EmployeeCreateWithoutAttendanceInput = {
   emergencyContact: Prisma.ContactInformationCreateNestedOneWithoutEmployeeEmergencyContactInput
   remainingLeave?: Prisma.LeaveCreateNestedManyWithoutEmployeeInput
   user: Prisma.UserCreateNestedOneWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementCreateNestedManyWithoutEmployeeInput
 }
 
@@ -1387,7 +1387,7 @@ export type EmployeeUncheckedCreateWithoutAttendanceInput = {
   emergencyContactId: string
   userId: string
   remainingLeave?: Prisma.LeaveUncheckedCreateNestedManyWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementUncheckedCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
@@ -1419,7 +1419,7 @@ export type EmployeeUpdateWithoutAttendanceInput = {
   emergencyContact?: Prisma.ContactInformationUpdateOneRequiredWithoutEmployeeEmergencyContactNestedInput
   remainingLeave?: Prisma.LeaveUpdateManyWithoutEmployeeNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1435,7 +1435,7 @@ export type EmployeeUncheckedUpdateWithoutAttendanceInput = {
   emergencyContactId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   remainingLeave?: Prisma.LeaveUncheckedUpdateManyWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUncheckedUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUncheckedUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1451,7 +1451,7 @@ export type EmployeeCreateWithoutRemainingLeaveInput = {
   emergencyContact: Prisma.ContactInformationCreateNestedOneWithoutEmployeeEmergencyContactInput
   attendance?: Prisma.AttendanceCreateNestedManyWithoutEmployeeInput
   user: Prisma.UserCreateNestedOneWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementCreateNestedManyWithoutEmployeeInput
 }
 
@@ -1467,7 +1467,7 @@ export type EmployeeUncheckedCreateWithoutRemainingLeaveInput = {
   emergencyContactId: string
   userId: string
   attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementUncheckedCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
@@ -1499,7 +1499,7 @@ export type EmployeeUpdateWithoutRemainingLeaveInput = {
   emergencyContact?: Prisma.ContactInformationUpdateOneRequiredWithoutEmployeeEmergencyContactNestedInput
   attendance?: Prisma.AttendanceUpdateManyWithoutEmployeeNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1515,7 +1515,7 @@ export type EmployeeUncheckedUpdateWithoutRemainingLeaveInput = {
   emergencyContactId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUncheckedUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUncheckedUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1569,7 +1569,7 @@ export type EmployeeCreateWithoutLeavesTakenInput = {
   attendance?: Prisma.AttendanceCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveCreateNestedManyWithoutEmployeeInput
   user: Prisma.UserCreateNestedOneWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementCreateNestedManyWithoutApprovedByInput
 }
 
 export type EmployeeUncheckedCreateWithoutLeavesTakenInput = {
@@ -1585,7 +1585,7 @@ export type EmployeeUncheckedCreateWithoutLeavesTakenInput = {
   userId: string
   attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveUncheckedCreateNestedManyWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementUncheckedCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutApprovedByInput
 }
 
 export type EmployeeCreateOrConnectWithoutLeavesTakenInput = {
@@ -1660,7 +1660,7 @@ export type EmployeeUpdateWithoutLeavesTakenInput = {
   attendance?: Prisma.AttendanceUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUpdateManyWithoutEmployeeNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUpdateManyWithoutApprovedByNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutLeavesTakenInput = {
@@ -1676,7 +1676,7 @@ export type EmployeeUncheckedUpdateWithoutLeavesTakenInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUncheckedUpdateManyWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUncheckedUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUncheckedUpdateManyWithoutApprovedByNestedInput
 }
 
 export type EmployeeCreateWithoutUserInput = {
@@ -1691,7 +1691,7 @@ export type EmployeeCreateWithoutUserInput = {
   emergencyContact: Prisma.ContactInformationCreateNestedOneWithoutEmployeeEmergencyContactInput
   attendance?: Prisma.AttendanceCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveCreateNestedManyWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementCreateNestedManyWithoutEmployeeInput
 }
 
@@ -1707,7 +1707,7 @@ export type EmployeeUncheckedCreateWithoutUserInput = {
   emergencyContactId: string
   attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutEmployeeInput
   remainingLeave?: Prisma.LeaveUncheckedCreateNestedManyWithoutEmployeeInput
-  approver?: Prisma.LeaveManagementUncheckedCreateNestedOneWithoutApprovedByInput
+  approver?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutApprovedByInput
   leavesTaken?: Prisma.LeaveManagementUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
@@ -1739,7 +1739,7 @@ export type EmployeeUpdateWithoutUserInput = {
   emergencyContact?: Prisma.ContactInformationUpdateOneRequiredWithoutEmployeeEmergencyContactNestedInput
   attendance?: Prisma.AttendanceUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUpdateManyWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1755,7 +1755,7 @@ export type EmployeeUncheckedUpdateWithoutUserInput = {
   emergencyContactId?: Prisma.StringFieldUpdateOperationsInput | string
   attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUncheckedUpdateManyWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUncheckedUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUncheckedUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1783,7 +1783,7 @@ export type EmployeeUpdateWithoutBankInformationInput = {
   attendance?: Prisma.AttendanceUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUpdateManyWithoutEmployeeNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1799,7 +1799,7 @@ export type EmployeeUncheckedUpdateWithoutBankInformationInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
   remainingLeave?: Prisma.LeaveUncheckedUpdateManyWithoutEmployeeNestedInput
-  approver?: Prisma.LeaveManagementUncheckedUpdateOneWithoutApprovedByNestedInput
+  approver?: Prisma.LeaveManagementUncheckedUpdateManyWithoutApprovedByNestedInput
   leavesTaken?: Prisma.LeaveManagementUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -1823,12 +1823,14 @@ export type EmployeeUncheckedUpdateManyWithoutBankInformationInput = {
 export type EmployeeCountOutputType = {
   attendance: number
   remainingLeave: number
+  approver: number
   leavesTaken: number
 }
 
 export type EmployeeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   attendance?: boolean | EmployeeCountOutputTypeCountAttendanceArgs
   remainingLeave?: boolean | EmployeeCountOutputTypeCountRemainingLeaveArgs
+  approver?: boolean | EmployeeCountOutputTypeCountApproverArgs
   leavesTaken?: boolean | EmployeeCountOutputTypeCountLeavesTakenArgs
 }
 
@@ -1854,6 +1856,13 @@ export type EmployeeCountOutputTypeCountAttendanceArgs<ExtArgs extends runtime.T
  */
 export type EmployeeCountOutputTypeCountRemainingLeaveArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LeaveWhereInput
+}
+
+/**
+ * EmployeeCountOutputType without action
+ */
+export type EmployeeCountOutputTypeCountApproverArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeaveManagementWhereInput
 }
 
 /**
@@ -1995,7 +2004,7 @@ export type $EmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     attendance: Prisma.$AttendancePayload<ExtArgs>[]
     remainingLeave: Prisma.$LeavePayload<ExtArgs>[]
     user: Prisma.$UserPayload<ExtArgs>
-    approver: Prisma.$LeaveManagementPayload<ExtArgs> | null
+    approver: Prisma.$LeaveManagementPayload<ExtArgs>[]
     leavesTaken: Prisma.$LeaveManagementPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -2413,7 +2422,7 @@ export interface Prisma__EmployeeClient<T, Null = never, ExtArgs extends runtime
   attendance<T extends Prisma.Employee$attendanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$attendanceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   remainingLeave<T extends Prisma.Employee$remainingLeaveArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$remainingLeaveArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeavePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  approver<T extends Prisma.Employee$approverArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$approverArgs<ExtArgs>>): Prisma.Prisma__LeaveManagementClient<runtime.Types.Result.GetResult<Prisma.$LeaveManagementPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  approver<T extends Prisma.Employee$approverArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$approverArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaveManagementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leavesTaken<T extends Prisma.Employee$leavesTakenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$leavesTakenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaveManagementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2933,6 +2942,11 @@ export type Employee$approverArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   include?: Prisma.LeaveManagementInclude<ExtArgs> | null
   where?: Prisma.LeaveManagementWhereInput
+  orderBy?: Prisma.LeaveManagementOrderByWithRelationInput | Prisma.LeaveManagementOrderByWithRelationInput[]
+  cursor?: Prisma.LeaveManagementWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeaveManagementScalarFieldEnum | Prisma.LeaveManagementScalarFieldEnum[]
 }
 
 /**

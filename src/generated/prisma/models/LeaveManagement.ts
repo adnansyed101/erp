@@ -252,7 +252,6 @@ export type LeaveManagementOrderByWithRelationInput = {
 
 export type LeaveManagementWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  approverId?: string
   AND?: Prisma.LeaveManagementWhereInput | Prisma.LeaveManagementWhereInput[]
   OR?: Prisma.LeaveManagementWhereInput[]
   NOT?: Prisma.LeaveManagementWhereInput | Prisma.LeaveManagementWhereInput[]
@@ -264,10 +263,11 @@ export type LeaveManagementWhereUniqueInput = Prisma.AtLeast<{
   addressDuringLeave?: Prisma.StringFilter<"LeaveManagement"> | string
   emergencyContactNumber?: Prisma.StringFilter<"LeaveManagement"> | string
   approved?: Prisma.EnumLeaveStatusFilter<"LeaveManagement"> | $Enums.LeaveStatus
+  approverId?: Prisma.StringFilter<"LeaveManagement"> | string
   employeeId?: Prisma.StringFilter<"LeaveManagement"> | string
   approvedBy?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-}, "id" | "approverId">
+}, "id">
 
 export type LeaveManagementOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -399,11 +399,6 @@ export type LeaveManagementUncheckedUpdateManyInput = {
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type LeaveManagementNullableScalarRelationFilter = {
-  is?: Prisma.LeaveManagementWhereInput | null
-  isNot?: Prisma.LeaveManagementWhereInput | null
-}
-
 export type LeaveManagementListRelationFilter = {
   every?: Prisma.LeaveManagementWhereInput
   some?: Prisma.LeaveManagementWhereInput
@@ -456,10 +451,11 @@ export type LeaveManagementMinOrderByAggregateInput = {
   employeeId?: Prisma.SortOrder
 }
 
-export type LeaveManagementCreateNestedOneWithoutApprovedByInput = {
-  create?: Prisma.XOR<Prisma.LeaveManagementCreateWithoutApprovedByInput, Prisma.LeaveManagementUncheckedCreateWithoutApprovedByInput>
-  connectOrCreate?: Prisma.LeaveManagementCreateOrConnectWithoutApprovedByInput
-  connect?: Prisma.LeaveManagementWhereUniqueInput
+export type LeaveManagementCreateNestedManyWithoutApprovedByInput = {
+  create?: Prisma.XOR<Prisma.LeaveManagementCreateWithoutApprovedByInput, Prisma.LeaveManagementUncheckedCreateWithoutApprovedByInput> | Prisma.LeaveManagementCreateWithoutApprovedByInput[] | Prisma.LeaveManagementUncheckedCreateWithoutApprovedByInput[]
+  connectOrCreate?: Prisma.LeaveManagementCreateOrConnectWithoutApprovedByInput | Prisma.LeaveManagementCreateOrConnectWithoutApprovedByInput[]
+  createMany?: Prisma.LeaveManagementCreateManyApprovedByInputEnvelope
+  connect?: Prisma.LeaveManagementWhereUniqueInput | Prisma.LeaveManagementWhereUniqueInput[]
 }
 
 export type LeaveManagementCreateNestedManyWithoutEmployeeInput = {
@@ -469,10 +465,11 @@ export type LeaveManagementCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.LeaveManagementWhereUniqueInput | Prisma.LeaveManagementWhereUniqueInput[]
 }
 
-export type LeaveManagementUncheckedCreateNestedOneWithoutApprovedByInput = {
-  create?: Prisma.XOR<Prisma.LeaveManagementCreateWithoutApprovedByInput, Prisma.LeaveManagementUncheckedCreateWithoutApprovedByInput>
-  connectOrCreate?: Prisma.LeaveManagementCreateOrConnectWithoutApprovedByInput
-  connect?: Prisma.LeaveManagementWhereUniqueInput
+export type LeaveManagementUncheckedCreateNestedManyWithoutApprovedByInput = {
+  create?: Prisma.XOR<Prisma.LeaveManagementCreateWithoutApprovedByInput, Prisma.LeaveManagementUncheckedCreateWithoutApprovedByInput> | Prisma.LeaveManagementCreateWithoutApprovedByInput[] | Prisma.LeaveManagementUncheckedCreateWithoutApprovedByInput[]
+  connectOrCreate?: Prisma.LeaveManagementCreateOrConnectWithoutApprovedByInput | Prisma.LeaveManagementCreateOrConnectWithoutApprovedByInput[]
+  createMany?: Prisma.LeaveManagementCreateManyApprovedByInputEnvelope
+  connect?: Prisma.LeaveManagementWhereUniqueInput | Prisma.LeaveManagementWhereUniqueInput[]
 }
 
 export type LeaveManagementUncheckedCreateNestedManyWithoutEmployeeInput = {
@@ -482,14 +479,18 @@ export type LeaveManagementUncheckedCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.LeaveManagementWhereUniqueInput | Prisma.LeaveManagementWhereUniqueInput[]
 }
 
-export type LeaveManagementUpdateOneWithoutApprovedByNestedInput = {
-  create?: Prisma.XOR<Prisma.LeaveManagementCreateWithoutApprovedByInput, Prisma.LeaveManagementUncheckedCreateWithoutApprovedByInput>
-  connectOrCreate?: Prisma.LeaveManagementCreateOrConnectWithoutApprovedByInput
-  upsert?: Prisma.LeaveManagementUpsertWithoutApprovedByInput
-  disconnect?: Prisma.LeaveManagementWhereInput | boolean
-  delete?: Prisma.LeaveManagementWhereInput | boolean
-  connect?: Prisma.LeaveManagementWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.LeaveManagementUpdateToOneWithWhereWithoutApprovedByInput, Prisma.LeaveManagementUpdateWithoutApprovedByInput>, Prisma.LeaveManagementUncheckedUpdateWithoutApprovedByInput>
+export type LeaveManagementUpdateManyWithoutApprovedByNestedInput = {
+  create?: Prisma.XOR<Prisma.LeaveManagementCreateWithoutApprovedByInput, Prisma.LeaveManagementUncheckedCreateWithoutApprovedByInput> | Prisma.LeaveManagementCreateWithoutApprovedByInput[] | Prisma.LeaveManagementUncheckedCreateWithoutApprovedByInput[]
+  connectOrCreate?: Prisma.LeaveManagementCreateOrConnectWithoutApprovedByInput | Prisma.LeaveManagementCreateOrConnectWithoutApprovedByInput[]
+  upsert?: Prisma.LeaveManagementUpsertWithWhereUniqueWithoutApprovedByInput | Prisma.LeaveManagementUpsertWithWhereUniqueWithoutApprovedByInput[]
+  createMany?: Prisma.LeaveManagementCreateManyApprovedByInputEnvelope
+  set?: Prisma.LeaveManagementWhereUniqueInput | Prisma.LeaveManagementWhereUniqueInput[]
+  disconnect?: Prisma.LeaveManagementWhereUniqueInput | Prisma.LeaveManagementWhereUniqueInput[]
+  delete?: Prisma.LeaveManagementWhereUniqueInput | Prisma.LeaveManagementWhereUniqueInput[]
+  connect?: Prisma.LeaveManagementWhereUniqueInput | Prisma.LeaveManagementWhereUniqueInput[]
+  update?: Prisma.LeaveManagementUpdateWithWhereUniqueWithoutApprovedByInput | Prisma.LeaveManagementUpdateWithWhereUniqueWithoutApprovedByInput[]
+  updateMany?: Prisma.LeaveManagementUpdateManyWithWhereWithoutApprovedByInput | Prisma.LeaveManagementUpdateManyWithWhereWithoutApprovedByInput[]
+  deleteMany?: Prisma.LeaveManagementScalarWhereInput | Prisma.LeaveManagementScalarWhereInput[]
 }
 
 export type LeaveManagementUpdateManyWithoutEmployeeNestedInput = {
@@ -506,14 +507,18 @@ export type LeaveManagementUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.LeaveManagementScalarWhereInput | Prisma.LeaveManagementScalarWhereInput[]
 }
 
-export type LeaveManagementUncheckedUpdateOneWithoutApprovedByNestedInput = {
-  create?: Prisma.XOR<Prisma.LeaveManagementCreateWithoutApprovedByInput, Prisma.LeaveManagementUncheckedCreateWithoutApprovedByInput>
-  connectOrCreate?: Prisma.LeaveManagementCreateOrConnectWithoutApprovedByInput
-  upsert?: Prisma.LeaveManagementUpsertWithoutApprovedByInput
-  disconnect?: Prisma.LeaveManagementWhereInput | boolean
-  delete?: Prisma.LeaveManagementWhereInput | boolean
-  connect?: Prisma.LeaveManagementWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.LeaveManagementUpdateToOneWithWhereWithoutApprovedByInput, Prisma.LeaveManagementUpdateWithoutApprovedByInput>, Prisma.LeaveManagementUncheckedUpdateWithoutApprovedByInput>
+export type LeaveManagementUncheckedUpdateManyWithoutApprovedByNestedInput = {
+  create?: Prisma.XOR<Prisma.LeaveManagementCreateWithoutApprovedByInput, Prisma.LeaveManagementUncheckedCreateWithoutApprovedByInput> | Prisma.LeaveManagementCreateWithoutApprovedByInput[] | Prisma.LeaveManagementUncheckedCreateWithoutApprovedByInput[]
+  connectOrCreate?: Prisma.LeaveManagementCreateOrConnectWithoutApprovedByInput | Prisma.LeaveManagementCreateOrConnectWithoutApprovedByInput[]
+  upsert?: Prisma.LeaveManagementUpsertWithWhereUniqueWithoutApprovedByInput | Prisma.LeaveManagementUpsertWithWhereUniqueWithoutApprovedByInput[]
+  createMany?: Prisma.LeaveManagementCreateManyApprovedByInputEnvelope
+  set?: Prisma.LeaveManagementWhereUniqueInput | Prisma.LeaveManagementWhereUniqueInput[]
+  disconnect?: Prisma.LeaveManagementWhereUniqueInput | Prisma.LeaveManagementWhereUniqueInput[]
+  delete?: Prisma.LeaveManagementWhereUniqueInput | Prisma.LeaveManagementWhereUniqueInput[]
+  connect?: Prisma.LeaveManagementWhereUniqueInput | Prisma.LeaveManagementWhereUniqueInput[]
+  update?: Prisma.LeaveManagementUpdateWithWhereUniqueWithoutApprovedByInput | Prisma.LeaveManagementUpdateWithWhereUniqueWithoutApprovedByInput[]
+  updateMany?: Prisma.LeaveManagementUpdateManyWithWhereWithoutApprovedByInput | Prisma.LeaveManagementUpdateManyWithWhereWithoutApprovedByInput[]
+  deleteMany?: Prisma.LeaveManagementScalarWhereInput | Prisma.LeaveManagementScalarWhereInput[]
 }
 
 export type LeaveManagementUncheckedUpdateManyWithoutEmployeeNestedInput = {
@@ -565,6 +570,11 @@ export type LeaveManagementCreateOrConnectWithoutApprovedByInput = {
   create: Prisma.XOR<Prisma.LeaveManagementCreateWithoutApprovedByInput, Prisma.LeaveManagementUncheckedCreateWithoutApprovedByInput>
 }
 
+export type LeaveManagementCreateManyApprovedByInputEnvelope = {
+  data: Prisma.LeaveManagementCreateManyApprovedByInput | Prisma.LeaveManagementCreateManyApprovedByInput[]
+  skipDuplicates?: boolean
+}
+
 export type LeaveManagementCreateWithoutEmployeeInput = {
   id?: string
   leaveType: $Enums.LeaveType
@@ -601,15 +611,79 @@ export type LeaveManagementCreateManyEmployeeInputEnvelope = {
   skipDuplicates?: boolean
 }
 
-export type LeaveManagementUpsertWithoutApprovedByInput = {
+export type LeaveManagementUpsertWithWhereUniqueWithoutApprovedByInput = {
+  where: Prisma.LeaveManagementWhereUniqueInput
   update: Prisma.XOR<Prisma.LeaveManagementUpdateWithoutApprovedByInput, Prisma.LeaveManagementUncheckedUpdateWithoutApprovedByInput>
   create: Prisma.XOR<Prisma.LeaveManagementCreateWithoutApprovedByInput, Prisma.LeaveManagementUncheckedCreateWithoutApprovedByInput>
-  where?: Prisma.LeaveManagementWhereInput
 }
 
-export type LeaveManagementUpdateToOneWithWhereWithoutApprovedByInput = {
-  where?: Prisma.LeaveManagementWhereInput
+export type LeaveManagementUpdateWithWhereUniqueWithoutApprovedByInput = {
+  where: Prisma.LeaveManagementWhereUniqueInput
   data: Prisma.XOR<Prisma.LeaveManagementUpdateWithoutApprovedByInput, Prisma.LeaveManagementUncheckedUpdateWithoutApprovedByInput>
+}
+
+export type LeaveManagementUpdateManyWithWhereWithoutApprovedByInput = {
+  where: Prisma.LeaveManagementScalarWhereInput
+  data: Prisma.XOR<Prisma.LeaveManagementUpdateManyMutationInput, Prisma.LeaveManagementUncheckedUpdateManyWithoutApprovedByInput>
+}
+
+export type LeaveManagementScalarWhereInput = {
+  AND?: Prisma.LeaveManagementScalarWhereInput | Prisma.LeaveManagementScalarWhereInput[]
+  OR?: Prisma.LeaveManagementScalarWhereInput[]
+  NOT?: Prisma.LeaveManagementScalarWhereInput | Prisma.LeaveManagementScalarWhereInput[]
+  id?: Prisma.StringFilter<"LeaveManagement"> | string
+  leaveType?: Prisma.EnumLeaveTypeFilter<"LeaveManagement"> | $Enums.LeaveType
+  leaveFrom?: Prisma.DateTimeFilter<"LeaveManagement"> | Date | string
+  leaveTo?: Prisma.DateTimeFilter<"LeaveManagement"> | Date | string
+  totalDays?: Prisma.StringFilter<"LeaveManagement"> | string
+  purposeOfLeave?: Prisma.StringFilter<"LeaveManagement"> | string
+  addressDuringLeave?: Prisma.StringFilter<"LeaveManagement"> | string
+  emergencyContactNumber?: Prisma.StringFilter<"LeaveManagement"> | string
+  approved?: Prisma.EnumLeaveStatusFilter<"LeaveManagement"> | $Enums.LeaveStatus
+  approverId?: Prisma.StringFilter<"LeaveManagement"> | string
+  employeeId?: Prisma.StringFilter<"LeaveManagement"> | string
+}
+
+export type LeaveManagementUpsertWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.LeaveManagementWhereUniqueInput
+  update: Prisma.XOR<Prisma.LeaveManagementUpdateWithoutEmployeeInput, Prisma.LeaveManagementUncheckedUpdateWithoutEmployeeInput>
+  create: Prisma.XOR<Prisma.LeaveManagementCreateWithoutEmployeeInput, Prisma.LeaveManagementUncheckedCreateWithoutEmployeeInput>
+}
+
+export type LeaveManagementUpdateWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.LeaveManagementWhereUniqueInput
+  data: Prisma.XOR<Prisma.LeaveManagementUpdateWithoutEmployeeInput, Prisma.LeaveManagementUncheckedUpdateWithoutEmployeeInput>
+}
+
+export type LeaveManagementUpdateManyWithWhereWithoutEmployeeInput = {
+  where: Prisma.LeaveManagementScalarWhereInput
+  data: Prisma.XOR<Prisma.LeaveManagementUpdateManyMutationInput, Prisma.LeaveManagementUncheckedUpdateManyWithoutEmployeeInput>
+}
+
+export type LeaveManagementCreateManyApprovedByInput = {
+  id?: string
+  leaveType: $Enums.LeaveType
+  leaveFrom: Date | string
+  leaveTo: Date | string
+  totalDays: string
+  purposeOfLeave: string
+  addressDuringLeave: string
+  emergencyContactNumber: string
+  approved?: $Enums.LeaveStatus
+  employeeId: string
+}
+
+export type LeaveManagementCreateManyEmployeeInput = {
+  id?: string
+  leaveType: $Enums.LeaveType
+  leaveFrom: Date | string
+  leaveTo: Date | string
+  totalDays: string
+  purposeOfLeave: string
+  addressDuringLeave: string
+  emergencyContactNumber: string
+  approved?: $Enums.LeaveStatus
+  approverId: string
 }
 
 export type LeaveManagementUpdateWithoutApprovedByInput = {
@@ -638,50 +712,17 @@ export type LeaveManagementUncheckedUpdateWithoutApprovedByInput = {
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type LeaveManagementUpsertWithWhereUniqueWithoutEmployeeInput = {
-  where: Prisma.LeaveManagementWhereUniqueInput
-  update: Prisma.XOR<Prisma.LeaveManagementUpdateWithoutEmployeeInput, Prisma.LeaveManagementUncheckedUpdateWithoutEmployeeInput>
-  create: Prisma.XOR<Prisma.LeaveManagementCreateWithoutEmployeeInput, Prisma.LeaveManagementUncheckedCreateWithoutEmployeeInput>
-}
-
-export type LeaveManagementUpdateWithWhereUniqueWithoutEmployeeInput = {
-  where: Prisma.LeaveManagementWhereUniqueInput
-  data: Prisma.XOR<Prisma.LeaveManagementUpdateWithoutEmployeeInput, Prisma.LeaveManagementUncheckedUpdateWithoutEmployeeInput>
-}
-
-export type LeaveManagementUpdateManyWithWhereWithoutEmployeeInput = {
-  where: Prisma.LeaveManagementScalarWhereInput
-  data: Prisma.XOR<Prisma.LeaveManagementUpdateManyMutationInput, Prisma.LeaveManagementUncheckedUpdateManyWithoutEmployeeInput>
-}
-
-export type LeaveManagementScalarWhereInput = {
-  AND?: Prisma.LeaveManagementScalarWhereInput | Prisma.LeaveManagementScalarWhereInput[]
-  OR?: Prisma.LeaveManagementScalarWhereInput[]
-  NOT?: Prisma.LeaveManagementScalarWhereInput | Prisma.LeaveManagementScalarWhereInput[]
-  id?: Prisma.StringFilter<"LeaveManagement"> | string
-  leaveType?: Prisma.EnumLeaveTypeFilter<"LeaveManagement"> | $Enums.LeaveType
-  leaveFrom?: Prisma.DateTimeFilter<"LeaveManagement"> | Date | string
-  leaveTo?: Prisma.DateTimeFilter<"LeaveManagement"> | Date | string
-  totalDays?: Prisma.StringFilter<"LeaveManagement"> | string
-  purposeOfLeave?: Prisma.StringFilter<"LeaveManagement"> | string
-  addressDuringLeave?: Prisma.StringFilter<"LeaveManagement"> | string
-  emergencyContactNumber?: Prisma.StringFilter<"LeaveManagement"> | string
-  approved?: Prisma.EnumLeaveStatusFilter<"LeaveManagement"> | $Enums.LeaveStatus
-  approverId?: Prisma.StringFilter<"LeaveManagement"> | string
-  employeeId?: Prisma.StringFilter<"LeaveManagement"> | string
-}
-
-export type LeaveManagementCreateManyEmployeeInput = {
-  id?: string
-  leaveType: $Enums.LeaveType
-  leaveFrom: Date | string
-  leaveTo: Date | string
-  totalDays: string
-  purposeOfLeave: string
-  addressDuringLeave: string
-  emergencyContactNumber: string
-  approved?: $Enums.LeaveStatus
-  approverId: string
+export type LeaveManagementUncheckedUpdateManyWithoutApprovedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
+  leaveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leaveTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  totalDays?: Prisma.StringFieldUpdateOperationsInput | string
+  purposeOfLeave?: Prisma.StringFieldUpdateOperationsInput | string
+  addressDuringLeave?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  approved?: Prisma.EnumLeaveStatusFieldUpdateOperationsInput | $Enums.LeaveStatus
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type LeaveManagementUpdateWithoutEmployeeInput = {
