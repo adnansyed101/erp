@@ -11,7 +11,7 @@ import {
 export interface LeaveBalanceProps {
   leaveType: string
   yearlyLeave: number
-  taken: number
+  leaveTaken: number
   balance: number
 }
 
@@ -35,11 +35,11 @@ export function LeaveBalancePanel({ leaves }: { leaves: LeaveBalanceProps[] }) {
             </TableHeader>
             <TableBody>
               {leaves.map((leave, idx) => (
-                <TableRow key={idx}>
+                <TableRow key={leave.leaveType}>
                   <TableCell>{idx + 1}</TableCell>
                   <TableCell>{leave.leaveType}</TableCell>
                   <TableCell>{leave.yearlyLeave}</TableCell>
-                  <TableCell>{leave.taken.toFixed(2)}</TableCell>
+                  <TableCell>{leave.leaveTaken}</TableCell>
                   <TableCell>{leave.balance}</TableCell>
                 </TableRow>
               ))}
