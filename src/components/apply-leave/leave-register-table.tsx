@@ -18,86 +18,53 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { ApplyLeaveWithId } from '@/lib/types/leave.types'
+import { useQuery } from '@tanstack/react-query'
 import { FileText, Download, Printer } from 'lucide-react'
 import { useState } from 'react'
+import { Spinner } from '../ui/spinner'
+import { format } from 'date-fns'
+import { formatId } from '@/lib/utils'
 
-export interface LeaveRecord {
-  id: number
-  employeeName: string
-  leaveType: string
-  leaveFrom: string
-  leaveTo: string
-  totalDays: number
-  remarks: string
-  status: 'On Approval' | 'Approved' | 'Rejected'
+type ResponseType = {
+  success: boolean
+  message: string
+  data: ApplyLeaveWithId[]
 }
-
-const sampleData: LeaveRecord[] = [
-  {
-    id: 1,
-    employeeName: 'MD. JALAL UDDIN SHAHALAL',
-    leaveType: 'Sick Leave',
-    leaveFrom: '09-Jul-2025',
-    leaveTo: '09-Jul-2025',
-    totalDays: 1.0,
-    remarks: 'Sick leave',
-    status: 'On Approval',
-  },
-  {
-    id: 2,
-    employeeName: 'MD. JALAL UDDIN SHAHALAL',
-    leaveType: 'Sick Leave',
-    leaveFrom: '24-Jun-2025',
-    leaveTo: '24-Jun-2025',
-    totalDays: 1.0,
-    remarks: 'leave apply to see Doctor and medical',
-    status: 'On Approval',
-  },
-  {
-    id: 3,
-    employeeName: 'MD. JALAL UDDIN SHAHALAL',
-    leaveType: 'Sick Leave',
-    leaveFrom: '19-Jan-2025',
-    leaveTo: '19-Jan-2025',
-    totalDays: 1.0,
-    remarks: '',
-    status: 'Approved',
-  },
-  {
-    id: 4,
-    employeeName: 'MD. JALAL UDDIN SHAHALAL',
-    leaveType: 'Sick Leave',
-    leaveFrom: '05-Nov-2024',
-    leaveTo: '05-Nov-2024',
-    totalDays: 1.0,
-    remarks: 'Cold fever & weekness suddenly',
-    status: 'Approved',
-  },
-  {
-    id: 5,
-    employeeName: 'MD. JALAL UDDIN SHAHALAL',
-    leaveType: 'Sick Leave',
-    leaveFrom: '23-Oct-2024',
-    leaveTo: '23-Oct-2024',
-    totalDays: 1.0,
-    remarks: 'Sick leave due to reason of digestion and weekness suddenly s',
-    status: 'Approved',
-  },
-]
 
 export function LeaveRegisterTable() {
   const [pageSize, setPageSize] = useState('10')
   const [searchTerm, setSearchTerm] = useState('')
 
+  // Get the Employees
+  const {
+    data: leaves,
+    isLoading,
+    isPending,
+    isError,
+    error: queryError,
+  } = useQuery({
+    queryKey: ['leave-list'],
+    queryFn: async (): Promise<ResponseType> => {
+      const response = await fetch('/api/hr-management/leave-management')
+      if (!response.ok) throw new Error('Failed to fetch employees')
+      return response.json()
+    },
+  })
+
   const statusColors = {
-    'On Approval': 'bg-yellow-100 text-yellow-800',
-    Approved: 'bg-green-100 text-green-800',
-    Rejected: 'bg-red-100 text-red-800',
+    pending: 'bg-yellow-100 text-yellow-800',
+    accepted: 'bg-green-100 text-green-800',
+    rejected: 'bg-red-100 text-red-800',
   }
 
-  const filteredData = sampleData.filter((record) =>
-    record.employeeName.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+  if (isError) {
+    throw new Error(queryError.message)
+  }
+
+  if (isLoading || isPending) {
+    return <Spinner />
+  }
 
   return (
     <Card>
@@ -178,33 +145,35 @@ export function LeaveRegisterTable() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredData.length > 0 ? (
-                  filteredData.map((record) => (
+                {leaves.data.length > 0 ? (
+                  leaves.data.map((record) => (
                     <TableRow key={record.id} className="hover:bg-gray-50">
-                      <TableCell>{record.id}</TableCell>
-                      <TableCell>{record.employeeName}</TableCell>
+                      <TableCell>{formatId(record.id)}</TableCell>
+                      <TableCell>
+                        {record.employee.personalInformation.fullName}
+                      </TableCell>
                       <TableCell>{record.leaveType}</TableCell>
-                      <TableCell>{record.leaveFrom}</TableCell>
-                      <TableCell>{record.leaveTo}</TableCell>
+                      <TableCell>{format(record.leaveFrom, 'PP')}</TableCell>
+                      <TableCell>{format(record.leaveTo, 'PP')}</TableCell>
                       <TableCell>{record.totalDays}</TableCell>
                       <TableCell className="text-xs">
-                        {record.remarks}
+                        {record.purposeOfLeave}
                       </TableCell>
                       <TableCell>
                         <span
                           className={`inline-block rounded px-2 py-1 text-xs font-semibold ${
-                            statusColors[record.status]
+                            statusColors[record.approved]
                           }`}
                         >
-                          {record.status}
+                          {record.approved}
                         </span>
                       </TableCell>
-                      <TableCell className='space-x-2'>
-                        <Button size="sm" variant="outline">
-                          Edit
+                      <TableCell className="space-x-2">
+                        <Button size="sm" variant="secondary">
+                          Approve
                         </Button>
-                        <Button size="sm" variant="outline">
-                          Print
+                        <Button size="sm" variant="destructive">
+                          Reject
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -225,11 +194,7 @@ export function LeaveRegisterTable() {
 
           {/* Pagination Info */}
           <div className="flex items-center justify-between text-sm text-gray-600">
-            <span>
-              Showing 1 to{' '}
-              {Math.min(filteredData.length, Number.parseInt(pageSize))} of{' '}
-              {filteredData.length} entries
-            </span>
+            <span>Showing 1 to 10 of 100 entries</span>
             <div className="flex gap-1">
               <Button variant="outline" size="sm" disabled>
                 Previous

@@ -8,7 +8,21 @@ export const Route = createFileRoute('/api/hr-management/leave-management')({
     handlers: {
       GET: async () => {
         try {
-          const leaves = await prisma.leaveManagement.findMany()
+          const leaves = await prisma.leaveManagement.findMany({
+            include: {
+              employee: {
+                include: {
+                  personalInformation: true,
+                },
+              },
+              approvedBy: {
+                include: {
+                  personalInformation: true,
+                },
+              },
+            },
+          })
+
           return Response.json({
             success: true,
             data: leaves,

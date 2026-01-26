@@ -1,17 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+import { Field, FieldError, FieldLabel } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+
 import {
   Select,
   SelectContent,
@@ -21,7 +15,7 @@ import {
 } from '@/components/ui/select'
 import { applyLeaveSchema } from '@/lib/validators/leave.validator'
 import type { ApplyLeave } from '@/lib/types/leave.types'
-import { addDays, differenceInDays, format } from 'date-fns'
+import { addDays, differenceInDays, format, isAfter } from 'date-fns'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { ChevronDownIcon } from 'lucide-react'
 import { Calendar } from '../ui/calendar'
@@ -48,9 +42,9 @@ export function ApplyLeaveForm() {
     resolver: zodResolver(applyLeaveSchema),
     defaultValues: {
       leaveType: 'casual',
-      leaveFrom: new Date(),
-      leaveTo: addDays(new Date(), 1),
-      totalDays: '1',
+      leaveFrom: addDays(new Date(), 2),
+      leaveTo: addDays(new Date(), 3),
+      totalDays: 1,
       purposeOfLeave: '',
       addressDuringLeave: '',
       emergencyContactNumber: '',
@@ -60,7 +54,7 @@ export function ApplyLeaveForm() {
     },
   })
 
-  // Get the attendances
+  // Get the Employees
   const { data: employees, isLoading } = useQuery({
     queryKey: ['employees-search', debouncedSearch],
     queryFn: async (): Promise<ResponseType> => {
@@ -74,42 +68,36 @@ export function ApplyLeaveForm() {
 
   const { mutate } = useMutation({
     mutationKey: ['apply-leave'],
-    mutationFn: async (newLeave: ApplyLeave) => {
+    mutationFn: async (payload: ApplyLeave) => {
       const response = await fetch('/api/hr-management/leave-management', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newLeave),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       })
-      if (!response.ok) {
-        throw new Error('Failed to apply leave')
-      }
+      if (!response.ok) throw new Error('Failed to apply leave')
       return response.json()
     },
     onSuccess: (data: ResponseType) => {
-      if (data.success === true) {
-        queryClient.invalidateQueries({
-          queryKey: ['leaves-list'],
-        })
-        return toast.success(data.message)
-      } else if (data.data === null && data.success === false) {
-        return toast.error(data.message)
+      if (data.success) {
+        queryClient.invalidateQueries({ queryKey: ['leaves-list'] })
+        toast.success(data.message)
       } else {
-        return toast.error(data.message)
+        toast.error(data.message)
       }
     },
   })
 
-  const onSubmit = async (values: ApplyLeave) => {
+  const onSubmit = (values: ApplyLeave) => {
+    if (isAfter(values.leaveFrom, values.leaveTo))
+      return toast.error('Leave From cannot come after leave to.')
+
     const payload: ApplyLeave = {
       ...values,
-      totalDays: differenceInDays(
-        form.watch('leaveTo'),
-        form.watch('leaveFrom'),
-      ).toString(),
+      totalDays: differenceInDays(values.leaveTo, values.leaveFrom),
     }
+
     return mutate(payload)
+    // return console.log(payload)
   }
 
   return (
@@ -117,220 +105,220 @@ export function ApplyLeaveForm() {
       <CardHeader>
         <CardTitle className="text-lg font-semibold">LEAVE INFO</CardTitle>
       </CardHeader>
+
       <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {/* Left Column */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="leaveType"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Type of Leave<span className="text-red-500">*</span>
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select One" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="casual">Casual Leave</SelectItem>
-                        <SelectItem value="sick">Sick Leave</SelectItem>
-                        <SelectItem value="earned">Earned Leave</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+        <form
+          onSubmit={form.handleSubmit(onSubmit, (e) => console.log(e))}
+          className="space-y-4"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Leave Type */}
+            <Controller
+              name="leaveType"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>
+                    Type of Leave <span className="text-red-500">*</span>
+                  </FieldLabel>
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select One" />
+                    </SelectTrigger>
 
-              <FormField
-                control={form.control}
-                name="leaveFrom"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Leave From<span className="text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className="w-full justify-between"
-                          >
-                            {field.value
-                              ? format(field.value, 'PP')
-                              : 'Select date'}
-                            <ChevronDownIcon />
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0">
-                          <Calendar
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            showOutsideDays
-                            disabled={{ before: new Date() }}
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                    <SelectContent>
+                      <SelectItem value="casual">Casual Leave</SelectItem>
+                      <SelectItem value="sick">Sick Leave</SelectItem>
+                      <SelectItem value="earned">Earned Leave</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
 
-              <FormField
-                control={form.control}
-                name="leaveTo"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Leave To<span className="text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className="w-full justify-between"
-                          >
-                            {field.value
-                              ? format(field.value, 'PP')
-                              : 'Select date'}
-                            <ChevronDownIcon />
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0">
-                          <Calendar
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            showOutsideDays
-                            disabled={{ before: addDays(new Date(), 1) }}
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="totalDays"
-                render={() => (
-                  <FormItem>
-                    <FormLabel>Total Days</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Total Days"
-                        disabled
-                        value={differenceInDays(
-                          form.watch('leaveTo'),
-                          form.watch('leaveFrom'),
-                        )}
+            {/* Leave From */}
+            <Controller
+              name="leaveFrom"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>
+                    Leave From <span className="text-red-500">*</span>
+                  </FieldLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-full justify-between"
+                      >
+                        {format(field.value, 'PP')}
+                        <ChevronDownIcon />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={{ before: addDays(new Date(), 2) }}
                       />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                    </PopoverContent>
+                  </Popover>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
 
-              <FormField
-                control={form.control}
-                name="purposeOfLeave"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Purpose Of Leave</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Purpose" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="addressDuringLeave"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Address During Leave</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Address" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="emergencyContactNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Emergency Contact Number</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Emergency Contact Number"
-                        {...field}
+            {/* Leave To */}
+            <Controller
+              name="leaveTo"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>
+                    Leave To <span className="text-red-500">*</span>
+                  </FieldLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-full justify-between"
+                      >
+                        {format(field.value, 'PP')}
+                        <ChevronDownIcon />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={{ before: addDays(new Date(), 3) }}
                       />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div>
-              <FormField
-                control={form.control}
-                name="approverId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Reliever's Employee Name</FormLabel>
-                    <FormControl>
-                      <SearchDropdown
-                        items={employees?.data ? employees.data : []}
-                        onSelect={(emp) => field.onChange(emp.id)}
-                        search={search}
-                        setSearch={setSearch}
-                        isLoading={isLoading}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+                    </PopoverContent>
+                  </Popover>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
 
-            <div className="flex gap-3">
-              <Button
-                type="button"
-                variant="outline"
-                className="flex-1 bg-transparent"
-                onClick={() => form.reset()}
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                className="flex-1 bg-blue-600 hover:bg-blue-700"
-                disabled={form.formState.isSubmitting}
-              >
-                {form.formState.isSubmitting ? 'Submitting...' : 'Submit'}
-              </Button>
-            </div>
-          </form>
-        </Form>
+            {/* Total Days (Computed) */}
+            <Field>
+              <FieldLabel>Total Days</FieldLabel>
+
+              <Input
+                disabled
+                value={
+                  differenceInDays(
+                    form.watch('leaveTo'),
+                    form.watch('leaveFrom'),
+                  ) <= 0
+                    ? 0
+                    : differenceInDays(
+                        form.watch('leaveTo'),
+                        form.watch('leaveFrom'),
+                      )
+                }
+              />
+            </Field>
+
+            {/* Purpose */}
+            <Controller
+              name="purposeOfLeave"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>Purpose Of Leave</FieldLabel>
+
+                  <Input placeholder="Purpose" {...field} />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
+            {/* Address */}
+            <Controller
+              name="addressDuringLeave"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>Address During Leave</FieldLabel>
+
+                  <Input placeholder="Address" {...field} />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
+            {/* Emergency Contact */}
+            <Controller
+              name="emergencyContactNumber"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>Emergency Contact Number</FieldLabel>
+
+                  <Input placeholder="Emergency Contact Number" {...field} />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+          </div>
+
+          {/* Approver */}
+          <Controller
+            name="approverId"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel>Reliever's Employee Name</FieldLabel>
+                <SearchDropdown
+                  items={employees?.data ?? []}
+                  isLoading={isLoading}
+                  search={search}
+                  setSearch={setSearch}
+                  onSelect={(emp) => field.onChange(emp.id)}
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+
+          {/* Actions */}
+          <div className="flex gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              className="flex-1"
+              onClick={() => form.reset()}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              type="submit"
+              className="flex-1 bg-blue-600 hover:bg-blue-700"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting ? 'Submitting...' : 'Submit'}
+            </Button>
+          </div>
+        </form>
       </CardContent>
     </Card>
   )
