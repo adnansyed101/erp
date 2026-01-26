@@ -1,15 +1,24 @@
 import { z } from 'zod'
 import { LEAVE_TYPES } from '../constant.array'
+import { EmployeeSchema } from './employee.validator'
 
 export const applyLeaveSchema = z.object({
   leaveType: z.enum(LEAVE_TYPES),
-  leaveFrom: z.date().min(1, 'Leave from date is required'),
-  leaveTo: z.date().min(1, 'Leave to date is required'),
-  totalDays: z.string(),
-  purposeOfLeave: z.string(),
-  addressDuringLeave: z.string(),
-  emergencyContactNumber: z.string(),
+  leaveFrom: z.date(),
+  leaveTo: z.date(),
+  totalDays: z.number().nonnegative(),
+  purposeOfLeave: z.string().min(1, 'Purpose of leave is required.'),
+  addressDuringLeave: z.string().min(1, 'Address is required'),
+  emergencyContactNumber: z
+    .string()
+    .min(1, 'Emergency contact number is required.'),
   approved: z.enum(['pending', 'accepted', 'rejected']),
   approverId: z.string(),
   employeeId: z.string(),
+})
+
+export const applyLeaveSchemaWithId = applyLeaveSchema.extend({
+  id: z.string(),
+  approvedBy: EmployeeSchema,
+  employee: EmployeeSchema,
 })
