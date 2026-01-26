@@ -221,7 +221,7 @@ model LeaveManagement {
   leaveType              LeaveType
   leaveFrom              DateTime
   leaveTo                DateTime
-  totalDays              String
+  totalDays              Int
   purposeOfLeave         String
   addressDuringLeave     String
   emergencyContactNumber String

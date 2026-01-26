@@ -20,8 +20,18 @@ export type LeaveManagementModel = runtime.Types.Result.DefaultSelection<Prisma.
 
 export type AggregateLeaveManagement = {
   _count: LeaveManagementCountAggregateOutputType | null
+  _avg: LeaveManagementAvgAggregateOutputType | null
+  _sum: LeaveManagementSumAggregateOutputType | null
   _min: LeaveManagementMinAggregateOutputType | null
   _max: LeaveManagementMaxAggregateOutputType | null
+}
+
+export type LeaveManagementAvgAggregateOutputType = {
+  totalDays: number | null
+}
+
+export type LeaveManagementSumAggregateOutputType = {
+  totalDays: number | null
 }
 
 export type LeaveManagementMinAggregateOutputType = {
@@ -29,7 +39,7 @@ export type LeaveManagementMinAggregateOutputType = {
   leaveType: $Enums.LeaveType | null
   leaveFrom: Date | null
   leaveTo: Date | null
-  totalDays: string | null
+  totalDays: number | null
   purposeOfLeave: string | null
   addressDuringLeave: string | null
   emergencyContactNumber: string | null
@@ -43,7 +53,7 @@ export type LeaveManagementMaxAggregateOutputType = {
   leaveType: $Enums.LeaveType | null
   leaveFrom: Date | null
   leaveTo: Date | null
-  totalDays: string | null
+  totalDays: number | null
   purposeOfLeave: string | null
   addressDuringLeave: string | null
   emergencyContactNumber: string | null
@@ -67,6 +77,14 @@ export type LeaveManagementCountAggregateOutputType = {
   _all: number
 }
 
+
+export type LeaveManagementAvgAggregateInputType = {
+  totalDays?: true
+}
+
+export type LeaveManagementSumAggregateInputType = {
+  totalDays?: true
+}
 
 export type LeaveManagementMinAggregateInputType = {
   id?: true
@@ -149,6 +167,18 @@ export type LeaveManagementAggregateArgs<ExtArgs extends runtime.Types.Extension
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: LeaveManagementAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: LeaveManagementSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: LeaveManagementMinAggregateInputType
@@ -179,6 +209,8 @@ export type LeaveManagementGroupByArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   _count?: LeaveManagementCountAggregateInputType | true
+  _avg?: LeaveManagementAvgAggregateInputType
+  _sum?: LeaveManagementSumAggregateInputType
   _min?: LeaveManagementMinAggregateInputType
   _max?: LeaveManagementMaxAggregateInputType
 }
@@ -188,7 +220,7 @@ export type LeaveManagementGroupByOutputType = {
   leaveType: $Enums.LeaveType
   leaveFrom: Date
   leaveTo: Date
-  totalDays: string
+  totalDays: number
   purposeOfLeave: string
   addressDuringLeave: string
   emergencyContactNumber: string
@@ -196,6 +228,8 @@ export type LeaveManagementGroupByOutputType = {
   approverId: string
   employeeId: string
   _count: LeaveManagementCountAggregateOutputType | null
+  _avg: LeaveManagementAvgAggregateOutputType | null
+  _sum: LeaveManagementSumAggregateOutputType | null
   _min: LeaveManagementMinAggregateOutputType | null
   _max: LeaveManagementMaxAggregateOutputType | null
 }
@@ -223,7 +257,7 @@ export type LeaveManagementWhereInput = {
   leaveType?: Prisma.EnumLeaveTypeFilter<"LeaveManagement"> | $Enums.LeaveType
   leaveFrom?: Prisma.DateTimeFilter<"LeaveManagement"> | Date | string
   leaveTo?: Prisma.DateTimeFilter<"LeaveManagement"> | Date | string
-  totalDays?: Prisma.StringFilter<"LeaveManagement"> | string
+  totalDays?: Prisma.IntFilter<"LeaveManagement"> | number
   purposeOfLeave?: Prisma.StringFilter<"LeaveManagement"> | string
   addressDuringLeave?: Prisma.StringFilter<"LeaveManagement"> | string
   emergencyContactNumber?: Prisma.StringFilter<"LeaveManagement"> | string
@@ -258,7 +292,7 @@ export type LeaveManagementWhereUniqueInput = Prisma.AtLeast<{
   leaveType?: Prisma.EnumLeaveTypeFilter<"LeaveManagement"> | $Enums.LeaveType
   leaveFrom?: Prisma.DateTimeFilter<"LeaveManagement"> | Date | string
   leaveTo?: Prisma.DateTimeFilter<"LeaveManagement"> | Date | string
-  totalDays?: Prisma.StringFilter<"LeaveManagement"> | string
+  totalDays?: Prisma.IntFilter<"LeaveManagement"> | number
   purposeOfLeave?: Prisma.StringFilter<"LeaveManagement"> | string
   addressDuringLeave?: Prisma.StringFilter<"LeaveManagement"> | string
   emergencyContactNumber?: Prisma.StringFilter<"LeaveManagement"> | string
@@ -282,8 +316,10 @@ export type LeaveManagementOrderByWithAggregationInput = {
   approverId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
   _count?: Prisma.LeaveManagementCountOrderByAggregateInput
+  _avg?: Prisma.LeaveManagementAvgOrderByAggregateInput
   _max?: Prisma.LeaveManagementMaxOrderByAggregateInput
   _min?: Prisma.LeaveManagementMinOrderByAggregateInput
+  _sum?: Prisma.LeaveManagementSumOrderByAggregateInput
 }
 
 export type LeaveManagementScalarWhereWithAggregatesInput = {
@@ -294,7 +330,7 @@ export type LeaveManagementScalarWhereWithAggregatesInput = {
   leaveType?: Prisma.EnumLeaveTypeWithAggregatesFilter<"LeaveManagement"> | $Enums.LeaveType
   leaveFrom?: Prisma.DateTimeWithAggregatesFilter<"LeaveManagement"> | Date | string
   leaveTo?: Prisma.DateTimeWithAggregatesFilter<"LeaveManagement"> | Date | string
-  totalDays?: Prisma.StringWithAggregatesFilter<"LeaveManagement"> | string
+  totalDays?: Prisma.IntWithAggregatesFilter<"LeaveManagement"> | number
   purposeOfLeave?: Prisma.StringWithAggregatesFilter<"LeaveManagement"> | string
   addressDuringLeave?: Prisma.StringWithAggregatesFilter<"LeaveManagement"> | string
   emergencyContactNumber?: Prisma.StringWithAggregatesFilter<"LeaveManagement"> | string
@@ -308,7 +344,7 @@ export type LeaveManagementCreateInput = {
   leaveType: $Enums.LeaveType
   leaveFrom: Date | string
   leaveTo: Date | string
-  totalDays: string
+  totalDays: number
   purposeOfLeave: string
   addressDuringLeave: string
   emergencyContactNumber: string
@@ -322,7 +358,7 @@ export type LeaveManagementUncheckedCreateInput = {
   leaveType: $Enums.LeaveType
   leaveFrom: Date | string
   leaveTo: Date | string
-  totalDays: string
+  totalDays: number
   purposeOfLeave: string
   addressDuringLeave: string
   emergencyContactNumber: string
@@ -336,7 +372,7 @@ export type LeaveManagementUpdateInput = {
   leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
   leaveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leaveTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalDays?: Prisma.StringFieldUpdateOperationsInput | string
+  totalDays?: Prisma.IntFieldUpdateOperationsInput | number
   purposeOfLeave?: Prisma.StringFieldUpdateOperationsInput | string
   addressDuringLeave?: Prisma.StringFieldUpdateOperationsInput | string
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -350,7 +386,7 @@ export type LeaveManagementUncheckedUpdateInput = {
   leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
   leaveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leaveTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalDays?: Prisma.StringFieldUpdateOperationsInput | string
+  totalDays?: Prisma.IntFieldUpdateOperationsInput | number
   purposeOfLeave?: Prisma.StringFieldUpdateOperationsInput | string
   addressDuringLeave?: Prisma.StringFieldUpdateOperationsInput | string
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -364,7 +400,7 @@ export type LeaveManagementCreateManyInput = {
   leaveType: $Enums.LeaveType
   leaveFrom: Date | string
   leaveTo: Date | string
-  totalDays: string
+  totalDays: number
   purposeOfLeave: string
   addressDuringLeave: string
   emergencyContactNumber: string
@@ -378,7 +414,7 @@ export type LeaveManagementUpdateManyMutationInput = {
   leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
   leaveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leaveTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalDays?: Prisma.StringFieldUpdateOperationsInput | string
+  totalDays?: Prisma.IntFieldUpdateOperationsInput | number
   purposeOfLeave?: Prisma.StringFieldUpdateOperationsInput | string
   addressDuringLeave?: Prisma.StringFieldUpdateOperationsInput | string
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -390,7 +426,7 @@ export type LeaveManagementUncheckedUpdateManyInput = {
   leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
   leaveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leaveTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalDays?: Prisma.StringFieldUpdateOperationsInput | string
+  totalDays?: Prisma.IntFieldUpdateOperationsInput | number
   purposeOfLeave?: Prisma.StringFieldUpdateOperationsInput | string
   addressDuringLeave?: Prisma.StringFieldUpdateOperationsInput | string
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -423,6 +459,10 @@ export type LeaveManagementCountOrderByAggregateInput = {
   employeeId?: Prisma.SortOrder
 }
 
+export type LeaveManagementAvgOrderByAggregateInput = {
+  totalDays?: Prisma.SortOrder
+}
+
 export type LeaveManagementMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   leaveType?: Prisma.SortOrder
@@ -449,6 +489,10 @@ export type LeaveManagementMinOrderByAggregateInput = {
   approved?: Prisma.SortOrder
   approverId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
+}
+
+export type LeaveManagementSumOrderByAggregateInput = {
+  totalDays?: Prisma.SortOrder
 }
 
 export type LeaveManagementCreateNestedManyWithoutApprovedByInput = {
@@ -544,7 +588,7 @@ export type LeaveManagementCreateWithoutApprovedByInput = {
   leaveType: $Enums.LeaveType
   leaveFrom: Date | string
   leaveTo: Date | string
-  totalDays: string
+  totalDays: number
   purposeOfLeave: string
   addressDuringLeave: string
   emergencyContactNumber: string
@@ -557,7 +601,7 @@ export type LeaveManagementUncheckedCreateWithoutApprovedByInput = {
   leaveType: $Enums.LeaveType
   leaveFrom: Date | string
   leaveTo: Date | string
-  totalDays: string
+  totalDays: number
   purposeOfLeave: string
   addressDuringLeave: string
   emergencyContactNumber: string
@@ -580,7 +624,7 @@ export type LeaveManagementCreateWithoutEmployeeInput = {
   leaveType: $Enums.LeaveType
   leaveFrom: Date | string
   leaveTo: Date | string
-  totalDays: string
+  totalDays: number
   purposeOfLeave: string
   addressDuringLeave: string
   emergencyContactNumber: string
@@ -593,7 +637,7 @@ export type LeaveManagementUncheckedCreateWithoutEmployeeInput = {
   leaveType: $Enums.LeaveType
   leaveFrom: Date | string
   leaveTo: Date | string
-  totalDays: string
+  totalDays: number
   purposeOfLeave: string
   addressDuringLeave: string
   emergencyContactNumber: string
@@ -635,7 +679,7 @@ export type LeaveManagementScalarWhereInput = {
   leaveType?: Prisma.EnumLeaveTypeFilter<"LeaveManagement"> | $Enums.LeaveType
   leaveFrom?: Prisma.DateTimeFilter<"LeaveManagement"> | Date | string
   leaveTo?: Prisma.DateTimeFilter<"LeaveManagement"> | Date | string
-  totalDays?: Prisma.StringFilter<"LeaveManagement"> | string
+  totalDays?: Prisma.IntFilter<"LeaveManagement"> | number
   purposeOfLeave?: Prisma.StringFilter<"LeaveManagement"> | string
   addressDuringLeave?: Prisma.StringFilter<"LeaveManagement"> | string
   emergencyContactNumber?: Prisma.StringFilter<"LeaveManagement"> | string
@@ -665,7 +709,7 @@ export type LeaveManagementCreateManyApprovedByInput = {
   leaveType: $Enums.LeaveType
   leaveFrom: Date | string
   leaveTo: Date | string
-  totalDays: string
+  totalDays: number
   purposeOfLeave: string
   addressDuringLeave: string
   emergencyContactNumber: string
@@ -678,7 +722,7 @@ export type LeaveManagementCreateManyEmployeeInput = {
   leaveType: $Enums.LeaveType
   leaveFrom: Date | string
   leaveTo: Date | string
-  totalDays: string
+  totalDays: number
   purposeOfLeave: string
   addressDuringLeave: string
   emergencyContactNumber: string
@@ -691,7 +735,7 @@ export type LeaveManagementUpdateWithoutApprovedByInput = {
   leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
   leaveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leaveTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalDays?: Prisma.StringFieldUpdateOperationsInput | string
+  totalDays?: Prisma.IntFieldUpdateOperationsInput | number
   purposeOfLeave?: Prisma.StringFieldUpdateOperationsInput | string
   addressDuringLeave?: Prisma.StringFieldUpdateOperationsInput | string
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -704,7 +748,7 @@ export type LeaveManagementUncheckedUpdateWithoutApprovedByInput = {
   leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
   leaveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leaveTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalDays?: Prisma.StringFieldUpdateOperationsInput | string
+  totalDays?: Prisma.IntFieldUpdateOperationsInput | number
   purposeOfLeave?: Prisma.StringFieldUpdateOperationsInput | string
   addressDuringLeave?: Prisma.StringFieldUpdateOperationsInput | string
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -717,7 +761,7 @@ export type LeaveManagementUncheckedUpdateManyWithoutApprovedByInput = {
   leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
   leaveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leaveTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalDays?: Prisma.StringFieldUpdateOperationsInput | string
+  totalDays?: Prisma.IntFieldUpdateOperationsInput | number
   purposeOfLeave?: Prisma.StringFieldUpdateOperationsInput | string
   addressDuringLeave?: Prisma.StringFieldUpdateOperationsInput | string
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -730,7 +774,7 @@ export type LeaveManagementUpdateWithoutEmployeeInput = {
   leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
   leaveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leaveTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalDays?: Prisma.StringFieldUpdateOperationsInput | string
+  totalDays?: Prisma.IntFieldUpdateOperationsInput | number
   purposeOfLeave?: Prisma.StringFieldUpdateOperationsInput | string
   addressDuringLeave?: Prisma.StringFieldUpdateOperationsInput | string
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -743,7 +787,7 @@ export type LeaveManagementUncheckedUpdateWithoutEmployeeInput = {
   leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
   leaveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leaveTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalDays?: Prisma.StringFieldUpdateOperationsInput | string
+  totalDays?: Prisma.IntFieldUpdateOperationsInput | number
   purposeOfLeave?: Prisma.StringFieldUpdateOperationsInput | string
   addressDuringLeave?: Prisma.StringFieldUpdateOperationsInput | string
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -756,7 +800,7 @@ export type LeaveManagementUncheckedUpdateManyWithoutEmployeeInput = {
   leaveType?: Prisma.EnumLeaveTypeFieldUpdateOperationsInput | $Enums.LeaveType
   leaveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leaveTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalDays?: Prisma.StringFieldUpdateOperationsInput | string
+  totalDays?: Prisma.IntFieldUpdateOperationsInput | number
   purposeOfLeave?: Prisma.StringFieldUpdateOperationsInput | string
   addressDuringLeave?: Prisma.StringFieldUpdateOperationsInput | string
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -853,7 +897,7 @@ export type $LeaveManagementPayload<ExtArgs extends runtime.Types.Extensions.Int
     leaveType: $Enums.LeaveType
     leaveFrom: Date
     leaveTo: Date
-    totalDays: string
+    totalDays: number
     purposeOfLeave: string
     addressDuringLeave: string
     emergencyContactNumber: string
@@ -1289,7 +1333,7 @@ export interface LeaveManagementFieldRefs {
   readonly leaveType: Prisma.FieldRef<"LeaveManagement", 'LeaveType'>
   readonly leaveFrom: Prisma.FieldRef<"LeaveManagement", 'DateTime'>
   readonly leaveTo: Prisma.FieldRef<"LeaveManagement", 'DateTime'>
-  readonly totalDays: Prisma.FieldRef<"LeaveManagement", 'String'>
+  readonly totalDays: Prisma.FieldRef<"LeaveManagement", 'Int'>
   readonly purposeOfLeave: Prisma.FieldRef<"LeaveManagement", 'String'>
   readonly addressDuringLeave: Prisma.FieldRef<"LeaveManagement", 'String'>
   readonly emergencyContactNumber: Prisma.FieldRef<"LeaveManagement", 'String'>
