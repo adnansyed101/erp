@@ -1,9 +1,8 @@
 import { createFileRoute, useNavigate, Link } from '@tanstack/react-router'
 import { Image } from '@unpic/react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
-
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -15,7 +14,6 @@ import {
 import {
   Form,
   FormControl,
-  FormField,
   FormItem,
   FormLabel,
   FormMessage,
@@ -100,6 +98,7 @@ function LoginPage() {
             <CardTitle className="text-xl">Welcome back</CardTitle>
             <CardDescription>Login to check daily activity.</CardDescription>
           </CardHeader>
+
           <CardContent>
             <Form {...form}>
               <form
@@ -107,30 +106,32 @@ function LoginPage() {
                 className="space-y-6"
               >
                 <div className="grid gap-6">
-                  {/* Email Field */}
-                  <FormField
-                    control={form.control}
+                  {/* Email */}
+                  <Controller
                     name="email"
-                    render={({ field }) => (
+                    control={form.control}
+                    render={({ field, fieldState }) => (
                       <FormItem>
                         <FormLabel>Email</FormLabel>
-                        <FormControl className="relative">
+                        <FormControl>
                           <Input
-                            placeholder="m@example.com"
                             type="email"
+                            placeholder="m@example.com"
                             {...field}
                           />
                         </FormControl>
-                        <FormMessage />
+                        {fieldState.error && (
+                          <FormMessage>{fieldState.error.message}</FormMessage>
+                        )}
                       </FormItem>
                     )}
                   />
 
-                  {/* Password Field */}
-                  <FormField
-                    control={form.control}
+                  {/* Password */}
+                  <Controller
                     name="password"
-                    render={({ field }) => (
+                    control={form.control}
+                    render={({ field, fieldState }) => (
                       <FormItem>
                         <div className="flex items-center">
                           <FormLabel>Password</FormLabel>
@@ -141,21 +142,22 @@ function LoginPage() {
                             Forgot your password?
                           </a>
                         </div>
+
                         <FormControl>
                           <div className="relative">
                             <Input
                               type={showPassword ? 'text' : 'password'}
-                              className="bg-background"
-                              id="password-toggle"
                               placeholder="Enter your password"
+                              className="bg-background"
                               {...field}
                             />
+
                             <Button
-                              className="absolute top-0 right-0 h-full px-3 hover:bg-transparent"
-                              onClick={() => setShowPassword(!showPassword)}
-                              size="icon"
                               type="button"
                               variant="ghost"
+                              size="icon"
+                              className="absolute top-0 right-0 h-full px-3 hover:bg-transparent"
+                              onClick={() => setShowPassword((p) => !p)}
                             >
                               {showPassword ? (
                                 <EyeOff className="h-4 w-4 text-muted-foreground" />
@@ -165,11 +167,15 @@ function LoginPage() {
                             </Button>
                           </div>
                         </FormControl>
-                        <FormMessage />
+
+                        {fieldState.error && (
+                          <FormMessage>{fieldState.error.message}</FormMessage>
+                        )}
                       </FormItem>
                     )}
                   />
 
+                  {/* Submit */}
                   <Button
                     type="submit"
                     className="w-full"
