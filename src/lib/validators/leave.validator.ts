@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { LEAVE_TYPES } from '../constant.array'
+import { LEAVE_STATUS, LEAVE_TYPES } from '../constant.array'
 import { EmployeeSchema } from './employee.validator'
 
 export const applyLeaveSchema = z.object({
@@ -12,7 +12,7 @@ export const applyLeaveSchema = z.object({
   emergencyContactNumber: z
     .string()
     .min(1, 'Emergency contact number is required.'),
-  approved: z.enum(['pending', 'accepted', 'rejected']),
+  approved: z.enum(LEAVE_STATUS),
   approverId: z.string(),
   employeeId: z.string(),
 })
@@ -21,4 +21,9 @@ export const applyLeaveSchemaWithId = applyLeaveSchema.extend({
   id: z.string(),
   approvedBy: EmployeeSchema,
   employee: EmployeeSchema,
+})
+
+export const updateLeaveSchema = z.object({
+  id: z.string(),
+  type: z.enum(LEAVE_STATUS),
 })
