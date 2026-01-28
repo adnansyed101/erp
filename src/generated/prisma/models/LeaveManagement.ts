@@ -46,6 +46,7 @@ export type LeaveManagementMinAggregateOutputType = {
   approved: $Enums.LeaveStatus | null
   approverId: string | null
   employeeId: string | null
+  createdAt: Date | null
 }
 
 export type LeaveManagementMaxAggregateOutputType = {
@@ -60,6 +61,7 @@ export type LeaveManagementMaxAggregateOutputType = {
   approved: $Enums.LeaveStatus | null
   approverId: string | null
   employeeId: string | null
+  createdAt: Date | null
 }
 
 export type LeaveManagementCountAggregateOutputType = {
@@ -74,6 +76,7 @@ export type LeaveManagementCountAggregateOutputType = {
   approved: number
   approverId: number
   employeeId: number
+  createdAt: number
   _all: number
 }
 
@@ -98,6 +101,7 @@ export type LeaveManagementMinAggregateInputType = {
   approved?: true
   approverId?: true
   employeeId?: true
+  createdAt?: true
 }
 
 export type LeaveManagementMaxAggregateInputType = {
@@ -112,6 +116,7 @@ export type LeaveManagementMaxAggregateInputType = {
   approved?: true
   approverId?: true
   employeeId?: true
+  createdAt?: true
 }
 
 export type LeaveManagementCountAggregateInputType = {
@@ -126,6 +131,7 @@ export type LeaveManagementCountAggregateInputType = {
   approved?: true
   approverId?: true
   employeeId?: true
+  createdAt?: true
   _all?: true
 }
 
@@ -227,6 +233,7 @@ export type LeaveManagementGroupByOutputType = {
   approved: $Enums.LeaveStatus
   approverId: string
   employeeId: string
+  createdAt: Date
   _count: LeaveManagementCountAggregateOutputType | null
   _avg: LeaveManagementAvgAggregateOutputType | null
   _sum: LeaveManagementSumAggregateOutputType | null
@@ -264,6 +271,7 @@ export type LeaveManagementWhereInput = {
   approved?: Prisma.EnumLeaveStatusFilter<"LeaveManagement"> | $Enums.LeaveStatus
   approverId?: Prisma.StringFilter<"LeaveManagement"> | string
   employeeId?: Prisma.StringFilter<"LeaveManagement"> | string
+  createdAt?: Prisma.DateTimeFilter<"LeaveManagement"> | Date | string
   approvedBy?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
@@ -280,6 +288,7 @@ export type LeaveManagementOrderByWithRelationInput = {
   approved?: Prisma.SortOrder
   approverId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   approvedBy?: Prisma.EmployeeOrderByWithRelationInput
   employee?: Prisma.EmployeeOrderByWithRelationInput
 }
@@ -299,6 +308,7 @@ export type LeaveManagementWhereUniqueInput = Prisma.AtLeast<{
   approved?: Prisma.EnumLeaveStatusFilter<"LeaveManagement"> | $Enums.LeaveStatus
   approverId?: Prisma.StringFilter<"LeaveManagement"> | string
   employeeId?: Prisma.StringFilter<"LeaveManagement"> | string
+  createdAt?: Prisma.DateTimeFilter<"LeaveManagement"> | Date | string
   approvedBy?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
@@ -315,6 +325,7 @@ export type LeaveManagementOrderByWithAggregationInput = {
   approved?: Prisma.SortOrder
   approverId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   _count?: Prisma.LeaveManagementCountOrderByAggregateInput
   _avg?: Prisma.LeaveManagementAvgOrderByAggregateInput
   _max?: Prisma.LeaveManagementMaxOrderByAggregateInput
@@ -337,6 +348,7 @@ export type LeaveManagementScalarWhereWithAggregatesInput = {
   approved?: Prisma.EnumLeaveStatusWithAggregatesFilter<"LeaveManagement"> | $Enums.LeaveStatus
   approverId?: Prisma.StringWithAggregatesFilter<"LeaveManagement"> | string
   employeeId?: Prisma.StringWithAggregatesFilter<"LeaveManagement"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"LeaveManagement"> | Date | string
 }
 
 export type LeaveManagementCreateInput = {
@@ -349,6 +361,7 @@ export type LeaveManagementCreateInput = {
   addressDuringLeave: string
   emergencyContactNumber: string
   approved?: $Enums.LeaveStatus
+  createdAt?: Date | string
   approvedBy: Prisma.EmployeeCreateNestedOneWithoutApproverInput
   employee: Prisma.EmployeeCreateNestedOneWithoutLeavesTakenInput
 }
@@ -365,6 +378,7 @@ export type LeaveManagementUncheckedCreateInput = {
   approved?: $Enums.LeaveStatus
   approverId: string
   employeeId: string
+  createdAt?: Date | string
 }
 
 export type LeaveManagementUpdateInput = {
@@ -377,6 +391,7 @@ export type LeaveManagementUpdateInput = {
   addressDuringLeave?: Prisma.StringFieldUpdateOperationsInput | string
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   approved?: Prisma.EnumLeaveStatusFieldUpdateOperationsInput | $Enums.LeaveStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedBy?: Prisma.EmployeeUpdateOneRequiredWithoutApproverNestedInput
   employee?: Prisma.EmployeeUpdateOneRequiredWithoutLeavesTakenNestedInput
 }
@@ -393,6 +408,7 @@ export type LeaveManagementUncheckedUpdateInput = {
   approved?: Prisma.EnumLeaveStatusFieldUpdateOperationsInput | $Enums.LeaveStatus
   approverId?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LeaveManagementCreateManyInput = {
@@ -407,6 +423,7 @@ export type LeaveManagementCreateManyInput = {
   approved?: $Enums.LeaveStatus
   approverId: string
   employeeId: string
+  createdAt?: Date | string
 }
 
 export type LeaveManagementUpdateManyMutationInput = {
@@ -419,6 +436,7 @@ export type LeaveManagementUpdateManyMutationInput = {
   addressDuringLeave?: Prisma.StringFieldUpdateOperationsInput | string
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   approved?: Prisma.EnumLeaveStatusFieldUpdateOperationsInput | $Enums.LeaveStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LeaveManagementUncheckedUpdateManyInput = {
@@ -433,6 +451,7 @@ export type LeaveManagementUncheckedUpdateManyInput = {
   approved?: Prisma.EnumLeaveStatusFieldUpdateOperationsInput | $Enums.LeaveStatus
   approverId?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LeaveManagementListRelationFilter = {
@@ -457,6 +476,7 @@ export type LeaveManagementCountOrderByAggregateInput = {
   approved?: Prisma.SortOrder
   approverId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type LeaveManagementAvgOrderByAggregateInput = {
@@ -475,6 +495,7 @@ export type LeaveManagementMaxOrderByAggregateInput = {
   approved?: Prisma.SortOrder
   approverId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type LeaveManagementMinOrderByAggregateInput = {
@@ -489,6 +510,7 @@ export type LeaveManagementMinOrderByAggregateInput = {
   approved?: Prisma.SortOrder
   approverId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type LeaveManagementSumOrderByAggregateInput = {
@@ -593,6 +615,7 @@ export type LeaveManagementCreateWithoutApprovedByInput = {
   addressDuringLeave: string
   emergencyContactNumber: string
   approved?: $Enums.LeaveStatus
+  createdAt?: Date | string
   employee: Prisma.EmployeeCreateNestedOneWithoutLeavesTakenInput
 }
 
@@ -607,6 +630,7 @@ export type LeaveManagementUncheckedCreateWithoutApprovedByInput = {
   emergencyContactNumber: string
   approved?: $Enums.LeaveStatus
   employeeId: string
+  createdAt?: Date | string
 }
 
 export type LeaveManagementCreateOrConnectWithoutApprovedByInput = {
@@ -629,6 +653,7 @@ export type LeaveManagementCreateWithoutEmployeeInput = {
   addressDuringLeave: string
   emergencyContactNumber: string
   approved?: $Enums.LeaveStatus
+  createdAt?: Date | string
   approvedBy: Prisma.EmployeeCreateNestedOneWithoutApproverInput
 }
 
@@ -643,6 +668,7 @@ export type LeaveManagementUncheckedCreateWithoutEmployeeInput = {
   emergencyContactNumber: string
   approved?: $Enums.LeaveStatus
   approverId: string
+  createdAt?: Date | string
 }
 
 export type LeaveManagementCreateOrConnectWithoutEmployeeInput = {
@@ -686,6 +712,7 @@ export type LeaveManagementScalarWhereInput = {
   approved?: Prisma.EnumLeaveStatusFilter<"LeaveManagement"> | $Enums.LeaveStatus
   approverId?: Prisma.StringFilter<"LeaveManagement"> | string
   employeeId?: Prisma.StringFilter<"LeaveManagement"> | string
+  createdAt?: Prisma.DateTimeFilter<"LeaveManagement"> | Date | string
 }
 
 export type LeaveManagementUpsertWithWhereUniqueWithoutEmployeeInput = {
@@ -715,6 +742,7 @@ export type LeaveManagementCreateManyApprovedByInput = {
   emergencyContactNumber: string
   approved?: $Enums.LeaveStatus
   employeeId: string
+  createdAt?: Date | string
 }
 
 export type LeaveManagementCreateManyEmployeeInput = {
@@ -728,6 +756,7 @@ export type LeaveManagementCreateManyEmployeeInput = {
   emergencyContactNumber: string
   approved?: $Enums.LeaveStatus
   approverId: string
+  createdAt?: Date | string
 }
 
 export type LeaveManagementUpdateWithoutApprovedByInput = {
@@ -740,6 +769,7 @@ export type LeaveManagementUpdateWithoutApprovedByInput = {
   addressDuringLeave?: Prisma.StringFieldUpdateOperationsInput | string
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   approved?: Prisma.EnumLeaveStatusFieldUpdateOperationsInput | $Enums.LeaveStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   employee?: Prisma.EmployeeUpdateOneRequiredWithoutLeavesTakenNestedInput
 }
 
@@ -754,6 +784,7 @@ export type LeaveManagementUncheckedUpdateWithoutApprovedByInput = {
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   approved?: Prisma.EnumLeaveStatusFieldUpdateOperationsInput | $Enums.LeaveStatus
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LeaveManagementUncheckedUpdateManyWithoutApprovedByInput = {
@@ -767,6 +798,7 @@ export type LeaveManagementUncheckedUpdateManyWithoutApprovedByInput = {
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   approved?: Prisma.EnumLeaveStatusFieldUpdateOperationsInput | $Enums.LeaveStatus
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LeaveManagementUpdateWithoutEmployeeInput = {
@@ -779,6 +811,7 @@ export type LeaveManagementUpdateWithoutEmployeeInput = {
   addressDuringLeave?: Prisma.StringFieldUpdateOperationsInput | string
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   approved?: Prisma.EnumLeaveStatusFieldUpdateOperationsInput | $Enums.LeaveStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedBy?: Prisma.EmployeeUpdateOneRequiredWithoutApproverNestedInput
 }
 
@@ -793,6 +826,7 @@ export type LeaveManagementUncheckedUpdateWithoutEmployeeInput = {
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   approved?: Prisma.EnumLeaveStatusFieldUpdateOperationsInput | $Enums.LeaveStatus
   approverId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LeaveManagementUncheckedUpdateManyWithoutEmployeeInput = {
@@ -806,6 +840,7 @@ export type LeaveManagementUncheckedUpdateManyWithoutEmployeeInput = {
   emergencyContactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   approved?: Prisma.EnumLeaveStatusFieldUpdateOperationsInput | $Enums.LeaveStatus
   approverId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -822,6 +857,7 @@ export type LeaveManagementSelect<ExtArgs extends runtime.Types.Extensions.Inter
   approved?: boolean
   approverId?: boolean
   employeeId?: boolean
+  createdAt?: boolean
   approvedBy?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["leaveManagement"]>
@@ -838,6 +874,7 @@ export type LeaveManagementSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   approved?: boolean
   approverId?: boolean
   employeeId?: boolean
+  createdAt?: boolean
   approvedBy?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["leaveManagement"]>
@@ -854,6 +891,7 @@ export type LeaveManagementSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   approved?: boolean
   approverId?: boolean
   employeeId?: boolean
+  createdAt?: boolean
   approvedBy?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["leaveManagement"]>
@@ -870,9 +908,10 @@ export type LeaveManagementSelectScalar = {
   approved?: boolean
   approverId?: boolean
   employeeId?: boolean
+  createdAt?: boolean
 }
 
-export type LeaveManagementOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "leaveType" | "leaveFrom" | "leaveTo" | "totalDays" | "purposeOfLeave" | "addressDuringLeave" | "emergencyContactNumber" | "approved" | "approverId" | "employeeId", ExtArgs["result"]["leaveManagement"]>
+export type LeaveManagementOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "leaveType" | "leaveFrom" | "leaveTo" | "totalDays" | "purposeOfLeave" | "addressDuringLeave" | "emergencyContactNumber" | "approved" | "approverId" | "employeeId" | "createdAt", ExtArgs["result"]["leaveManagement"]>
 export type LeaveManagementInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   approvedBy?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -904,6 +943,7 @@ export type $LeaveManagementPayload<ExtArgs extends runtime.Types.Extensions.Int
     approved: $Enums.LeaveStatus
     approverId: string
     employeeId: string
+    createdAt: Date
   }, ExtArgs["result"]["leaveManagement"]>
   composites: {}
 }
@@ -1340,6 +1380,7 @@ export interface LeaveManagementFieldRefs {
   readonly approved: Prisma.FieldRef<"LeaveManagement", 'LeaveStatus'>
   readonly approverId: Prisma.FieldRef<"LeaveManagement", 'String'>
   readonly employeeId: Prisma.FieldRef<"LeaveManagement", 'String'>
+  readonly createdAt: Prisma.FieldRef<"LeaveManagement", 'DateTime'>
 }
     
 

@@ -230,6 +230,7 @@ model LeaveManagement {
   approvedBy             Employee    @relation(name: "approverEmployee", fields: [approverId], references: [id])
   employee               Employee    @relation(name: "employeeLeavesTaken", fields: [employeeId], references: [id])
   employeeId             String
+  createdAt              DateTime    @default(now())
 }
 
 model User {

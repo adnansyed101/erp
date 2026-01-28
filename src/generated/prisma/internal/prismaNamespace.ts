@@ -1558,7 +1558,8 @@ export const LeaveManagementScalarFieldEnum = {
   emergencyContactNumber: 'emergencyContactNumber',
   approved: 'approved',
   approverId: 'approverId',
-  employeeId: 'employeeId'
+  employeeId: 'employeeId',
+  createdAt: 'createdAt'
 } as const
 
 export type LeaveManagementScalarFieldEnum = (typeof LeaveManagementScalarFieldEnum)[keyof typeof LeaveManagementScalarFieldEnum]
